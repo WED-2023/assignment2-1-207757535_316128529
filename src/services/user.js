@@ -9,7 +9,7 @@ import recipe_preview from "../assets/mocks/recipe_preview.json";
   
   export function mockAddUserRecipe(recipeDetails) {
     return { status: 200, response: { data: { message: "The Recipe successfully added to My Recipes", success: true}} };
-
+    
   }
   
   

@@ -1,21 +1,36 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
-    <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
+  <div class="recipe-container">
+    <link
+      rel="stylesheet"
+      href="http://static.sasongsmat.nu/fonts/vegetarian.css"
+    />
+    <router-link
+      :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+      class="recipe-preview"
+    >
+      <div class="recipe-card">
+        <b-card
+          v-if="image_load"
+          :img-src="recipe.image"
+          img-alt="Image"
+          tag="article"
+          class="recipe-image"
+        >
+          <div class="recipe-footer">
+            <div :title="recipe.title" class="recipe-title">
+              <b-card-text>
+                {{ recipe.title }}
+              </b-card-text>
+            </div>
+            <ul class="recipe-overview">
+              <li>{{ recipe.readyInMinutes }} minutes</li>
+              <li>{{ recipe.aggregateLikes }} likes</li>
+            </ul>
+          </div>
+        </b-card>
       </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
-    </div>
-  </router-link>
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -35,56 +50,34 @@ export default {
       type: Object,
       required: true
     }
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
   }
 };
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Amaranth&family=Comfortaa:wght@300&family=Lemonada:wght@400;500&family=Mali:wght@200&family=Shadows+Into+Light+Two&family=Syncopate&display=swap");
+
+.recipe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .recipe-preview {
   display: inline-block;
-  width: 90%;
-  height: 100%;
-  position: relative;
-  margin: 10px 10px;
-}
-.recipe-preview > .recipe-body {
   width: 100%;
-  height: 200px;
   position: relative;
 }
 
-.recipe-preview .recipe-body .recipe-image {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+.recipe-preview > .recipe-card {
+  width: 200px; /* Adjust the width to make the card readable */
+  margin: 10px 0; /* Add space between the cards */
+}
+
+.recipe-preview .recipe-card .recipe-image {
   display: block;
-  width: 98%;
-  height: auto;
+  width: 100%;
+  height: 150px; /* Ensure a consistent height for images */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -92,50 +85,42 @@ export default {
 
 .recipe-preview .recipe-footer {
   width: 100%;
-  height: 50%;
   overflow: hidden;
+  background-color: white; /* Set the background color to white */
+  padding: 10px; /* Add padding for better readability */
+  box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 .recipe-preview .recipe-footer .recipe-title {
-  padding: 10px 10px;
+  padding: 5px 10px; /* Increase padding for better readability */
   width: 100%;
-  font-size: 12pt;
+  font-size: 14px; /* Increase font size */
   text-align: left;
-  white-space: nowrap;
   overflow: hidden;
-  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+  white-space: normal; /* Ensure text wraps to the next line */
+  background-color: white; /* Set the background color to white */
 }
 
 .recipe-preview .recipe-footer ul.recipe-overview {
-  padding: 5px 10px;
   width: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex: 1 auto;
-  -ms-flex: 1 auto;
-  flex: 1 auto;
   table-layout: fixed;
   margin-bottom: 0px;
+  font-size: 12px; /* Adjust font size */
 }
 
 .recipe-preview .recipe-footer ul.recipe-overview li {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  -ms-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex-grow: 1;
   flex-grow: 1;
-  width: 90px;
   display: table-cell;
   text-align: center;
+}
+
+.details {
+  display: flex;
+  font-size: 25pt;
+  width: 100%;
+  table-layout: fixed;
+  margin-bottom: 5px;
 }
 </style>

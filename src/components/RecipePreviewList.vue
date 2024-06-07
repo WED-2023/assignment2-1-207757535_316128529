@@ -4,7 +4,7 @@
       {{ title }}:
       <slot></slot>
     </h3>
-    <b-row>
+    <b-row no-gutters> 
       <b-col v-for="r in recipes" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
@@ -41,7 +41,7 @@ export default {
         //   this.$root.store.server_domain + "/recipes/random",
         // );
 
-        const amountToFetch = 5; // Set this to how many recipes you want to fetch
+        const amountToFetch = 3; // Set this to how many recipes you want to fetch
         const response = mockGetRecipesPreview(amountToFetch);
 
 
@@ -61,5 +61,9 @@ export default {
 <style lang="scss" scoped>
 .container {
   min-height: 400px;
+}
+.recipePreview {
+  margin-bottom: 10px; /* Add some bottom margin to separate rows slightly */
+  padding-right: 2px;
 }
 </style>

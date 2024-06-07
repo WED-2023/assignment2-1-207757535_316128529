@@ -1,52 +1,50 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
-      <router-link :to="{ name: 'search' }">Search</router-link>|
-      <router-link :to="{ name: 'about' }">About</router-link>|
-      <!-- {{ !$root.store.username }} -->
-      <span v-if="!$root.store.username">
-        Hello Guest:
-        <router-link :to="{ name: 'register' }">Register</router-link>|
-        <router-link :to="{ name: 'login' }">Login</router-link>|
-      </span>
-      <span v-else>
-        <!-- {{ $root.store.username }}:  -->
-        <div class="dropdown">
-          <button @click="toggleDropdown" class="dropbtn">My Zone</button>|
-          <div id="myDropdown" class="dropdown-content">
-              <router-link :to="{ name: 'MyFavoriteRecipes' }">My Favorite Recipes</router-link>|
-              <router-link :to="{ name: 'MyRecipes' }">My Recipes</router-link>|
-              <router-link :to="{ name: 'MyFamilyRecipes' }">My Family Recipes</router-link>|
-          </div>
-        </div>
-        <router-link :to="{ name: 'NewRecipe' }">Add a new Recipe</router-link>|
-        <button @click="Logout">Logout</button>|
-      </span>
+    <div>
+      <b-navbar toggleable="lg" type="light" variant="primary">
+        <b-navbar-brand href="#" id="brand">DawaraRecipes</b-navbar-brand>
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item :to="{ name: 'main' }">Main</b-nav-item>
+            <b-nav-item :to="{ name: 'about' }" >About</b-nav-item>
+            <b-nav-form >
+              <b-form-input size="sm" class="mr-sm-2" placeholder="Search" ></b-form-input>
+              <b-nav-item :to="{ name: 'search' }" size="sm" >Search</b-nav-item>
+            </b-nav-form>
+          </b-navbar-nav>
+
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+            <span v-if="!$root.store.username" class="not-connected">
+              Hello Guest:
+              <b-nav-item :to="{ name: 'register' }" style="padding-right: 4%">Register</b-nav-item> 
+              <b-nav-item :to="{ name: 'login' }" style="padding-right: 4%">Login</b-nav-item>
+            </span>
+            <span v-else>
+              Hello {{ $root.store.username }}:
+              <b-nav-item-dropdown text="My Zone" right>
+                <router-link :to="{ name: 'MyFavoriteRecipes' }" class="dropdown-item">My Favorite Recipes</router-link>
+                <router-link :to="{ name: 'MyRecipes' }" class="dropdown-item">My Recipes</router-link>
+                <router-link :to="{ name: 'MyFamilyRecipes' }" class="dropdown-item">My Family Recipes</router-link>
+              </b-nav-item-dropdown>
+              <b-nav-item :to="{ name: 'NewRecipe' }" class="nav-link">Add a new Recipe</b-nav-item>
+              <b-nav-item @click="Logout">Logout</b-nav-item>
+            </span>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
     </div>
-    <router-view />
+    <router-view />   
   </div>
 </template>
+
 
 <script>
 import { computed } from 'vue';
 export default {
   name: "App",
   methods: {
-    toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-            window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    },
     Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
@@ -60,67 +58,37 @@ export default {
 
 <style lang="scss">
 @import "@/scss/form-style.scss";
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 
+/* Apply background to html and body to cover the entire viewport */
+html, body {
+  height: 100%;
+  margin: 0;
+  background: url('assets/bg7.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Main app container */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  font-family: Comfortaa;
+  font-size: 12pt;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-#nav {
-  padding: 30px;
+/* Ensure router-view fills the remaining space */
+#app .router-view {
+  flex: 1;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
+/* Style for active router links */
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 
-.dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropbtn {
-            background-color: #4CAF50; /* Green background */
-            color: white; /* White text */
-            padding: 16px; /* Some padding */
-            font-size: 16px; /* Larger text size */
-            border: none; /* No borders */
-            cursor: pointer; /* Pointer/hand icon */
-        }
-
-        .dropbtn:hover, .dropbtn:focus {
-            background-color: #3e8e41; /* Darker green on hover */
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .show {
-            display: block;
-        }
+/* Styling for not-connected span */
+.not-connected {
+  display: flex;
+}
 </style>

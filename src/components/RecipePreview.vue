@@ -71,7 +71,7 @@ export default {
 
 .recipe-preview > .recipe-card {
   width: 200px; /* Adjust the width to make the card readable */
-  margin: 10px 0; /* Add space between the cards */
+  margin: 10px -30px; /* Add space between the cards */
 }
 
 .recipe-preview .recipe-card .recipe-image {

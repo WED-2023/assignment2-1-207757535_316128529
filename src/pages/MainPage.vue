@@ -2,9 +2,9 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <div class="left-side" style="width: 75%; float: left;">
-      <div class="container-random">
-        <RecipePreviewList style="text-align: center; font-family: Comfortaa; margin-top: 3%; margin-left: -1%;" title="Explore this recipes" class="RandomRecipes center" :key="componentKey" />
+    <div class="left-side" style="width: 60%; float: left;">
+      <div class="container-random" style="padding-left: 10px;">
+        <RecipePreviewList style="text-align: center; font-family: Comfortaa; margin-top: 3%;" title="Explore this recipes" class="RandomRecipes center" :key="componentKey" />
       </div>
       <div class="container-user">
         <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
@@ -20,8 +20,8 @@
         ></RecipePreviewList>
       </div>
     </div>
-    <div class="right-side" style="width: 25%; float: right;">
-      <LoginPage v-if="$root.store.username" :class="connected"></LoginPage>
+    <div class="right-side" style="width: 40%; float: right; padding-top: 50%">
+      <LoginPage v-if="!$root.store.username" :class="connected"></LoginPage>
     </div>
   </div>
 </template>
@@ -46,29 +46,14 @@ export default {
 <style lang="scss" scoped>
 .container {
   padding-top: 5px;
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   height: 100vh;
 }
 
-// .left-side {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   height: 100%;
-//   align-self: flex-start; /* Align to top left */
-// }
-
-.container-random {
-  position: relative; /* Align to top left */
-}
-
-.container-user {
-  position: relative; /* Align to bottom left */
-}
-
 .RandomRecipes {
   margin: 10px 0 10px;
+  padding-left: 5px;
 }
 
 .blur {
@@ -85,7 +70,4 @@ export default {
   visibility: hidden;
 }
 
-.notConnected{
-  visibility: visible;
-}
 </style>

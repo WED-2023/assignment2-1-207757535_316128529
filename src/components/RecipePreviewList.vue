@@ -64,6 +64,6 @@ export default {
 }
 .recipePreview {
   margin-bottom: 10px; /* Add some bottom margin to separate rows slightly */
-  padding-right: 2px;
+  padding-right: 1px;
 }
 </style>

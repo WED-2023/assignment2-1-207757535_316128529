@@ -16,13 +16,13 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-            <span v-if="!$root.store.username" class="not-connected">
+            <span v-if="!$root.store.username" class="nav-not-connected">
               Hello Guest:
               <b-nav-item :to="{ name: 'register' }" style="padding-right: 4%">Register</b-nav-item> 
               <b-nav-item :to="{ name: 'login' }" style="padding-right: 4%">Login</b-nav-item>
             </span>
-            <span v-else>
-              Hello {{ $root.store.username }}:
+            <span v-else class="nav-connected">
+              <span class="greeting">Hello {{ $root.store.username }}:</span>
               <b-nav-item-dropdown text="My Zone" right>
                 <router-link :to="{ name: 'MyFavoriteRecipes' }" class="dropdown-item">My Favorite Recipes</router-link>
                 <router-link :to="{ name: 'MyRecipes' }" class="dropdown-item">My Recipes</router-link>
@@ -71,7 +71,7 @@ html, body {
 /* Main app container */
 #app {
   font-family: Comfortaa;
-  font-size: 12pt;
+  font-size: 10pt;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -82,13 +82,34 @@ html, body {
   flex: 1;
 }
 
-/* Style for active router links */
+.nav-connected {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-not-connected {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+// .nav-item {
+//   padding-right: 1rem;
+//   display: flex;
+//   align-items: center;
+// }
+
+// .not-connected {
+//   display: flex;
+//   align-items: center;
+// }
+
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 
-/* Styling for not-connected span */
-.not-connected {
-  display: flex;
+.greeting {
+  flex: right;
 }
 </style>

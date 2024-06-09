@@ -4,7 +4,7 @@
     <h1 class="title">Main Page</h1>
     <div class="left-side" style="width: 60%; float: left;">
       <div class="container-random" style="padding-left: 10px;">
-        <RecipePreviewList style="text-align: center; font-family: Comfortaa; margin-top: 3%;" title="Explore this recipes" class="RandomRecipes center" :key="componentKey" />
+        <RecipePreviewList style="text-align: center; font-family: Comfortaa; margin-top: 3%;" numOfRecipes=3 title="Explore this recipes" class="RandomRecipes center" :key="componentKey" />
       </div>
       <div class="container-user">
         <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
@@ -16,6 +16,7 @@
             blur: !$root.store.username,
             center: true
           }"
+          numOfRecipes=3
           disabled
         ></RecipePreviewList>
       </div>
@@ -23,6 +24,10 @@
     <div class="right-side" style="width: 40%; float: right; padding-top: 50%">
       <LoginPage v-if="!$root.store.username" :class="connected"></LoginPage>
     </div>
+    <!--<audio v-if="$root.store.username && !visited" :visited=true autoplay>
+      <source src="../assets/HarbuDarbu.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio> -->
   </div>
 </template>
 
@@ -34,6 +39,7 @@ export default {
   data(){
     return{
       componentKey: 0,
+      // visited: false
     }
   },
   components: {

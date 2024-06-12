@@ -2,7 +2,6 @@
   <div class="container">
     <br><br><br>
     <h1 class="title">Main Page</h1>
-<<<<<<< HEAD
     <br><br><br>
     <div class="content">
       <div class="left-side">
@@ -14,9 +13,9 @@
             class="RandomRecipes center"
             :key="componentKey"
           />
-          <div class="shuffle-container" >
+        <div class="shuffle-container" >
               <b-button id="shuffle-button"></b-button>
-        </div>
+        </div>
         </div>
         <div class="container-user">
           <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to view this</router-link>
@@ -30,13 +29,6 @@
             numOfRecipes="3"
             disabled
           ></RecipePreviewList>
-=======
-    <div class="left-side" style="width: 60%; float: left;">
-      <div class="container-random" style="padding-left: 10px;">
-        <RecipePreviewList style="text-align: center; font-family: Comfortaa; margin-top: 3%;" numOfRecipes=3 title="Explore this recipes" class="RandomRecipes center" :key="componentKey" />
-        <div class="shuffle-container" >
-              <b-button id="shuffle-button"></b-button>
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
         </div>
       </div>
       <div class="right-side">
@@ -117,6 +109,7 @@ export default {
 .connected {
   visibility: hidden;
 }
+
 .container-random {
   display: flex;
   flex-direction: column; /* Stack elements vertically */
@@ -124,27 +117,11 @@ export default {
   align-items: center; /* Center elements horizontally */
   position: relative; /* Enable positioning for child elements */
 }
-
-<<<<<<< HEAD
-=======
-.container-random {
-  display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  justify-content: flex-end; /* Align content at the bottom */
-  align-items: center; /* Center elements horizontally */
-  position: relative; /* Enable positioning for child elements */
-}
-
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
 
 #shuffle-button {
     background-image: url('@/assets/shuffle.png');
     background-size: cover;
-<<<<<<< HEAD
     background-color: #9bbcad ;
-=======
-    background-color: #294b47;
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
     width: 50px;
     height: 50px;
     border: none;
@@ -153,16 +130,8 @@ export default {
 
 .shuffle-container {
   position: absolute; /* Make element position relative to parent */
-  bottom: 0; /* Position at the bottom of the container */
+  bottom: 17.5%; /* Position at the bottom of the container */
   left: 50%; /* Center horizontally */
-<<<<<<< HEAD
   transform: translateX(-50%); /* Offset to center perfectly */
 }
-=======
-  transform: translateX(-50%); /* Offset to center perfectly */
-}
-
-
-
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
 </style>

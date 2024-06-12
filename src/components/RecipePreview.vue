@@ -4,31 +4,13 @@
       rel="stylesheet"
       href="http://static.sasongsmat.nu/fonts/vegetarian.css"
     />
-<<<<<<< HEAD
-    <router-link
-      :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-      class="recipe-preview"
-    >
-      <div class="recipe-card">
-        <b-card
-          v-if="image_load"
-          :img-src="recipe.image"
-          img-alt="Image"
-          tag="article"
-          class="recipe-image"
-          img-top
-          style="max-width: 50rem; background-color: #9bbcad;"
-        >
-          <div class="recipe-footer">
-=======
     <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
       <div class="recipe-card-wrapper">
         <div class="image-container">
-          <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image"></b-card>
+          <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
         </div>
         <div class="recipe-details">
           <div class="recipe-footer-content">
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
             <div :title="recipe.title" class="recipe-title">
               <b-card-text>{{ recipe.title }}</b-card-text>
             </div>
@@ -85,93 +67,79 @@ export default {
   position: relative;
 }
 
-.recipe-card {
-  width: 200px; /* Adjust the width to make the card readable */
-  margin: 10px -30px; /* Add space between the cards */
+.recipe-card-wrapper {
+  display: flex;
+  flex-direction: column; /* Stacks children vertically */
+  width: 100%; /* Full width of the parent */
 }
 
-.recipe-preview .recipe-card-wrapper .recipe-details {
-  position: absolute;
-  bottom: 0;
+.image-container {
+  flex: 1; /* Takes up necessary space for the image */
+}
+
+.recipe-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes space between elements */
+  padding: 5px; /* Reduced padding */
+  box-sizing: border-box;
+}
+
+.recipe-footer-content {
+  width: calc(100% - 50px); /* Adjust width to accommodate like button */
+  color:black;
+}
+
+.recipe-title {
+  padding: 3px 5px; /* Reduced padding */
   width: 100%;
-<<<<<<< HEAD
-  height: 150px; /* Ensure a consistent height for images */
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-}
-
-.recipe-preview .recipe-footer {
-  width: 100%;
-  overflow: hidden;
-  background-color: #9bbcad ;
-=======
-  display: flex; /* Arrange footer content and like button side-by-side */
-  justify-content: space-between; /* Distribute elements evenly */
-  align-items: flex-end;
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
-  padding: 10px; /* Add padding for better readability */
-  box-sizing: border-box; /* Ensure padding is included in the width */
-  color: rgb(255, 255, 255);
-}
-
-.recipe-preview .recipe-card-wrapper .recipe-footer-content {
-  width: calc(100% - 60px); /* Adjust width to accommodate like button */
-}
-
-.recipe-footer .recipe-title {
-  padding: 5px 10px; /* Increase padding for better readability */
-  width: 100%;
-  font-size: 14px; /* Increase font size */
+  font-size: 12px; /* Reduced font size */
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: normal; /* Ensure text wraps to the next line */
-<<<<<<< HEAD
-  background-color: #9bbcad ;
-=======
-  background-color: black; /* Set the background color to white */
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
+  white-space: normal;
 }
 
-.recipe-footer ul.recipe-overview {
+.card-body {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+.recipe-overview {
   width: 100%;
   display: flex;
   table-layout: fixed;
-  margin-bottom: 0px;
-  font-size: 12px; /* Adjust font size */
-  color: rgb(255, 255, 255);
+  margin-left: 0; /* Remove default margin */
+  padding-left: 0; /* Remove default padding */  margin-bottom: 0px;
+  font-size: 10px; /* Reduced font size */
 }
 
-.recipe-footer ul.recipe-overview li {
+.recipe-overview li {
   flex-grow: 1;
   display: table-cell;
   text-align: center;
 }
 
+.like-container {
+  position: absolute;
+  bottom: 5px; /* Adjusted position */
+  right: 5px; /* Adjusted position */
+}
+
 .like-container button {
-  background: none; /* Remove default button background */
-  border: none; /* Remove button border */
-  padding: 0; /* Remove button padding */
-  cursor: pointer; /* Set cursor to pointer on hover */
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center; /* Center image horizontally and vertically */
+  justify-content: center;
 }
 
 .like-container button img {
-  width: 40px; /* Adjust width and height as needed */
-  height: 40px;
+  width: 30px; /* Adjusted width and height */
+  height: 30px;
 }
 
-.like-container {
-  position: absolute; /* Make the container positioned relative to its parent */
-  bottom: 10px; /* Position 10px from the bottom */
-  right: 10px; /* Position 10px from the right */
-}
-<<<<<<< HEAD
-</style>
-=======
 </style>
 
->>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e

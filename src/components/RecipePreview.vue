@@ -4,29 +4,29 @@
       rel="stylesheet"
       href="http://static.sasongsmat.nu/fonts/vegetarian.css"
     />
-    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-      <div class="recipe-card-wrapper">
-        <div class="image-container">
-          <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
-        </div>
-        <div class="recipe-details">
-          <div class="recipe-footer-content">
-            <div :title="recipe.title" class="recipe-title">
-              <b-card-text>{{ recipe.title }}</b-card-text>
+    <div class="recipe-card-wrapper">
+      <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
+          <div class="image-container">
+            <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
+          </div>
+          </router-link>
+          <div class="recipe-details">
+            <div class="recipe-footer-content">
+              <div :title="recipe.title" class="recipe-title">
+                <b-card-text>{{ recipe.title }}</b-card-text>
+              </div>
+              <ul class="recipe-overview">
+                <li>{{ recipe.readyInMinutes }} minutes</li>
+                <li>{{ recipe.aggregateLikes }} likes</li>
+              </ul>
             </div>
-            <ul class="recipe-overview">
-              <li>{{ recipe.readyInMinutes }} minutes</li>
-              <li>{{ recipe.aggregateLikes }} likes</li>
-            </ul>
+            <div class="like-container" v-if="showLikeButton">
+              <b-button id="like-button">
+                <img src="@/assets/like.png" alt="Like Button">
+              </b-button>
+            </div>
           </div>
-          <div class="like-container">
-            <b-button id="like-button">
-              <img src="@/assets/like.png" alt="Like Button">
-            </b-button>
-          </div>
-        </div>
-      </div>
-    </router-link>
+    </div>
   </div>
 </template>
 
@@ -47,8 +47,12 @@ export default {
     recipe: {
       type: Object,
       required: true
-    }
+    },
+  showLikeButton: {
+      type: Boolean,
+      default: true
   }
+  },
 };
 </script>
 
@@ -122,8 +126,8 @@ export default {
 
 .like-container {
   position: absolute;
-  bottom: 5px; /* Adjusted position */
-  right: 5px; /* Adjusted position */
+  bottom: 5%; /* Adjusted position */
+  right: 10%;
 }
 
 .like-container button {
@@ -132,8 +136,7 @@ export default {
   padding: 0;
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  
 }
 
 .like-container button img {

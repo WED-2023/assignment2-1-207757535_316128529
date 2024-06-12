@@ -1,6 +1,7 @@
 // src/services/recipes.js
 import recipe_full_view from "../assets/mocks/recipe_full_view.json";
 import recipe_preview from "../assets/mocks/recipe_preview.json";
+import bgImage from "@/assets/bg1.jpg"; // Import the image here
 
 
 export function mockGetRecipesPreview(amount = 1) {

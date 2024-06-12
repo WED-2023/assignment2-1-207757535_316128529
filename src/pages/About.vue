@@ -183,31 +183,6 @@
   font-size: 1em; /* Adjust the font size as needed */
   color: #013c30; /* Change the text color if desired */
 }
-.image-container {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    max-height: 300px; /* Adjust this value to make the image less tall */
-    overflow: hidden;
-  }
-  
-  .about-us-image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .overlay h1 {
-    font-size: 3em;
-    font-weight: bold;
-    color: white;
-  }
+
   </style>
   

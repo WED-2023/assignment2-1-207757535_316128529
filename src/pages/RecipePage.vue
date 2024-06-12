@@ -1,6 +1,13 @@
 <template>
+  
   <div class="recipe-container">
-    <br><br><br>
+    <div class="image-container">
+        <img src="@/assets/recipePage.jpg" alt="Recipe Page" class="recipe-image" />
+        <div class="overlay">
+          <h1>Recipe Page</h1>
+        </div>
+      </div>
+    <br><br>
     <div class="recipe-card">
       <b-card
         v-if="image_load"
@@ -9,8 +16,9 @@
         img-alt="Image"
         tag="article"
         class="recipe-image"
+        
       >
-      <b-card-text>
+      <b-card-text class="card-text">
         Ready in {{ recipe.readyInMinutes }} minutes  |  {{ recipe.aggregateLikes }} Likes
     </b-card-text>
       </b-card>
@@ -74,7 +82,7 @@ export default {
   justify-content: center; /* Center content vertically */
   align-items: flex-start; /* Align content to the left */
   height: 100%; /* Ensure container takes full height */
-  background-color: #eeeeee;
+  background-color: #0e1812;
 }
 
 .recipe-card {
@@ -109,6 +117,12 @@ export default {
 .section-title {
   font-size: 40px;
   margin-bottom: 10px;
+  color: #99d4a2;
+  font-weight: bold;
+}
+.card-text{
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .ingredients ul, .summary p {
@@ -121,7 +135,32 @@ export default {
   font-family: Arial, sans-serif; /* Change font */
   font-weight: bold; /* Make text bold */
   font-size: 20px;
-  color: #1c3e24;
+  color: #ffffff;
 }
-
+.image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-height: 500px; /* Adjust this value to make the image less tall */
+    overflow: hidden;
+  }
+  
+  .recipe-image {
+    width: 100%;
+    height: 300;
+    display: block;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .overlay h1 {
+    font-size: 6em;
+    font-weight: bold;
+    color: white;
+  }
 </style>

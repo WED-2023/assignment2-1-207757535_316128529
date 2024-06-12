@@ -133,6 +133,7 @@ html, body {
 
 .greeting {
   flex: right;
+  color: white;
 }
 
 #new-recipe-modal .modal-header {

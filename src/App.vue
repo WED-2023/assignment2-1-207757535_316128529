@@ -28,22 +28,31 @@
                 <router-link :to="{ name: 'MyRecipes' }" class="dropdown-item">My Recipes</router-link>
                 <router-link :to="{ name: 'MyFamilyRecipes' }" class="dropdown-item">My Family Recipes</router-link>
               </b-nav-item-dropdown>
-              <b-nav-item :to="{ name: 'NewRecipe' }" class="nav-link">Add a new Recipe</b-nav-item>
+              <b-nav-item text="Add a new Recipe" @click="showNewRecipeModal">Add a new Recipe</b-nav-item>
               <b-nav-item @click="Logout">Logout</b-nav-item>
             </span>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
+    <b-modal size="lg" class="modal" id="modal-1" ref="my-modal1" title="Create Recipe" >
+    </b-modal>
     </div>
     <router-view />   
   </div>
 </template>
 
 <script>
+import NewRecipe from "./pages/NewRecipe";
 import { computed } from 'vue';
 export default {
   name: "App",
+  comments:{
+    NewRecipe
+  },
   methods: {
+    // showNewRecipeModal() {
+    //     this.$refs['my-modal1'].show()
+    // },
     Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");

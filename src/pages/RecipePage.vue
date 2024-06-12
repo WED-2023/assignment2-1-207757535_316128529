@@ -33,7 +33,7 @@
         <h3 class="section-title">Ingredients</h3>
         <ul>
           <li v-for="ingredient in recipe.extendedIngredients" :key="ingredient.id">
-            Product: {{ ingredient.name }}, Amount: {{ ingredient.amount }}
+            {{ ingredient.amount }} {{ ingredient.unit}} of {{ ingredient.name }}  
           </li>
         </ul>
       </div>

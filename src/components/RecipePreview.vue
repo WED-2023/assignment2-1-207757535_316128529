@@ -4,36 +4,32 @@
       rel="stylesheet"
       href="http://static.sasongsmat.nu/fonts/vegetarian.css"
     />
-    <router-link
-      :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-      class="recipe-preview"
-    >
-      <div class="recipe-card">
-        <b-card
-          v-if="image_load"
-          :img-src="recipe.image"
-          img-alt="Image"
-          tag="article"
-          class="recipe-image"
-          img-top
-          style="max-width: 50rem; background-color: #9bbcad;"
-        >
-          <div class="recipe-footer">
+    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
+      <div class="recipe-card-wrapper">
+        <div class="image-container">
+          <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
+        </div>
+        <div class="recipe-details">
+          <div class="recipe-footer-content">
             <div :title="recipe.title" class="recipe-title">
-              <b-card-text>
-                {{ recipe.title }}
-              </b-card-text>
+              <b-card-text>{{ recipe.title }}</b-card-text>
             </div>
             <ul class="recipe-overview">
               <li>{{ recipe.readyInMinutes }} minutes</li>
               <li>{{ recipe.aggregateLikes }} likes</li>
             </ul>
           </div>
-        </b-card>
+          <div class="like-container">
+            <b-button id="like-button">
+              <img src="@/assets/like.png" alt="Like Button">
+            </b-button>
+          </div>
+        </div>
       </div>
     </router-link>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -71,60 +67,79 @@ export default {
   position: relative;
 }
 
-.recipe-preview > .recipe-card {
-  width: 200px; /* Adjust the width to make the card readable */
-  margin: 10px -30px; /* Add space between the cards */
+.recipe-card-wrapper {
+  display: flex;
+  flex-direction: column; /* Stacks children vertically */
+  width: 100%; /* Full width of the parent */
 }
 
-.recipe-preview .recipe-card .recipe-image {
-  display: block;
-  width: 100%;
-  height: 150px; /* Ensure a consistent height for images */
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
+.image-container {
+  flex: 1; /* Takes up necessary space for the image */
 }
 
-.recipe-preview .recipe-footer {
-  width: 100%;
-  overflow: hidden;
-  background-color: #9bbcad ;
-  padding: 10px; /* Add padding for better readability */
-  box-sizing: border-box; /* Ensure padding is included in the width */
-  color: rgb(255, 255, 255);
+.recipe-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes space between elements */
+  padding: 5px; /* Reduced padding */
+  box-sizing: border-box;
 }
 
-.recipe-preview .recipe-footer .recipe-title {
-  padding: 5px 10px; /* Increase padding for better readability */
+.recipe-footer-content {
+  width: calc(100% - 50px); /* Adjust width to accommodate like button */
+  color:black;
+}
+
+.recipe-title {
+  padding: 3px 5px; /* Reduced padding */
   width: 100%;
-  font-size: 14px; /* Increase font size */
+  font-size: 12px; /* Reduced font size */
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: normal; /* Ensure text wraps to the next line */
-  background-color: #9bbcad ;
+  white-space: normal;
 }
 
-.recipe-preview .recipe-footer ul.recipe-overview {
+.card-body {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+.recipe-overview {
   width: 100%;
   display: flex;
   table-layout: fixed;
-  margin-bottom: 0px;
-  font-size: 12px; /* Adjust font size */
-  color: rgb(255, 255, 255);
+  margin-left: 0; /* Remove default margin */
+  padding-left: 0; /* Remove default padding */  margin-bottom: 0px;
+  font-size: 10px; /* Reduced font size */
 }
 
-.recipe-preview .recipe-footer ul.recipe-overview li {
+.recipe-overview li {
   flex-grow: 1;
   display: table-cell;
   text-align: center;
 }
 
-.details {
-  display: flex;
-  font-size: 25pt;
-  width: 100%;
-  table-layout: fixed;
-  margin-bottom: 5px;
+.like-container {
+  position: absolute;
+  bottom: 5px; /* Adjusted position */
+  right: 5px; /* Adjusted position */
 }
+
+.like-container button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.like-container button img {
+  width: 30px; /* Adjusted width and height */
+  height: 30px;
+}
+
 </style>
+

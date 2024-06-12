@@ -13,6 +13,9 @@
             class="RandomRecipes center"
             :key="componentKey"
           />
+          <div class="shuffle-container" >
+              <b-button id="shuffle-button"></b-button>
+        </div>
         </div>
         <div class="container-user">
           <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to view this</router-link>
@@ -105,5 +108,30 @@ export default {
 
 .connected {
   visibility: hidden;
+}
+.container-random {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: flex-end; /* Align content at the bottom */
+  align-items: center; /* Center elements horizontally */
+  position: relative; /* Enable positioning for child elements */
+}
+
+
+#shuffle-button {
+    background-image: url('@/assets/shuffle.png');
+    background-size: cover;
+    background-color: #9bbcad ;
+    width: 50px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+}
+
+.shuffle-container {
+  position: absolute; /* Make element position relative to parent */
+  bottom: 0; /* Position at the bottom of the container */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset to center perfectly */
 }
 </style>

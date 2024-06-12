@@ -63,6 +63,10 @@ export default {
 html, body {
   height: 100%;
   margin: 0;
+<<<<<<< HEAD
+=======
+  background-color: aquamarine;
+>>>>>>> d356913c9c2a10773a159f0dd2c94cbf833bb55e
   background-size: cover;
   background-color: #9bbcad ;
 
@@ -73,7 +77,8 @@ html, body {
   font-family: Comfortaa;
   font-size: 10pt;
   min-height: 100vh;
-  display: flex;
+  display: flex;  
+  background-color: aquamarine;
   flex-direction: column;
   background-color: #9bbcad ;
 }

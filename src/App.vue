@@ -64,7 +64,7 @@ export default {
 html, body {
   height: 100%;
   margin: 0;
-  background: url('assets/bg7.jpg') no-repeat center center fixed;
+  background-color: aquamarine;
   background-size: cover;
 }
 
@@ -73,7 +73,8 @@ html, body {
   font-family: Comfortaa;
   font-size: 10pt;
   min-height: 100vh;
-  display: flex;
+  display: flex;  
+  background-color: aquamarine;
   flex-direction: column;
 }
 

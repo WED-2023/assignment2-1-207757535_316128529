@@ -31,7 +31,7 @@
             <div class="mt-3">Selected file: {{ file2 ? file2.name : '' }}</div>
     </div>
 
-      <b-form-group id="input-group-2" label="Summary:" label-for="input-2">
+      <b-form-group id="input-group-2" label="Summary:" label-for="Enter description">
         <b-form-textarea
             id="input-2"
             v-model="text"
@@ -50,6 +50,9 @@
           required
         ></b-form-select>
       </b-form-group> -->
+
+       <b-form-timepicker v-model="value" show-seconds ></b-form-timepicker>
+       <div class="mt-2">Value: '{{ value }}'</div>
 
       <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
         <b-form-checkbox-group

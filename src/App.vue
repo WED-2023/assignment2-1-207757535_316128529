@@ -1,23 +1,23 @@
 <template>
   <div id="app">
     <div>
-      <b-navbar toggleable="lg" type="light" variant="primary">
+      <b-navbar toggleable="lg" type="dark" variant="dark" class="bg-green">
         <b-navbar-brand href="#" id="brand">DawaraRecipes</b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav>
-            <b-nav-item :to="{ name: 'main' }">Main</b-nav-item>
-            <b-nav-item :to="{ name: 'about' }" >About</b-nav-item>
-            <b-nav-form >
-              <b-form-input size="sm" class="mr-sm-2" placeholder="Search" ></b-form-input>
-              <b-nav-item :to="{ name: 'search' }" size="sm" >Search</b-nav-item>
+          <b-navbar-nav class="mx-auto">
+            <b-nav-item :to="{ name: 'main' }" class="main-page">Main Page</b-nav-item>
+            <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
+            <b-nav-form>
+              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+              <b-nav-item :to="{ name: 'search' }" size="sm">Search</b-nav-item>
             </b-nav-form>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
             <span v-if="!$root.store.username" class="nav-not-connected">
-              Hello Guest:
+              <h6 style="color: #fff;">Hello Guest:</h6>
               <b-nav-item :to="{ name: 'register' }" style="padding-right: 4%">Register</b-nav-item> 
               <b-nav-item :to="{ name: 'login' }" style="padding-right: 4%">Login</b-nav-item>
             </span>
@@ -38,7 +38,6 @@
     <router-view />   
   </div>
 </template>
-
 
 <script>
 import { computed } from 'vue';
@@ -64,8 +63,9 @@ export default {
 html, body {
   height: 100%;
   margin: 0;
-  background: url('assets/bg7.jpg') no-repeat center center fixed;
   background-size: cover;
+  background-color: #9bbcad ;
+
 }
 
 /* Main app container */
@@ -75,11 +75,29 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #9bbcad ;
 }
 
 /* Ensure router-view fills the remaining space */
 #app .router-view {
   flex: 1;
+}
+
+/* Navbar custom styles */
+.b-navbar-nav {
+  background-color: rgb(0, 0, 0);
+}
+
+.main-page {
+  font-weight: bold;
+  
+}
+
+/* Center the navbar items */
+.b-navbar-nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-connected {
@@ -94,19 +112,8 @@ html, body {
   align-items: center;
 }
 
-// .nav-item {
-//   padding-right: 1rem;
-//   display: flex;
-//   align-items: center;
-// }
-
-// .not-connected {
-//   display: flex;
-//   align-items: center;
-// }
-
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #9bbcad;
 }
 
 .greeting {

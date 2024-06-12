@@ -15,6 +15,8 @@
           img-alt="Image"
           tag="article"
           class="recipe-image"
+          img-top
+          style="max-width: 50rem;"
         >
           <div class="recipe-footer">
             <div :title="recipe.title" class="recipe-title">
@@ -86,9 +88,10 @@ export default {
 .recipe-preview .recipe-footer {
   width: 100%;
   overflow: hidden;
-  background-color: white; /* Set the background color to white */
+  background-color: rgb(255, 255, 255); /* Set the background color to white */
   padding: 10px; /* Add padding for better readability */
   box-sizing: border-box; /* Ensure padding is included in the width */
+  color: rgb(13, 80, 63);
 }
 
 .recipe-preview .recipe-footer .recipe-title {
@@ -99,7 +102,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal; /* Ensure text wraps to the next line */
-  background-color: white; /* Set the background color to white */
+  background-color: rgb(250, 250, 250); /* Set the background color to white */
 }
 
 .recipe-preview .recipe-footer ul.recipe-overview {
@@ -108,6 +111,7 @@ export default {
   table-layout: fixed;
   margin-bottom: 0px;
   font-size: 12px; /* Adjust font size */
+  color: rgb(0, 114, 44);
 }
 
 .recipe-preview .recipe-footer ul.recipe-overview li {

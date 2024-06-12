@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <br>    <br>
+    <br>
+    <br> <br>    <br>
+    <br>
+    <br>
+
     <h1 class="title">Login</h1>
     <b-form @submit.prevent="onLogin">
       <b-form-group
@@ -138,6 +144,10 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
+}
+.title{
+  font-size: 30px;
+  font-weight: bold;
 }
 .login-button {
   width: 100px;

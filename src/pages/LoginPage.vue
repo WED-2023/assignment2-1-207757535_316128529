@@ -39,8 +39,10 @@
       <b-button
         type="submit"
         variant="primary"
-        style="width:100px;display:block;"
+        style="width:100px; display:block; background-color: #177d5b;"
+
         class="mx-auto w-100"
+        
         >Login</b-button
       >
       <div class="mt-2">
@@ -136,5 +138,10 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
+}
+.login-button {
+  width: 100px;
+  display: block;
+  background-color: #1b9b70;
 }
 </style>

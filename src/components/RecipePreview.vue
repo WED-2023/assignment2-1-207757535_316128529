@@ -1,46 +1,52 @@
 <template>
   <div class="recipe-container">
-    <link
-      rel="stylesheet"
-      href="http://static.sasongsmat.nu/fonts/vegetarian.css"
-    />
+    <link rel="stylesheet" href="http://static.sasongsmat.nu/fonts/vegetarian.css" />
     <div class="recipe-card-wrapper">
       <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-          <div class="image-container">
-            <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
+        <div class="image-container">
+          <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
+        </div>
+      </router-link>
+      <div class="recipe-details">
+        <div class="recipe-footer-content">
+          <div :title="recipe.title" class="recipe-title">
+            <b-card-text>{{ recipe.title }}</b-card-text>
           </div>
-          </router-link>
-          <div class="recipe-details">
-            <div class="recipe-footer-content">
-              <div :title="recipe.title" class="recipe-title">
-                <b-card-text>{{ recipe.title }}</b-card-text>
-              </div>
-              <ul class="recipe-overview">
-                <li>{{ recipe.readyInMinutes }} minutes</li>
-                <li>{{ recipe.aggregateLikes }} likes</li>
-              </ul>
-            </div>
-            <div class="like-container" v-if="showLikeButton">
-              <b-button id="like-button" @click="addToFavorites">
-                <img src="@/assets/like.png" alt="Like Button">
-              </b-button>
-            </div>
-          </div>
+          <ul class="recipe-overview">
+            <li>{{ recipe.readyInMinutes }} minutes</li>
+            <li>{{ recipe.aggregateLikes }} likes</li>
+          </ul>
+        </div>
+       
+        <div class="tags-container">
+          <img v-if="recipe.vegetarian" src="@/assets/vegetarian.png" alt="Vegetarian" class="tag-icon">
+          <img v-if="recipe.vegan" src="@/assets/vegan.png" alt="Vegan" class="tag-icon">
+          <img v-if="recipe.glutenFree" src="@/assets/gluten.png" alt="Gluten Free" class="tag-icon">
+        </div>
+        <br><br>
+        <div class="like-container" v-if="showLikeButton">
+          <b-button id="like-button" @click="addToFavorites">
+            <img :src="likeButtonImage" alt="Like Button">
+          </b-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-
 <script>
+import { mockAddFavorite } from "../services/user.js";
+
 export default {
   mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
+    this.axios.get(this.recipe.image).then(() => {
       this.image_load = true;
     });
   },
   data() {
     return {
-      image_load: false
+      image_load: false,
+      likeButtonImage: require("@/assets/like.png")
     };
   },
   props: {
@@ -48,14 +54,24 @@ export default {
       type: Object,
       required: true
     },
-  showLikeButton: {
+    showLikeButton: {
       type: Boolean,
       default: true
-  }
+    }
   },
   methods: {
-    addToFavorites(){
-        this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
+    async addToFavorites() {
+      try {
+        const response = mockAddFavorite(this.recipe.id);
+        if (response.status === 200 && response.response.data.success) {
+          this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
+          this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image
+        } else {
+          this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
+        }
+      } catch (err) {
+        this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
+      }
     }
   }
 };
@@ -78,49 +94,52 @@ export default {
 
 .recipe-card-wrapper {
   display: flex;
-  flex-direction: column; /* Stacks children vertically */
-  width: 100%; /* Full width of the parent */
+  flex-direction: column;
+  width: 100%;
 }
 
 .image-container {
-  flex: 1; /* Takes up necessary space for the image */
+  flex: 1;
 }
 
 .recipe-details {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distributes space between elements */
-  padding: 5px; /* Reduced padding */
+  justify-content: space-between;
+  padding: 5px;
   box-sizing: border-box;
 }
 
 .recipe-footer-content {
-  width: calc(100% - 50px); /* Adjust width to accommodate like button */
-  color:black;
+  width: calc(100% - 50px);
+  color: black;
 }
 
 .recipe-title {
-  padding: 3px 5px; /* Reduced padding */
+  padding: 3px 5px;
   width: 100%;
-  font-size: 12px; /* Reduced font size */
+  font-size: 12px;
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+  font-weight: bold;
 }
 
 .card-body {
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
+  margin: 0;
+  padding: 0;
 }
 
 .recipe-overview {
   width: 100%;
   display: flex;
   table-layout: fixed;
-  margin-left: 0; /* Remove default margin */
-  padding-left: 0; /* Remove default padding */  margin-bottom: 0px;
-  font-size: 10px; /* Reduced font size */
+  margin-left: 0;
+  padding-left: 0;
+  margin-bottom: 0px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .recipe-overview li {
@@ -131,8 +150,8 @@ export default {
 
 .like-container {
   position: absolute;
-  bottom: 5%; /* Adjusted position */
-  right: 10%;
+  bottom: 1%;
+  right: 45%;
 }
 
 .like-container button {
@@ -141,13 +160,23 @@ export default {
   padding: 0;
   cursor: pointer;
   display: flex;
-  
 }
 
 .like-container button img {
-  width: 30px; /* Adjusted width and height */
+  width: 30px;
   height: 30px;
 }
 
-</style>
+.tags-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
 
+.tag-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+}
+</style>

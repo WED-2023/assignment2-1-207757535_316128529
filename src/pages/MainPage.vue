@@ -38,6 +38,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginPage from "../pages/LoginPage";
+import {mockAddUserRecipe} from "../services/user.js" 
 
 export default {
   data() {

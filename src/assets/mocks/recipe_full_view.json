@@ -8,7 +8,52 @@
     "vegan": false,
     "glutenFree": false,
     "summary": "You can never have too many main course recipes, so give Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs a try. One serving contains <b>543 calories</b>, <b>17g of protein</b>, and <b>16g of fat</b>. For <b>$1.57 per serving</b>, this recipe <b>covers 22%</b> of your daily requirements of vitamins and minerals. This recipe serves 2. A mixture of butter, white wine, pasta, and a handful of other ingredients are all it takes to make this recipe so yummy. 209 people have tried and liked this recipe. It is brought to you by fullbellysisters.blogspot.com. From preparation to the plate, this recipe takes approximately <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 83%</b>, which is tremendous. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1230187\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229807\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229669\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>.",
-    "analyzedInstructions": [],
+    "analyzedInstructions": [
+        {
+            "step": 1,
+            "instruction": "Bring a large pot of salted water to a boil."
+        },
+        {
+            "step": 2,
+            "instruction": "Add the pasta and cook according to package instructions until al dente."
+        },
+        {
+            "step": 3,
+            "instruction": "While the pasta is cooking, heat olive oil in a large skillet over medium heat."
+        },
+        {
+            "step": 4,
+            "instruction": "Add minced garlic and sauté for 1-2 minutes until fragrant."
+        },
+        {
+            "step": 5,
+            "instruction": "Add cherry tomatoes to the skillet and cook until they start to soften, about 3-4 minutes."
+        },
+        {
+            "step": 6,
+            "instruction": "Drain the cooked pasta, reserving 1 cup of pasta water."
+        },
+        {
+            "step": 7,
+            "instruction": "Add the cooked pasta to the skillet with the tomatoes and garlic."
+        },
+        {
+            "step": 8,
+            "instruction": "Toss the pasta with the tomato mixture, adding pasta water as needed to create a light sauce."
+        },
+        {
+            "step": 9,
+            "instruction": "Season with salt, pepper, and red pepper flakes to taste."
+        },
+        {
+            "step": 10,
+            "instruction": "Remove from heat and stir in fresh basil leaves and grated Parmesan cheese."
+        },
+        {
+            "step": 11,
+            "instruction": "Serve immediately, garnished with additional Parmesan cheese and basil if desired."
+        }
+    ],
     "instructions": "",
     "extendedIngredients": [
         {

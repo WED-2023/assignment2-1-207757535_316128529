@@ -4,8 +4,9 @@
     <h1 class="title">Main Page</h1>
     <div class="content">
       <div class="left-side">
-        <div class="container-random">
+        <div class="container-random">         
           <RecipePreviewList
+            :isUserLoggedIn="$root.store.username"
             style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
             numOfRecipes="3"
             title="Explore these recipes"
@@ -20,6 +21,7 @@
       <div class="right-side">
         <div v-if="$root.store.username" class="container-user">
           <RecipePreviewList
+            :isUserLoggedIn="$root.store.username"
             title="Last Viewed Recipes"
             class="RandomRecipes center"
             numOfRecipes="3"
@@ -36,6 +38,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginPage from "../pages/LoginPage";
+
 export default {
   data() {
     return {
@@ -44,12 +47,13 @@ export default {
   },
   components: {
     RecipePreviewList,
-    LoginPage
-  }
+    LoginPage,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+
 .container {
   display: flex;
   flex-direction: column;
@@ -117,6 +121,8 @@ export default {
   position: relative; /* Enable positioning for child elements */
   width: 120%; /* Ensure both containers take the full width of their parent */
   height: 100%; /* Ensure both containers take the full height of their parent */
+  margin-left: 0%;
+  padding-left: 0%;
 }
 
 #shuffle-button {

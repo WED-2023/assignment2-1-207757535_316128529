@@ -28,31 +28,35 @@
                 <router-link :to="{ name: 'MyRecipes' }" class="dropdown-item">My Recipes</router-link>
                 <router-link :to="{ name: 'MyFamilyRecipes' }" class="dropdown-item">My Family Recipes</router-link>
               </b-nav-item-dropdown>
-              <b-nav-item text="Add a new Recipe" @click="showNewRecipeModal">Add a new Recipe</b-nav-item>
+              <b-nav-item @click="showNewRecipeModal">Add a new Recipe</b-nav-item>
               <b-nav-item @click="Logout">Logout</b-nav-item>
             </span>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-    <b-modal size="lg" class="modal" id="modal-1" ref="my-modal1" title="Create Recipe" >
-    </b-modal>
     </div>
+    <b-modal id="new-recipe-modal" title="Create a New Recipe" hide-footer>
+      <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+        <new-recipe />
+      </div>    
+    </b-modal>
     <router-view />   
   </div>
 </template>
 
 <script>
-import NewRecipe from "./pages/NewRecipe";
+import NewRecipe from "./components/NewRecipe";
 import { computed } from 'vue';
 export default {
+  components: { NewRecipe },
   name: "App",
   comments:{
     NewRecipe
   },
   methods: {
-    // showNewRecipeModal() {
-    //     this.$refs['my-modal1'].show()
-    // },
+    showNewRecipeModal() {
+      this.$bvModal.show('new-recipe-modal');
+    },
     Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
@@ -127,5 +131,10 @@ html, body {
 
 .greeting {
   flex: right;
+  color: white;
+}
+
+#new-recipe-modal .modal-header {
+  background-color: #9bbcad;
 }
 </style>

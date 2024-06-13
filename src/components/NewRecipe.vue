@@ -46,7 +46,12 @@
 
       <!-- Time to make -->
       <b-form-group class="time-container" label="Time to make:">
-        <b-form-timepicker v-model="time" show-seconds required></b-form-timepicker>
+        <b-form-timepicker v-model="time" show-seconds required :hour12="false"></b-form-timepicker>
+      </b-form-group>
+
+      <!-- Serving -->
+      <b-form-group class="serving-container" label="Serving:">
+            <b-form-spinbutton id="serving-sb" v-model="servingAmount" min="1" max="100"></b-form-spinbutton>
       </b-form-group>
 
       <!-- Vegan, Vegetarian, Gluten Free -->
@@ -64,24 +69,34 @@
       <!-- Instructions -->
       <b-form-group class="instruction-container" label="Instructions:">
         <label>Add an instruction:</label>
-        <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}.`" required></b-form-input>
+        <template v-if="numOfIngredients === 1">
+          <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}. Enter instruction...`" required></b-form-input>
+        </template>
+        <template v-else>
+             <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}.`" required></b-form-input>
+        </template>
         <b-icon variant="success" icon="plus" @click="AddInstruction"></b-icon>
-        <b-icon variant="warning" icon="dash" @click="RemoveInstruction"></b-icon>
+        <b-icon variant="danger" icon="dash" @click="RemoveInstruction"></b-icon>
       </b-form-group>
 
      <!-- Ingredients -->
       <b-form-group class="ingredients-container" label="Ingredients:">
         <label>Add an ingredient:</label>
-        <b-form-input v-model="ingredientName" :placeholder="`${numOfIngredients}.`" required></b-form-input>
+        <template v-if="numOfIngredients === 1">
+          <b-form-input v-model="ingredientName" :placeholder="`${numOfIngredients}. Please enter here your ingredients name...`" required></b-form-input>
+        </template>
+        <template v-else>
+             <b-form-input v-model="ingredientName" :placeholder="`${numOfIngredients}.`" required></b-form-input>
+        </template>
         <!-- Ingredient details -->
         <div class="ingredients-details-container">
           <b-row class="mt-3">
               <b-form-group class="amount" label="Amount:">
-                <b-form-spinbutton id="demo-sb" v-model="amount" min="1" max="100"></b-form-spinbutton>
+                <b-form-spinbutton id="amount-sb" v-model="amount" min="1" max="100"></b-form-spinbutton>
               </b-form-group>
               <b-form-group class="units" label="Units:">
                 <b-form-select v-model="selected" required>
-                <b-form-select-option :value="null">Please select unit measure</b-form-select-option>
+                <b-form-select-option :value="null">Please select a unit measure</b-form-select-option>
                   <b-form-select-option value="Gram">Gram</b-form-select-option>
                   <b-form-select-option value="Kilogram">Kilogram</b-form-select-option>
                   <b-form-select-option value="Milliliter">Milliliter</b-form-select-option>
@@ -101,7 +116,7 @@
                   :disabled="isIngredientButtonDisabled"
                 ></b-icon>
                 <b-icon 
-                  variant="warning" 
+                  variant="danger" 
                   icon="dash" 
                   @click="RemoveIngredient" 
                   :style="{ fontSize: '24px' }"
@@ -114,6 +129,7 @@
 
       <div class="buttons-container">
         <b-button type="submit" variant="success">Create</b-button>
+        <b-button type="reset" variant="warning" @click="onReset">Reset</b-button>
         <b-button type="reset" variant="danger">Cancel</b-button>
       </div>
     </b-form>
@@ -132,6 +148,7 @@ export default {
         name: '',
         checked: [],
       },
+      servingAmount: 0,
       instructions: [],
       instruction: "",
       numOfInstructions: 1,
@@ -155,12 +172,20 @@ export default {
       if (this.instruction) {
         this.instructions.push(this.instruction);
         this.numOfInstructions += 1;
-        this.instruction = "";  // Clear the input field
+        this.instruction = "";
+        this.$root.toast("Instruction added!", "This instruction was added to your current recipe", "success");
       }
     },
     RemoveInstruction() {
-      this.instructions.pop();
-      this.numOfInstructions -= 1;
+      if(this.numOfInstructions > 0){
+         this.instructions.pop();
+         this.numOfInstructions -= 1;
+      }
+      else
+      {
+          this.$root.toast("Problem encountered during instruction removal ", "You don't have any instruction for this recipe", "danger");
+      }
+     
     },
     AddIngredient() {
       if (this.isIngredientButtonDisabled) {
@@ -172,19 +197,29 @@ export default {
         this.numOfIngredients += 1;
         this.ingredientName = "";
         this.amount = 0;
-        this.selected = null;  // 
+        this.selected = null;
+        this.$root.toast("Ingredient added!", "This ingredient was added to your current recipe", "success");
+ 
       }
     },
     RemoveIngredient() {
-      this.ingredients.pop();
-      this.numOfIngredients -= 1;
+      if(this.numOfIngredients > 0){
+        this.ingredients.pop();
+        this.numOfIngredients -= 1;
+      }
+      else
+      {
+        this.$root.toast("Problem encountered during ingridient removal ", "You don't have any ingridient for this recipe", "danger");
+      }
     },
     onSubmit(event) {
       event.preventDefault();
       // Handle form submission
     },
     onReset(event) {
-      event.preventDefault();
+      if(event != null){
+        event.preventDefault();
+      }
       this.form = {
         name: '',
         checked: [],
@@ -194,6 +229,7 @@ export default {
       this.instructions = [];
       this.numOfInstructions = 1;
       this.ingredients = [];
+      this.servingAmount = 0;
       this.numOfIngredients = 1;
       this.ingredientName = '';
       this.amount = 0;

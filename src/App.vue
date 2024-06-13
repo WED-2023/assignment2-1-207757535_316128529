@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import NewRecipe from "./pages/NewRecipe";
+import NewRecipe from "./components/NewRecipe";
 import { computed } from 'vue';
 export default {
   components: { NewRecipe },

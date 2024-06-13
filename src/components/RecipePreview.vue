@@ -21,7 +21,7 @@
               </ul>
             </div>
             <div class="like-container" v-if="showLikeButton">
-              <b-button id="like-button">
+              <b-button id="like-button" @click="addToFavorites">
                 <img src="@/assets/like.png" alt="Like Button">
               </b-button>
             </div>
@@ -53,6 +53,11 @@ export default {
       default: true
   }
   },
+  methods: {
+    addToFavorites(){
+        this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
+    }
+  }
 };
 </script>
 

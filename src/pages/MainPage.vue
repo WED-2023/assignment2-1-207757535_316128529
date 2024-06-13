@@ -118,15 +118,6 @@ export default {
   padding-left: 5px;
 }
 
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
-}
 
 .connected {
   visibility: hidden;

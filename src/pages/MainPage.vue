@@ -7,8 +7,8 @@
         <div class="container-random">         
           <RecipePreviewList
             :isUserLoggedIn="$root.store.username"
+            :recipes="randomRecipes"
             style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
-            numOfRecipes="3"
             title="Explore these recipes"
             class="RandomRecipes center"
             :key="componentKey"
@@ -22,9 +22,9 @@
         <div v-if="$root.store.username" class="container-user">
           <RecipePreviewList
             :isUserLoggedIn="$root.store.username"
+            :recipes="lastViewedRecipes"
             title="Last Viewed Recipes"
             class="RandomRecipes center"
-            numOfRecipes="3"
           />
         </div>
         <div v-else class="login-container">
@@ -38,18 +38,36 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginPage from "../pages/LoginPage";
-import {mockAddUserRecipe} from "../services/user.js" 
+import { mockGetRecipesPreview } from "../services/recipes.js"; // Import the mock function
 
 export default {
   data() {
     return {
-      componentKey: 0
+      componentKey: 0,
+      randomRecipes: [], // Initialize an empty array for random recipes
+      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
     };
   },
   components: {
     RecipePreviewList,
     LoginPage,
   },
+  mounted() {
+    this.fetchRandomRecipes(3); // Fetch 3 random recipes when the component is mounted
+    if (this.$root.store.username) {
+      this.fetchLastViewedRecipes(3); // Fetch 3 last viewed recipes if the user is logged in
+    }
+  },
+  methods: {
+    fetchRandomRecipes(amountToFetch) {
+      const response = mockGetRecipesPreview(amountToFetch);
+      this.randomRecipes = response.data.recipes;
+    },
+    fetchLastViewedRecipes(amountToFetch) {
+      const response = mockGetRecipesPreview(amountToFetch);
+      this.lastViewedRecipes = response.data.recipes;
+    }
+  }
 };
 </script>
 

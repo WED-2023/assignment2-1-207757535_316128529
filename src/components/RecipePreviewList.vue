@@ -14,44 +14,24 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
+
 export default {
   name: "RecipePreviewList",
   components: {
     RecipePreview
-  },
-  data() {
-    return {
-      recipes: [],
-    };
   },
   props: {
     title: {
       type: String,
       required: true
     },
-    numOfRecipes: {
-      type: Number,
-      default: 0
+    recipes: {
+      type: Array,
+      required: true
     },
     isUserLoggedIn: {
       type: Boolean,
       default: false
-    }
-  },
-  mounted() {
-    this.updateRecipes(this.numOfRecipes);
-  },
-  methods: {
-    async updateRecipes(amountToFetch) {
-      try {
-        const response = mockGetRecipesPreview(amountToFetch);
-        const recipes = response.data.recipes;
-        this.recipes = [];
-        this.recipes.push(...recipes);
-      } catch (error) {
-        console.log(error);
-      }
     }
   }
 };

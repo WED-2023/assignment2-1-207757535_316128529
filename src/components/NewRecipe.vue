@@ -130,13 +130,14 @@
       <div class="buttons-container">
         <b-button type="submit" variant="success">Create</b-button>
         <b-button type="reset" variant="warning" @click="onReset">Reset</b-button>
-        <b-button type="reset" variant="danger">Cancel</b-button>
       </div>
     </b-form>
   </div>
 </template>
 
 <script>
+import { mockAddUserRecipe } from "../services/user.js";
+
 export default {
   name: 'NewRecipe',
   data() {
@@ -156,7 +157,7 @@ export default {
       ingredientName: "",
       numOfIngredients: 1,
       amount: 0,
-      time: 0,
+      time: '00:00:00',
       text: '',
       selected: null,
       showToast: false
@@ -214,7 +215,23 @@ export default {
     },
     onSubmit(event) {
       event.preventDefault();
-      // Handle form submission
+      const recipeDetails = {
+        name: this.form.name,
+        image: this.file1,
+        summary: this.text,
+        time: this.time,
+        servings: this.servingAmount,
+        dietaryOptions: this.form.checked,
+        instructions: this.instructions,
+        ingredients: this.ingredients
+      };
+      const response = mockAddUserRecipe(recipeDetails);
+      if (response.status === 200 && response.response.data.success) {
+        alert(response.response.data.message);
+        this.show = false; // Close the form window
+      } else {
+        alert('Failed to add the recipe. Please try again.');
+      }
     },
     onReset(event) {
       if(event != null){
@@ -233,12 +250,14 @@ export default {
       this.numOfIngredients = 1;
       this.ingredientName = '';
       this.amount = 0;
-      this.time = 0;
+      this.time = '00:00:00';
       this.text = '';
       this.selected = null;
     }
   }
 }
+
+
 </script>
 
 <style scoped>

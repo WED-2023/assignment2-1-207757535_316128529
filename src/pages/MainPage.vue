@@ -13,10 +13,11 @@
             class="RandomRecipes center"
             :key="componentKey"
           />
-          <div class="shuffle-container">
+      
+        </div>
+        <div class="shuffle-container">
             <b-button id="shuffle-button"></b-button>
           </div>
-        </div>
       </div>
       <div class="right-side">
         <div v-if="$root.store.username" class="container-user">
@@ -118,15 +119,6 @@ export default {
   padding-left: 5px;
 }
 
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
-}
 
 .connected {
   visibility: hidden;
@@ -155,8 +147,8 @@ export default {
 }
 
 .shuffle-container {
-  position: absolute; /* Make element position relative to parent */
-  bottom: 17.5%; /* Position at the bottom of the container */
+  position:absolute; /* Make element position relative to parent */
+  height: 15%;
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Offset to center perfectly */
 }

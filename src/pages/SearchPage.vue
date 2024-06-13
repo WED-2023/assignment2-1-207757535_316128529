@@ -41,12 +41,12 @@
       <div class="num-of-showed-recipes-container" style="padding-right: 0%; padding-bottom: 10%; padding-left: 2.5%">
         <b-row class="button-row" >
           <h1 class="small-heading">Presented recipes:</h1>
-          <b-col cols="auto" style="padding-left: 0px;">
+          <b-col cols="auto" style="padding-left: 8px; padding-right: 8px;">
             <b-button id="5-button" class="number-button small-button" @click="changeNumOfPresentedRec(5)">
               <img src="@/assets/5.png" alt="5 Button" class="small-image">
             </b-button>
           </b-col>
-          <b-col cols="auto" style="padding: 0;">
+          <b-col cols="auto" style="padding-left: 0%; padding-right: 8px;">
             <b-button id="10-button" class="number-button small-button" @click="changeNumOfPresentedRec(10)">
               <img src="@/assets/10.png" alt="10 Button" class="small-image">
             </b-button>

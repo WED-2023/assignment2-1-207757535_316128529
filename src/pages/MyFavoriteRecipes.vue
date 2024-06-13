@@ -1,94 +1,151 @@
 <template>
-  <div class="carousel-container">
-    <b-carousel v-model="slide"
-      :interval="4000"
-      controls
-      indicators
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-      prev-icon="fas fa-chevron-left"
-      next-icon="fas fa-chevron-right"
-      >
-      <b-carousel-slide v-for="r in recipes" :key="r.id">
-        <template #img >
-          <img :src="r.image" alt="Recipe Image" class="recipe-image"/>
-        <div class="recipe-info">
-            {{ r.title }}
-            <span>{{ r.readyInMinutes }} minutes </span>
-            <br>
-            <span>{{ r.aggregateLikes }} likes</span>
+  <div class="container">
+    <br><br><br><br>
+    <h1 class="title">MY FAVORITE RECIPES</h1>
+      <div >
+          <RecipeCarousel :recipes="recipes"/>
+          
+      </div>
+      <div >
+          <RecipePreviewList
+            :isUserLoggedIn=false
+            class="RandomRecipes center"
+            :recipes="lastViewedRecipes"
+          />
         </div>
-        </template>
-      </b-carousel-slide>
-    </b-carousel>
-  </div>
+    </div>
 </template>
 
 <script>
-import { BCarousel, BCarouselSlide } from 'bootstrap-vue';
-import RecipePreview from "../components/RecipePreview";
+import RecipeCarousel from "../components/RecipeCarousel.vue";
+import RecipePreviewList from "../components/RecipePreviewList.vue";
 import { mockGetRecipesPreview } from "../services/recipes.js";
 
 export default {
   components: {
-    BCarousel,
-    BCarouselSlide
+    RecipeCarousel,
+    RecipePreviewList,
   },
   data() {
     return {
-      recipes: [],
-      slide: 0,
-      sliding: null    
+      recipes: [], // Initialize an empty array for recipes
+      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
     };
   },
   mounted() {
-    this.updateRecipes();
+    this.fetchRecipes(4); // Fetch 4 recipes when the component is mounted
+    if (this.$root.store.username) {
+      this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
+    }
   },
   methods: {
-     onSlideStart(slide) {
-        this.sliding = true
-      },
-      onSlideEnd(slide) {
-        this.sliding = false
-      },
-    async updateRecipes() {    
-      try {
-        const response = mockGetRecipesPreview(4);
-        const recipes = response.data.recipes;
-        this.recipes = recipes;
-      } catch (error) {
-        console.log(error);
-      }
+    fetchRecipes(amountToFetch) {
+      const response = mockGetRecipesPreview(amountToFetch);
+      this.recipes = response.data.recipes;
+    },
+    fetchLastViewedRecipes(amountToFetch) {
+      const response = mockGetRecipesPreview(amountToFetch);
+      this.lastViewedRecipes = response.data.recipes;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.carousel-container {
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.container {
+  display: flex;
   flex-direction: column;
+  height: 100vh;
+  align-items: center;
+
 }
 
-.recipe-image {
-  width: 400px; /* Adjust the max-width as needed */
-  height: 400px; /* Adjust the max-width as needed */
-  display: block;
-  flex:top;
-}
-
-.recipe-info {
-  max-width: 400px; /* Adjust the max-width as needed */
-  max-height: 200px; /* Adjust the max-width as needed */
-  background-color: white;
-  padding: 10px;
+.title {
   text-align: center;
-  margin-top: 10px; /* Add margin between image and info */
-  flex:bottom;
+  margin-bottom: 20px;
+  font-size: 80px;
+  font-weight: bold;
 }
 
+.content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
 
+.left-side, .right-side {
+  width: 45%; /* Ensure both sides have the same width */
+}
+
+.left-side {
+  padding-left: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+}
+
+.right-side {
+  padding-left: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the top left */
+  justify-content: flex-start; /* Align items to the top */
+  padding-top: 3px; /* Adjust padding to move the login form up */
+}
+
+.RandomRecipes {
+  margin: 10px 0 10px;
+  padding-left: 5px;
+}
+
+.blur {
+  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+  filter: blur(2px);
+}
+
+::v-deep .blur .recipe-preview {
+  pointer-events: none;
+  cursor: default;
+}
+
+.connected {
+  visibility: hidden;
+}
+
+.container-random, .container-user {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: flex-end; /* Align content at the bottom */
+  align-items: center; /* Center elements horizontally */
+  position: relative; /* Enable positioning for child elements */
+  width: 120%; /* Ensure both containers take the full width of their parent */
+  height: 100%; /* Ensure both containers take the full height of their parent */
+  margin-left: 0%;
+  padding-left: 0%;
+}
+
+#shuffle-button {
+  background-image: url('@/assets/shuffle.png');
+  background-size: cover;
+  background-color: #9bbcad;
+  width: 50px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+}
+
+.shuffle-container {
+  position: absolute; /* Make element position relative to parent */
+  bottom: 17.5%; /* Position at the bottom of the container */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset to center perfectly */
+}
+
+.login-container {
+  width: 100%; /* Ensure login container takes the full width of its parent */
+  height: 100%; /* Ensure login container takes the full height of its parent */
+  display: flex;
+  justify-content: center; /* Center login component horizontally */
+  align-items: center; /* Center login component vertically */
+}
 </style>

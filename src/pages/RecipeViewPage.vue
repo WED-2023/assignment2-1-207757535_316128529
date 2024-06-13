@@ -19,9 +19,22 @@
         class="recipe-image"
         
       >
-      <b-card-text class="card-text">
-        Ready in {{ recipe.readyInMinutes }} minutes  |  {{ recipe.aggregateLikes }} Likes
-    </b-card-text>
+      <div class="recipe-details">
+        <div class="recipe-footer-content">
+          <div :title="recipe.title" class="recipe-title">
+          </div>
+          <ul class="recipe-overview">
+            <li>{{ recipe.readyInMinutes }} minutes</li>
+            <li>{{ recipe.aggregateLikes }} likes</li>
+          </ul>
+        </div>
+       <br>
+        <div class="tags-container">
+          <img v-if="recipe.vegetarian" src="@/assets/vegetarian.png" alt="Vegetarian" class="tag-icon">
+          <img v-if="recipe.vegan" src="@/assets/vegan.png" alt="Vegan" class="tag-icon">
+          <img v-if="recipe.glutenFree" src="@/assets/gluten.png" alt="Gluten Free" class="tag-icon">
+        </div>
+      </div>
       </b-card>
     </div>
 
@@ -123,6 +136,7 @@ export default {
 .title {
   font-size: 24px;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .details {
@@ -134,13 +148,13 @@ export default {
 }
 
 .section-title {
-  font-size: 40px;
+  font-size: 60px;
   margin-bottom: 10px;
   color: #99d4a2;
   font-weight: bold;
 }
 .card-text{
-  font-size: 20px;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
@@ -193,4 +207,36 @@ export default {
     margin-right: 25%; /* Add padding to the left */
   padding-right: 25%;
   }
+  .recipe-overview {
+  width: 100%;
+  display: flex;
+  table-layout: fixed;
+  margin-left: 0;
+  padding-left: 0;
+  margin-bottom: 0px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.recipe-overview li {
+  flex-grow: 1;
+  display: table-cell;
+  text-align: center;
+  font-size: 300%;
+}
+
+
+
+.tags-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.tag-icon {
+  width: 60px;
+  height: 60px;
+  margin-right: 5px;
+}
 </style>

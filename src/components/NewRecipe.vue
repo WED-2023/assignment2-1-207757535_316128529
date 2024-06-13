@@ -69,7 +69,7 @@
       <!-- Instructions -->
       <b-form-group class="instruction-container" label="Instructions:">
         <label>Add an instruction:</label>
-        <template v-if="numOfIngredients === 1">
+        <template v-if="numOfInstructions === 1">
           <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}. Enter instruction...`" required></b-form-input>
         </template>
         <template v-else>

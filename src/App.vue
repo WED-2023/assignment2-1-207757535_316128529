@@ -34,8 +34,6 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-    <!-- <b-modal size="lg" class="modal" id="modal-1" ref="my-modal1" title="Create Recipe" >
-       <NewRecipe ref="newRecipe" /> -->
     </div>
     <b-modal id="new-recipe-modal" title="Create a New Recipe" hide-footer>
       <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">

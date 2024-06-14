@@ -14,12 +14,8 @@ export function mockGetRecipesPreview(amount = 1) {
   return { data: { recipes: recipes } };
 }
 
-export function mockGetRecipesFamily() {
-  let recipes = [];
-  for(let i = 0; i < amount; i++){
-    recipes.push(Familyrecipe);
-  }
-}
+
+
 export function mockGetRecipeFullDetails(recipeId) {
     return { data: { recipe: recipe_full_view } } ;
   }

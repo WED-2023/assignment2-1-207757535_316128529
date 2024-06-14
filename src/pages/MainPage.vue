@@ -13,10 +13,11 @@
             class="RandomRecipes center"
             :key="componentKey"
           />
-          <div class="shuffle-container">
+      
+        </div>
+        <div class="shuffle-container">
             <b-button id="shuffle-button"></b-button>
           </div>
-        </div>
       </div>
       <div class="right-side">
         <div v-if="$root.store.username" class="container-user">
@@ -146,8 +147,8 @@ export default {
 }
 
 .shuffle-container {
-  position: absolute; /* Make element position relative to parent */
-  bottom: 17.5%; /* Position at the bottom of the container */
+  position:absolute; /* Make element position relative to parent */
+  height: 15%;
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Offset to center perfectly */
 }
@@ -157,6 +158,6 @@ export default {
   height: 100%; /* Ensure login container takes the full height of its parent */
   display: flex;
   justify-content: center; /* Center login component horizontally */
-  align-items: center; /* Center login component vertically */
+  align-items: center; /* Center login component vertically */
 }
 </style>

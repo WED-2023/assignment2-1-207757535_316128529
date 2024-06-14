@@ -12,8 +12,8 @@
       <div class="top-container" style="padding-left: 20%;">
       <div class="search-button" style="padding-bottom: 10%; padding-right: 0">
         <b-row>
-        <b-form-input size="sm" class="mr-sm-2 search-input" placeholder="Search a recipre..."></b-form-input>
-        <b-button class="small-button">
+        <b-form-input size="sm" v-model="searchQuery" class="mr-sm-2 search-input" placeholder="Search for a recipe..." required></b-form-input>
+        <b-button class="small-button" @click="search">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
@@ -23,17 +23,17 @@
 
       <!-- Sort options button to the left of the number of recipes buttons -->
       <div class="sort-options-container" style="padding-left: 2%; padding-bottom: 10%">
-        <b-dropdown id="sort-options" size="sm" toggle-class="btn-sm text-decoration-none small-button" no-caret>
+        <b-dropdown v-model="selectedSortOption" id="sort-options" size="sm" toggle-class="btn-sm text-decoration-none small-button" no-caret>
           <template #button-content>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
               <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
             </svg>       
           </template>
-          <b-dropdown-item>Default</b-dropdown-item>
-          <b-dropdown-item>Rating High-Low</b-dropdown-item>
-          <b-dropdown-item>Rating Low-High</b-dropdown-item>
-          <b-dropdown-item>Cooking Time Short-Long</b-dropdown-item>
-          <b-dropdown-item>Cooking Time Long-Short</b-dropdown-item>          
+          <b-dropdown-item value="Default">Default</b-dropdown-item>
+          <b-dropdown-item value="Rating High-Low">Rating High-Low</b-dropdown-item>
+          <b-dropdown-item value="Rating Low-High">Rating Low-High</b-dropdown-item>
+          <b-dropdown-item value="Cooking Time Short-Long">Cooking Time Short-Long</b-dropdown-item>
+          <b-dropdown-item value="Cooking Time Long-Short">Cooking Time Long-Short</b-dropdown-item>         
         </b-dropdown>
       </div>
 
@@ -64,7 +64,7 @@
     <b-sidebar id="filters-sidebar" title="Filters" shadow>
       <!-- Dropdown for Cuisines -->
       <b-col>
-        <b-dropdown id="cuisine-filter" text="Cuisines" class="mb-3" menu-class="w-10000">
+        <b-dropdown id="cuisine-filter" text="Cuisines" class="mb-3">
           <div class="cuisines-dropdown-options">
             <b-dropdown-item v-for="(cuisine, index) in cuisines" :key="index">
               <b-form-checkbox v-model="selectedFilters.cuisines[cuisine]">{{ cuisine }}</b-form-checkbox>
@@ -94,9 +94,15 @@
       </b-col>
     </b-sidebar>
       </div>
-      <div class="search-result-container">
-
-      </div>
+      <!-- <div class="search-result-container"> -->
+        <div v-if="username" class="recent-searches-container">
+          <h1 style="font-size: 20px">Your recent recipes:</h1>
+        </div>
+        <br><br><br><br>
+        <div class="current-searches-container">
+          <h1 style="font-size: 20px">Your results:</h1>
+        </div>
+      <!-- </div> -->
   </div>
 </template>
 
@@ -116,50 +122,100 @@ export default {
         diets: {},
         intolerances: {}
       },
-      numOfRecipes: 5
+      numOfRecipes: 5,
+      selectedSortOption: 'Default', // Add this line
+      searchQuery: ""
     };
+  },
+   watch: {
+    selectedSortOption() {
+      this.handleSortOptionChange();
+    }
+  },
+  computed: {
+    username() {
+      return this.$root.store.username;
+    }
   },
   methods: {
     changeNumOfPresentedRec(number) {
       this.numOfRecipes = number;
+    },
+    search(){
+      this.searchQuery = "";
+    },
+     handleSortOptionChange() {      
+      // Implement sorting logic based on selectedSortOption
+      switch (this.selectedSortOption) {
+        case 'Default':
+          // Handle default sorting logic
+          this.recipes.sort(/* Add your default sorting logic */);
+          break;
+        case 'Rating High-Low':
+          // Handle rating high to low sorting logic
+          this.recipes.sort((a, b) => b.rating - a.rating);
+          break;
+        case 'Rating Low-High':
+          // Handle rating low to high sorting logic
+          this.recipes.sort((a, b) => a.rating - b.rating);
+          break;
+        case 'Cooking Time Short-Long':
+          // Handle cooking time short to long sorting logic
+          this.recipes.sort((a, b) => a.cookingTime - b.cookingTime);
+          break;
+        case 'Cooking Time Long-Short':
+          // Handle cooking time long to short sorting logic
+          this.recipes.sort((a, b) => b.cookingTime - a.cookingTime);
+          break;
+        default:
+          // Handle default case or any additional options
+          break;
+      }
+    },
+    resetLastSearch(){
+
     }
   }
 };
 </script>
 
 <style scoped>
-/* .search-page-container {
-  position: relative;
-  padding: 20px;
-} */
+
+.filters-sidebar-container {
+  display: flex;
+  align-items: flex-start; /* Adjust alignment as needed */
+}
+
+.filters-sidebar-content {
+  width: 100%; /* Ensure content takes full width of sidebar */
+}
+
+.filters-sidebar-content > .mb-3 {
+  margin-bottom: 1rem; /* Adjust spacing between dropdowns */
+}
+
+.cuisines-dropdown,
+.diets-dropdown,
+.intolerances-dropdown {
+  width: 100%; /* Make each dropdown container full width */
+  max-width: 100%; /* Ensure they take up full available width */
+  padding-right: 15px; /* Compensate for padding */
+}
+
+.cuisines-dropdown-options {
+  max-height: 300px; /* Adjust height as needed */
+  overflow-y: auto;
+}
 
 .top-container {
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   width: 100%;
 }
 
-/* .search-button{
-    align-items: center;
-    flex-direction: column;
-} */
-
-/* .sidebar-button-container {
-  padding:0;
-} */
-
-/* .sort-options-container {
-  padding-right: 0;
-  margin-right: 0;
-} */
-
-/* .num-of-showed-recipes-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-} */
-
+.recent-searches-container{
+    visibility: visible;
+}
 
 .button-row {
   display: flex;

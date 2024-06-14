@@ -22,7 +22,7 @@
               <b-nav-item :to="{ name: 'login' }" style="padding-right: 4%">Login</b-nav-item>
             </span>
             <span v-else class="nav-connected">
-              <span class="greeting">Hello {{ $root.store.username }}:</span>
+              <span class="greeting">Hello {{ $root.store.username }} :</span>
               <b-nav-item-dropdown text="My Zone" right>
                 <router-link :to="{ name: 'MyFavoriteRecipes' }" class="dropdown-item">My Favorite Recipes</router-link>
                 <router-link :to="{ name: 'MyRecipes' }" class="dropdown-item">My Recipes</router-link>

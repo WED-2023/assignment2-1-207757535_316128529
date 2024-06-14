@@ -1,7 +1,8 @@
 // src/services/recipes.js
 import recipe_full_view from "../assets/mocks/recipe_full_view.json";
 import recipe_preview from "../assets/mocks/recipe_preview.json";
-import bgImage from "@/assets/bg1.jpg"; // Import the image here
+import Familyrecipe from "../assets/mocks/familyRecipes.json";
+
 
 
 export function mockGetRecipesPreview(amount = 1) {
@@ -12,6 +13,8 @@ export function mockGetRecipesPreview(amount = 1) {
 
   return { data: { recipes: recipes } };
 }
+
+
 
 export function mockGetRecipeFullDetails(recipeId) {
     return { data: { recipe: recipe_full_view } } ;

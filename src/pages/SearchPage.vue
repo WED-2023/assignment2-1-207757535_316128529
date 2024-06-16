@@ -97,6 +97,13 @@
       <!-- <div class="search-result-container"> -->
         <div v-if="username" class="recent-searches-container">
           <h1 style="font-size: 20px">Your recent recipes:</h1>
+          <div >
+          <RecipePreviewList
+            :isUserLoggedIn=false
+            class="RandomRecipes center"
+            :recipes="lastViewedRecipes"
+          />
+        </div>
         </div>
         <br><br><br><br>
         <div class="current-searches-container">
@@ -107,13 +114,20 @@
 </template>
 
 <script>
+import RecipePreviewList from "../components/RecipePreviewList.vue";
+import { mockGetRecipesPreview } from "../services/recipes.js";
 import cuisines from '../assets/cuisines.json';
 import diets from '../assets/diets.json';
 import intolerances from '../assets/intolerances.json';
 
 export default {
+  components: {
+    RecipePreviewList,
+  },
   data() {
     return {
+      recipes: [],
+      lastViewedRecipes: [],
       cuisines: cuisines,
       diets: diets,
       intolerances: intolerances,
@@ -126,8 +140,10 @@ export default {
       selectedSortOption: 'Default', // Add this line
       searchQuery: ""
     };
+    
   },
    watch: {
+
     selectedSortOption() {
       this.handleSortOptionChange();
     }
@@ -137,10 +153,24 @@ export default {
       return this.$root.store.username;
     }
   },
+  mounted() {
+    
+    if (this.$root.store.username) {
+      this.fetchLastViewedRecipes(this.numOfRecipes); // Fetch 3 last viewed recipes if the user is logged in
+    }
+  },
   methods: {
+    fetchLastViewedRecipes(amountToFetch) {
+      const response = mockGetRecipesPreview(amountToFetch);
+      this.lastViewedRecipes = response.data.recipes;
+    },
     changeNumOfPresentedRec(number) {
       this.numOfRecipes = number;
+      this.fetchLastViewedRecipes(this.numOfRecipes); // Fetch 3 last viewed recipes if the user is logged in
+
     },
+  
+  
     search(){
       this.searchQuery = "";
     },

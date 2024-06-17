@@ -19,15 +19,13 @@
         </div>
        
         <div class="tags-container">
-          <img v-if="recipe.vegetarian" src="@/assets/vegetarian.png" alt="Vegetarian" class="tag-icon">
-          <img v-if="recipe.vegan" src="@/assets/vegan.png" alt="Vegan" class="tag-icon">
-          <img v-if="recipe.glutenFree" src="@/assets/gluten.png" alt="Gluten Free" class="tag-icon">
+          <tags :recipe="recipe"/>
         </div>
         <br><br>
-        <div v-if="showLikeButton">  
-          <like/>
-          <watch/>      
-        </div>
+        <!-- <div v-if="showLikeButton">   -->
+          <like :LoggedIn="showLikeButton"/>
+          <un-watched :LoggedIn="showLikeButton"/>      
+        <!-- </div> -->
     </div>
   </div>
   </div>
@@ -36,12 +34,14 @@
 <script>
 import { mockAddFavorite } from "../services/user.js";
 import Like from "../components/Like.vue";
-import Watch from "../components/Watch.vue";
+import UnWatched from "../components/UnWatched.vue";
+import Tags from "../components/Tags.vue";
 
 export default {
   components:{
       Like,
-      Watch
+      UnWatched,
+      Tags
   },
   mounted() {
     this.axios.get(this.recipe.image).then(() => {

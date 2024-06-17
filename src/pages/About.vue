@@ -8,23 +8,14 @@
       </div>
       <div class="middle-text">
         <p class="styled-paragraph">
-          Welcome to our recipe Website!<br>                   
-          Our team is dedicated to continuous improvement and innovation. <br>We are two Software and Information Systems Engineering students in our 3rd year at Ben Gurion University. 
-        We are passionate about technology and committed to delivering high-quality 
-        solutions. Our expertise spans a variety of programming languages and platforms, allowing us to 
-        tackle diverse challenges in the tech world.
+          Welcome to our recipe Website!<br> Our team is dedicated to continuous improvement and innovation. <br>We are two Software and Information Systems Engineering students in our 3rd year at Ben Gurion University.We are passionate about technology and committed to delivering high-quality solutions. Our expertise spans a variety of programming languages and platforms, allowing us to tackle diverse challenges in the tech world.
         </p>
       </div>
       <div class="content-section">
         <img src="@/assets/dvir.jpg" alt="Another Image" class="side-image" />
         <div class="text-content">
           <p class="styled-paragraph">
-        
-            Dvir Zandany <br> Dvir Zandany, tech's shining star,<br>
-Leading projects, reaching far,<br>
-With code and vision, sets the bar,<br>
-Innovation drives his car,<br>
-In the digital world, he’s raising the par.
+            Dvir Zandany <br> Dvir Zandany, tech's shining star,<br>Leading projects, reaching far,<br>With code and vision, sets the bar,<br>Innovation drives his car,<br>In thedigital world, he’s raising the par.
           </p>
         </div>
       </div>
@@ -32,13 +23,7 @@ In the digital world, he’s raising the par.
         <img src="@/assets/ido.jpg" alt="Another Image" class="side-image" />
         <div class="text-content">
           <p class="styled-paragraph">
-            Ido Dai<br>
-
-             Ido Dai, in tech he shines bright,<br>
-Crafting code through day and night,<br>
-Innovation's path, he lights,<br>
-In the world of tech, he takes flight,<br>
-Turning dreams to real, just right.
+            Ido Dai<br>Ido Dai, in tech he shines bright,<br>Crafting code through day and night,<br>Innovation's path, he lights,<br>In the world of tech, he takes flight,<br>Turning dreams to real, just right.
           </p>
         </div>
       </div>
@@ -77,7 +62,6 @@ Turning dreams to real, just right.
         links2: [
           { image: '@/assets/git.jpg', url: 'https://www.linkedin.com/in/dvir-zandany-197921236/', text: "Dvir's Linkdin", alt: 'Link 1 Image' },
           { image: '@/assets/in.png', url: 'https://www.linkedin.com/in/ido-dai-a176b0201?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app ', text: "Ido's Linkdin", alt: 'Link 2 Image' }
-         
         ]
       };
     }

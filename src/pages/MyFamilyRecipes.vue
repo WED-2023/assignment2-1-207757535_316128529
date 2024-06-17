@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: #fff;">
       <div class="cover-image-container">
         <img src="@/assets/Family.jpg" alt="Family Picture" class="full-width-image" />
         <h1 class="cover-text">My Family Recipes</h1>
@@ -167,6 +167,7 @@
     margin-left: 20px;
     margin-right: auto;
     width: 80%;
+    color: #000000
   }
   
   .recipe-details h2 {

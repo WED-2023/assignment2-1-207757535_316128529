@@ -5,9 +5,9 @@
       <b-col>
         <b-dropdown id="cuisine-filter" text="Cuisines" class="mb-3">
           <div class="cuisines-dropdown-options">
-            <b-dropdown-item v-for="(cuisine, index) in cuisines" :key="index">
-              <b-form-checkbox v-model="selectedFilters.cuisines[cuisine]">{{ cuisine }}</b-form-checkbox>
-            </b-dropdown-item>
+            <b-form-checkbox-group v-model="selectedFilters.cuisines" stacked>
+              <b-form-checkbox v-for="(cuisine, index) in cuisines" :key="index" :value="cuisine">{{ cuisine }}</b-form-checkbox>
+            </b-form-checkbox-group>
           </div>
         </b-dropdown>
       </b-col>
@@ -15,9 +15,9 @@
       <b-col>
         <div class="diets-dropdown">
           <b-dropdown id="diet-filter" text="Diets" class="mb-3">
-            <b-dropdown-item v-for="(diet, index) in diets" :key="index">
-              <b-form-checkbox v-model="selectedFilters.diets[diet]">{{ diet }}</b-form-checkbox>
-            </b-dropdown-item>
+            <b-form-checkbox-group v-model="selectedFilters.diets" stacked>
+              <b-form-checkbox v-for="(diet, index) in diets" :key="index" :value="diet">{{ diet }}</b-form-checkbox>
+            </b-form-checkbox-group>
           </b-dropdown>
         </div>
       </b-col>
@@ -25,9 +25,9 @@
       <b-col>
         <div class="intolerances-dropdown">
           <b-dropdown id="intolerance-filter" text="Intolerances" class="mb-3">
-            <b-dropdown-item v-for="(intolerance, index) in intolerances" :key="index">
-              <b-form-checkbox v-model="selectedFilters.intolerances[intolerance]">{{ intolerance }}</b-form-checkbox>
-            </b-dropdown-item>
+            <b-form-checkbox-group v-model="selectedFilters.intolerances" stacked>
+              <b-form-checkbox v-for="(intolerance, index) in intolerances" :key="index" :value="intolerance">{{ intolerance }}</b-form-checkbox>
+            </b-form-checkbox-group>
           </b-dropdown>
         </div>
       </b-col>
@@ -46,18 +46,18 @@
         diets: diets,
         intolerances: intolerances,
         selectedFilters: {
-          cuisines: {},
-          diets: {},
-          intolerances: {}
+          cuisines: [],
+          diets: [],
+          intolerances: []
         }
       };
     },
     methods: {
       resetFilters() {
         this.selectedFilters = {
-          cuisines: {},
-          diets: {},
-          intolerances: {}
+          cuisines: [],
+          diets: [],
+          intolerances: []
         };
       }
     }

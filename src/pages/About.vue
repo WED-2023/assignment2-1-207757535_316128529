@@ -8,20 +8,14 @@
       </div>
       <div class="middle-text">
         <p class="styled-paragraph">
-          Welcome to our recipe Website!<br>                   
-          Our team is dedicated to continuous improvement and innovation. <br>We are two Software and Information Systems Engineering students in our 3rd year at Ben Gurion University. 
-        We are passionate about technology and committed to delivering high-quality 
-        solutions. Our expertise spans a variety of programming languages and platforms, allowing us to 
-        tackle diverse challenges in the tech world.
+          Welcome to our recipe Website!<br> Our team is dedicated to continuous improvement and innovation. <br>We are two Software and Information Systems Engineering students in our 3rd year at Ben Gurion University.We are passionate about technology and committed to delivering high-quality solutions. Our expertise spans a variety of programming languages and platforms, allowing us to tackle diverse challenges in the tech world.
         </p>
       </div>
       <div class="content-section">
         <img src="@/assets/dvir.jpg" alt="Another Image" class="side-image" />
         <div class="text-content">
           <p class="styled-paragraph">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, 
-            nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec 
-            congue eget, auctor vitae massa.
+            Dvir Zandany <br> Dvir Zandany, tech's shining star,<br>Leading projects, reaching far,<br>With code and vision, sets the bar,<br>Innovation drives his car,<br>In thedigital world, he’s raising the par.
           </p>
         </div>
       </div>
@@ -29,9 +23,7 @@
         <img src="@/assets/ido.jpg" alt="Another Image" class="side-image" />
         <div class="text-content">
           <p class="styled-paragraph">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, 
-            nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec 
-            congue eget, auctor vitae massa.
+            Ido Dai<br>Ido Dai, in tech he shines bright,<br>Crafting code through day and night,<br>Innovation's path, he lights,<br>In the world of tech, he takes flight,<br>Turning dreams to real, just right.
           </p>
         </div>
       </div>
@@ -40,6 +32,7 @@
         <!-- First link section -->
         <div class="links-section">
           <h1>Projects</h1>
+          <br>
           <div class="link-item" v-for="(link, index) in links" :key="index">
             <img src="@/assets/git.jpg" alt="Another Image" class="icon" />
             <a :href="link.url">{{ link.text }}</a>
@@ -63,14 +56,12 @@
     data() {
       return {
         links: [
-          { image: '@/assets/git.jpg', url: 'https://example.com/1', text: 'Link 1', alt: 'Link 1 Image' },
-          { image: '@/assets/in.png', url: 'https://example.com/2', text: 'Link 2', alt: 'Link 2 Image' },
-          { image: '@/assets/git.jpg', url: 'https://example.com/3', text: 'Link 3', alt: 'Link 3 Image' }
+          { image: '@/assets/git.jpg', url: 'https://github.com/zandanyd', text: "Dvir's GitHub", alt: "Link 1 Image" },
+          { image: '@/assets/in.png', url: 'https://github.com/IdoDai', text: "Ido's GitHub", alt: 'Link 2 Image' }
         ],
         links2: [
-          { image: '@/assets/git.jpg', url: 'https://example.com/1', text: 'Link 1', alt: 'Link 1 Image' },
-          { image: '@/assets/in.png', url: 'https://example.com/2', text: 'Link 2', alt: 'Link 2 Image' }
-         
+          { image: '@/assets/git.jpg', url: 'https://www.linkedin.com/in/dvir-zandany-197921236/', text: "Dvir's Linkdin", alt: 'Link 1 Image' },
+          { image: '@/assets/in.png', url: 'https://www.linkedin.com/in/ido-dai-a176b0201?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app ', text: "Ido's Linkdin", alt: 'Link 2 Image' }
         ]
       };
     }
@@ -132,7 +123,8 @@
   }
   
   .text-content {
-    max-width: 600px;
+    max-width: 60%;
+    padding-left: 15%;
   }
   
   .links-sections-container {
@@ -180,8 +172,9 @@
 .styled-paragraph {
   font-weight: bold;
   font-family: 'Arial', sans-serif; /* Change 'Arial' to any other font you prefer */
-  font-size: 1em; /* Adjust the font size as needed */
+  font-size: 2em; /* Adjust the font size as needed */
   color: #013c30; /* Change the text color if desired */
+  width: 100%;
 }
 
   </style>

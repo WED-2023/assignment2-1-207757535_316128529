@@ -4,6 +4,7 @@
       :interval="4000"
       controls
       indicators
+      style="border: 100px; background-color: #fff; "
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
       prev-icon="fas fa-chevron-left"
@@ -86,8 +87,7 @@ export default {
 
 .recipe-info {
   max-width: 400px; /* Adjust the max-width as needed */
-  background-color: white;
-  padding: 10px;
+ background-color: #b3d6c7 ;
   text-align: center;
   margin-top: 5px; /* Add margin between image and info */
   font-weight: bold;

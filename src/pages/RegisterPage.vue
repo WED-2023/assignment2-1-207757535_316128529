@@ -128,6 +128,11 @@ import {
   email
 } from "vuelidate/lib/validators";
 import { mockRegister } from "../services/auth.js";
+
+const passwordContainsLetter = (value) => /[a-zA-Z]/.test(value);
+const passwordContainsNumber = (value) => /\d/.test(value);
+const passwordContainsSpecialChar = (value) => /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
 export default {
   name: "Register",
   data() {
@@ -159,7 +164,10 @@ export default {
       },
       password: {
         required,
-        length: (p) => minLength(5)(p) && maxLength(10)(p)
+        length: (p) => minLength(5)(p) && maxLength(10)(p) ,
+        passwordContainsLetter,
+        passwordContainsNumber,
+        passwordContainsSpecialChar
       },
       confirmedPassword: {
         required,

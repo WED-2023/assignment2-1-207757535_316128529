@@ -24,20 +24,25 @@
           <img v-if="recipe.glutenFree" src="@/assets/gluten.png" alt="Gluten Free" class="tag-icon">
         </div>
         <br><br>
-        <div class="like-container" v-if="showLikeButton">
-          <b-button id="like-button" @click="addToFavorites">
-            <img :src="likeButtonImage" alt="Like Button">
-          </b-button>
+        <div v-if="showLikeButton">  
+          <like/>
+          <watch/>      
         </div>
-      </div>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 import { mockAddFavorite } from "../services/user.js";
+import Like from "../components/Like.vue";
+import Watch from "../components/Watch.vue";
 
 export default {
+  components:{
+      Like,
+      Watch
+  },
   mounted() {
     this.axios.get(this.recipe.image).then(() => {
       this.image_load = true;
@@ -46,7 +51,6 @@ export default {
   data() {
     return {
       image_load: false,
-      likeButtonImage: require("@/assets/like.png")
     };
   },
   props: {
@@ -178,5 +182,11 @@ export default {
   width: 40px;
   height: 40px;
   margin-right: 5px;
+}
+
+.watch-container{
+  justify-content: flex-start;
+  bottom: 1%;
+  left: 50%;
 }
 </style>

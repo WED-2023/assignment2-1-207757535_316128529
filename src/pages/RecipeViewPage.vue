@@ -7,6 +7,7 @@
       </div>
     </div>
     <br>
+    <div style="width: 60%; ">
     <div class="recipe-card">
       <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image">
         <div class="recipe-details">
@@ -63,6 +64,7 @@
         <p v-html="recipe.summary"></p>
       </div>
     </div>
+  </div>
   </div>
 </template>
 

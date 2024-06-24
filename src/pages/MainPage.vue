@@ -6,14 +6,12 @@
       <div class="left-side">
         <div class="container-random">         
           <RecipePreviewList
-            :isUserLoggedIn="$root.store.username"
-            :recipes="randomRecipes"
+            :isUserLoggedIn="$root.store.username" :recipes="randomRecipes"
             style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
             title="Explore these recipes"
             class="RandomRecipes center"
             :key="componentKey"
           />
-      
         </div>
         <div class="shuffle-container">
             <b-button id="shuffle-button"></b-button>

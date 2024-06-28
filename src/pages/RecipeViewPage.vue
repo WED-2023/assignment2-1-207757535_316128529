@@ -7,64 +7,59 @@
       </div>
     </div>
     <br>
-    <div style="width: 60%; ">
-    <div class="recipe-card">
-      <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image">
-        <div class="recipe-details">
-          <div class="recipe-footer-content">
+    <div class="recipe-content">
+      <div class="recipe-card">
+        <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image">
+          <div class="recipe-details">
+            <div class="recipe-footer-content">
               <h2>{{ recipe.title }}</h2>
-  
-            <ul class="recipe-overview">
-              <li>{{ recipe.readyInMinutes }} minutes</li>
-              <li>{{ recipe.aggregateLikes }} likes</li>
-            </ul>
-          </div>
-      
-          <br>
-          <div class="tags-container">
-            <div class="left-tags-container">
-              <tags :recipe="recipe"/>
+              <ul class="recipe-overview">
+                <li>{{ recipe.readyInMinutes }} minutes</li>
+                <li>{{ recipe.aggregateLikes }} likes</li>
+              </ul>
             </div>
-            <div class="right-tags-container">
-              <div class="watch-container">
-                <watch :recipeID="recipe.id" v-if="showLikeButton"/>
+            <br>
+            <div class="tags-container">
+              <div class="left-tags-container">
+                <tags :recipe="recipe"/>
               </div>
-              <div class="like-container">
-                <like v-if="showLikeButton"/>
+              <div class="right-tags-container">
+                <div class="watch-container">
+                  <watch :recipeID="recipe.id" v-if="showLikeButton"/>
+                </div>
+                <div class="like-container">
+                  <like v-if="showLikeButton"/>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </b-card>
-    </div>
+        </b-card>
+      </div>
 
-    <!-- New section for title and details -->
-    <div class="recipe-details">
-      <p class="details"></p>
-      <!-- Ingredients and Summary -->
-       
-      <div class="ingredients">
-        <h3 class="section-title">Serving: {{ recipe.servings }}<br><br>Ingredients</h3>
-        <ul>
-          <li v-for="ingredient in recipe.extendedIngredients" :key="ingredient.id">
-            {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.name }}
-          </li>
-        </ul>
-      </div>
-      <div class="instructions">
-        <h3 class="section-title">Instructions</h3>
-        <ul>
-          <li v-for=" instruction in recipe.analyzedInstructions" :key="instruction.step">
-             {{ instruction.instruction}}
-          </li>
-        </ul>
-      </div>
-      <div class="summary">
-        <h3 class="section-title">Summary</h3>
-        <p v-html="recipe.summary"></p>
+      <div class="recipe-details">
+        <p class="details"></p>
+        <div class="ingredients">
+          <h3 class="section-title">Serving: {{ recipe.servings }}<br><br>Ingredients</h3>
+          <ul>
+            <li v-for="ingredient in recipe.extendedIngredients" :key="ingredient.id">
+              {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.name }}
+            </li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h3 class="section-title">Instructions</h3>
+          <ul>
+            <li v-for="instruction in recipe.analyzedInstructions" :key="instruction.step">
+              {{ instruction.instruction }}
+            </li>
+          </ul>
+        </div>
+        <div class="summary">
+          <h3 class="section-title">Summary</h3>
+          <p v-html="recipe.summary"></p>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -77,10 +72,10 @@ import Tags from "../components/Tags.vue";
 
 export default {
   name: "recipe",
-   components:{
-      Like,
-      Watch,
-      Tags
+  components: {
+    Like,
+    Watch,
+    Tags
   },
   data() {
     return {
@@ -109,7 +104,7 @@ export default {
         const response = await mockAddFavorite(this.recipe.id);
         if (response.status === 200 && response.response.data.success) {
           this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
-          this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image
+          this.likeButtonImage = require("@/assets/vi.png");
         } else {
           this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
         }
@@ -131,7 +126,7 @@ export default {
 .recipe-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   background-color: #0c1311;
   color: #ffffff;
   padding: 20px;
@@ -141,7 +136,7 @@ export default {
   position: relative;
   display: inline-block;
   width: 100%;
-  max-height: 500px; /* Adjust this value to make the image less tall */
+  max-height: 500px;
   overflow: hidden;
 }
 
@@ -164,22 +159,35 @@ export default {
   color: white;
 }
 
+.recipe-content {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .recipe-card {
-  width: 50%;
+  width: 70%;
+  margin-right: 40%;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .recipe-details {
-  margin-top: 0px;
-  font-family: Arial, sans-serif; /* Change font */
-  font-weight: bold; /* Make text bold */
-  color: #9bbcad;
   width: 100%;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #9bbcad;
+  margin-top: 0px;
 }
-.recipe-footer-content{
-  font-weight: bold; /* Make text bold */
+
+.recipe-footer-content {
+  font-weight: bold;
   color: #9bbcad;
   font-weight: 2em;
+  text-align: center;
 }
 
 .title {
@@ -205,13 +213,13 @@ export default {
 
 .ingredients ul, .instructions ul, .summary p {
   list-style-type: disc;
-  margin-left: 20px; /* Add padding to the left */
-  padding-left: 20px; /* Add padding to the left */
+  margin-left: 20px;
+  padding-left: 20px;
 }
 
 .ingredients ul li, .instructions ul li, .summary p {
-  font-family: Arial, sans-serif; /* Change font */
-  font-weight: bold; /* Make text bold */
+  font-family: Arial, sans-serif;
+  font-weight: bold;
   font-size: 1.5em;
   color: #ffffff;
 }
@@ -225,12 +233,12 @@ export default {
   margin-bottom: 0px;
   font-size: 1.5em;
   font-weight: bold;
+  text-align: center;
 }
 
 .recipe-overview li {
   flex-grow: 1;
   display: table-cell;
-  text-align: center;
 }
 
 .tags-container {
@@ -254,10 +262,10 @@ export default {
   margin-right: 5px;
 }
 
-.like-container{
-   display: flex;
+.like-container {
+  display: flex;
   align-items: center;
-  margin-right: 10px; /* Add some spacing between the icons */
+  margin-right: 10px;
 }
 
 .watch-container {

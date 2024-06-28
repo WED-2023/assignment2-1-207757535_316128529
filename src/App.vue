@@ -89,6 +89,7 @@ html, body {
   display: flex;
   flex-direction: column;
   background-color: #9bbcad ;
+  background-image: url("@/assets/b1.jpg");
 }
 
 /* Ensure router-view fills the remaining space */

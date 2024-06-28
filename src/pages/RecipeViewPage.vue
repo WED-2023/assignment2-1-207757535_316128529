@@ -127,7 +127,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #0c1311;
+  background-color: #1d1b1b;
   color: #ffffff;
   padding: 20px;
 }

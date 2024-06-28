@@ -75,9 +75,11 @@ export default {
 /* Apply background to html and body to cover the entire viewport */
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   background-size: cover;
   background-color: #9bbcad ;
+  background-image: url("@/assets/b1.jpg");
 
 }
 
@@ -86,10 +88,9 @@ html, body {
   font-family: Comfortaa;
   font-size: 10pt;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #9bbcad ;
-  background-image: url("@/assets/b1.jpg");
 }
 
 /* Ensure router-view fills the remaining space */
@@ -137,5 +138,12 @@ html, body {
 
 #new-recipe-modal .modal-header {
   background-color: #9bbcad;
+}
+#brand img {
+  max-height: 40px; /* Maximum height */
+  width: 100%; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure image fits within given dimensions without stretching */
+  display: block;
+  margin: 0 auto;
 }
 </style>

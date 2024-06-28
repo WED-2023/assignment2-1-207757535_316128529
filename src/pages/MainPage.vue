@@ -77,6 +77,8 @@ export default {
   flex-direction: column;
   height: 100vh;
   align-items: center;
+  
+  
 }
 
 .title {

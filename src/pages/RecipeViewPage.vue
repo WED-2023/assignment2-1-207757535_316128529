@@ -1,41 +1,19 @@
 <template>
   <div class="recipe-container">
-    <div class="image-container">
-      <img src="@/assets/recipePage.jpg" alt="Recipe Page" class="recipe-image" />
-      <div class="overlay">
-        <h1>Recipe Page</h1>
-      </div>
+    <div class="cover-image-container">
+      <img src="@/assets/recipePage.jpg" alt="Recipe Page" class="full-width-image" />
+      <h1 class="cover-text">Recipe Page</h1>
     </div>
     <br>
     <div class="recipe-content">
-      <div class="recipe-card">
-        <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image">
-          <div class="recipe-details">
-            <div class="recipe-footer-content">
-              <h2>{{ recipe.title }}</h2>
-              <ul class="recipe-overview">
-                <li>{{ recipe.readyInMinutes }} minutes</li>
-                <li>{{ recipe.aggregateLikes }} likes</li>
-              </ul>
-            </div>
-            <br>
-            <div class="tags-container">
-              <div class="left-tags-container">
-                <tags :recipe="recipe"/>
-              </div>
-              <div class="right-tags-container">
-                <div class="watch-container">
-                  <watch :recipeID="recipe.id" v-if="showLikeButton"/>
-                </div>
-                <div class="like-container">
-                  <like v-if="showLikeButton"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </b-card>
-      </div>
-
+      <div clas = "preview-conteiner">
+        <RecipePreviewList
+            :isUserLoggedIn="$root.store.username" :recipes="randomRecipes"
+            style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
+            class="RandomRecipes center"
+            :key="componentKey"
+          />
+    </div>
       <div class="recipe-details">
         <p class="details"></p>
         <div class="ingredients">
@@ -64,87 +42,78 @@
 </template>
 
 <script>
+import RecipePreviewList from "../components/RecipePreviewList";
 import { mockGetRecipeFullDetails } from "../services/recipes.js";
-import { mockAddFavorite } from "../services/user.js";
-import Like from "../components/Like.vue";
-import Watch from "../components/Watch.vue";
-import Tags from "../components/Tags.vue";
+import { mockGetRecipesPreview } from "../services/recipes.js"; // Import the mock function
 
 export default {
   name: "recipe",
   components: {
-    Like,
-    Watch,
-    Tags
+    RecipePreviewList
   },
   data() {
     return {
-      image_load: false,
       showDetails: false,
       recipe: null,
-      likeButtonImage: require("@/assets/like.png")
+      preview: [],
     };
   },
   mounted() {
     this.getRecipe();
+    this.fetchRecipes(1);
   },
   methods: {
     async getRecipe() {
       try {
         const response = mockGetRecipeFullDetails(1);
-        this.image_load = true;
         const recipeDetails = response.data.recipe;
         this.recipe = recipeDetails;
       } catch (error) {
         console.log(error);
       }
     },
-    async addToFavorites() {
-      try {
-        const response = await mockAddFavorite(this.recipe.id);
-        if (response.status === 200 && response.response.data.success) {
-          this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
-          this.likeButtonImage = require("@/assets/vi.png");
-        } else {
-          this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
-        }
-      } catch (err) {
-        this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
-      }
-    }
+    fetchRecipes(amountToFetch) {
+      const response = mockGetRecipesPreview(amountToFetch);
+      this.randomRecipes = response.data.recipes;
+    
   },
-  props: {
-    showLikeButton: {
-      type: Boolean,
-      default: true
-    }
-  }
-};
+}};
 </script>
 
 <style scoped>
 .recipe-container {
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #1d1b1b;
+  align-items: flex-start;
   color: #ffffff;
-  padding: 20px;
-}
+  background-color: #151718;
 
-.image-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  max-height: 500px;
-  overflow: hidden;
 }
+.cover-image-container {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  
+  .full-width-image {
+    width: 100%;
+    height: 500px; /* Adjust the height here */
+    object-fit: cover;
+  }
+  .preview-conteiner{
+      width: 550%;
+  }
+  .cover-text {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 6em;
+    background: rgba(0, 0, 0, 0.5); /* Optional: Add background for better readability */
+    padding: 10px;
+    border-radius: 6px;
+  }
 
-.recipe-image {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
+
 
 .overlay {
   position: absolute;
@@ -160,38 +129,35 @@ export default {
 }
 
 .recipe-content {
-  width: 60%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #1b1d1d;
+  margin-left: 15%;
+
 }
 
-.recipe-card {
-  width: 70%;
-  margin-right: 40%;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
+
 
 .recipe-details {
-  width: 100%;
+  width: 80%;
   text-align: left;
   font-family: Arial, sans-serif;
-  font-weight: bold;
-  color: #9bbcad;
+  color: #ffffff;
   margin-top: 0px;
+  font-size:medium;
+
 }
 
 .recipe-footer-content {
   font-weight: bold;
-  color: #9bbcad;
   font-weight: 2em;
   text-align: center;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 10px;
   font-weight: bold;
 }
@@ -207,7 +173,7 @@ export default {
 .section-title {
   font-size: 2em;
   margin-bottom: 10px;
-  color: #99d4a2;
+  color: #94cb9c;
   font-weight: bold;
 }
 
@@ -221,7 +187,6 @@ export default {
   font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 1.5em;
-  color: #ffffff;
 }
 
 .recipe-overview {
@@ -241,36 +206,9 @@ export default {
   display: table-cell;
 }
 
-.tags-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  width: 100%;
-}
 
-.left-tags-container {
-  display: flex;
-}
-
-.right-tags-container {
-  display: flex;
-}
-
-.tag-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 5px;
-}
-
-.like-container {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-}
-
-.watch-container {
-  display: flex;
-  align-items: center;
-  margin-right: 40px;
+.preview-conteiner { /* Adjusted the class name if it was a typo */
+  min-height: 200px;
+  background-color: #000000;
 }
 </style>

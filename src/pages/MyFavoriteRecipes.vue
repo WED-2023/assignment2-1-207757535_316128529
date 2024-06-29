@@ -124,28 +124,4 @@ export default {
   padding-left: 0%;
 }
 
-#shuffle-button {
-  background-image: url('@/assets/shuffle.png');
-  background-size: cover;
-  background-color: #1bd883;
-  width: 50px;
-  height: 50px;
-  border: none;
-  cursor: pointer;
-}
-
-.shuffle-container {
-  position: absolute; /* Make element position relative to parent */
-  bottom: 17.5%; /* Position at the bottom of the container */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Offset to center perfectly */
-}
-
-.login-container {
-  width: 100%; /* Ensure login container takes the full width of its parent */
-  height: 100%; /* Ensure login container takes the full height of its parent */
-  display: flex;
-  justify-content: center; /* Center login component horizontally */
-  align-items: center; /* Center login component vertically */
-}
 </style>

@@ -2,7 +2,7 @@
   <div class="recipe-container">
     <div class="cover-image-container">
       <img src="@/assets/recipePage.jpg" alt="Recipe Page" class="full-width-image" />
-      <h1 class="cover-text">Recipe Page</h1>
+      <h1 class="cover-text">{{ recipe.title }}</h1>
     </div>
     <br>
     <div class="recipe-content">
@@ -107,8 +107,7 @@ export default {
     top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 6em;
-    background: rgba(0, 0, 0, 0.5); /* Optional: Add background for better readability */
+    font-size: 3em;
     padding: 10px;
     border-radius: 6px;
   }
@@ -133,7 +132,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #1b1d1d;
+  background-image: url("@/assets/b2.jpg");
   margin-left: 15%;
 
 }

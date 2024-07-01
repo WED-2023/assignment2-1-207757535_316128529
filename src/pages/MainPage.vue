@@ -139,7 +139,7 @@ export default {
 #shuffle-button {
   background-image: url('@/assets/shuffle.png');
   background-size: cover;
-  background-color: #56cae7;
+  background-color: transparent;
   width: 50px;
   height: 50px;
   border: none;

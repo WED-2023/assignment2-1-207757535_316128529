@@ -20,7 +20,7 @@
           <h3 class="section-title">Serving: {{ recipe.servings }}<br><br>Ingredients</h3>
           <ul>
             <li v-for="ingredient in recipe.extendedIngredients" :key="ingredient.id">
-              {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.name }}
+              {{ ingredient.original }} 
             </li>
           </ul>
         </div>

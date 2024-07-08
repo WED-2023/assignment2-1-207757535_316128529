@@ -276,9 +276,16 @@ export default {
         this.$router.push("/login");
       } catch (err) {
         console.log(err.response);
-        this.form.submitError = err.response.data.message;
-      }
-    },
+        if (err.response.status === 409) {
+          // Username already exists, show error message but don't navigate away
+          this.form.submitError = "username taken";
+        } else {
+          // Handle other errors (if any)
+          console.error("Registration error:", err);
+          // Optionally show a generic error message
+          this.form.submitError = "Registration failed. Please try again later.";
+            }
+    }},
     onRegister() {
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {

@@ -13,7 +13,7 @@ export function mockLogin(username, password, success = true) {
   });
 }
 
-export async function Register1(user_details) {
+export async function Register(user_details) {
   console.log(user_details.username);
   return await axios.post(`http://localhost:3000/api/Register`, {
     user_name: user_details.username,

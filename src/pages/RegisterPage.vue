@@ -196,7 +196,7 @@ import {
   sameAs,
   email
 } from "vuelidate/lib/validators";
-import { Register1 } from "../services/auth.js";
+import { Register } from "../services/auth.js";
 
 const passwordContainsLetter = (value) => /[a-zA-Z]/.test(value);
 const passwordContainsNumber = (value) => /\d/.test(value);
@@ -272,7 +272,7 @@ export default {
           country: this.form.country,
           email: this.form.email,
         };
-        const response = await Register1(userDetails);
+        const response = await Register(userDetails);
         this.$router.push("/login");
       } catch (err) {
         console.log(err.response);

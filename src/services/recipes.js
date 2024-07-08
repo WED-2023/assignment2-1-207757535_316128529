@@ -1,7 +1,8 @@
 // src/services/recipes.js
+const axios = require("axios");
+
 import recipe_full_view from "../assets/mocks/recipe_full_view.json";
 import recipe_preview from "../assets/mocks/recipe_preview.json";
-import Familyrecipe from "../assets/mocks/familyRecipes.json";
 
 
 
@@ -20,3 +21,6 @@ export function mockGetRecipeFullDetails(recipeId) {
     return { data: { recipe: recipe_full_view } } ;
   }
   
+  export async function getRandomRecipes() {
+    return await axios.get(`http://localhost:3000/recipes/random?number=3`);
+  }

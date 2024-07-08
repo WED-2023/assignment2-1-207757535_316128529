@@ -3,30 +3,23 @@
     <link rel="stylesheet" href="http://static.sasongsmat.nu/fonts/vegetarian.css" />
     <div class="recipe-card-wrapper">
       <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-        <div class="image-container">
           <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
-        </div>
-      </router-link>
-      <div class="recipe-details">
+        </router-link>
         <div class="recipe-footer-content">
           <div :title="recipe.title" class="recipe-title">
             <b-card-text>{{ recipe.title }}</b-card-text>
           </div>
           <ul class="recipe-overview">
-            <li>{{ recipe.readyInMinutes }} minutes</li>
-            <li>{{ recipe.aggregateLikes }} likes</li>
+            <li>| {{ recipe.readyInMinutes }} | minutes</li>
+            <li> |  {{ recipe.aggregateLikes }} | likes</li>
           </ul>
         </div>
-       
-        <div class="tags-container">
           <tags :recipe="recipe"/>
-        </div>
         <br><br>
         <!-- <div v-if="showLikeButton">   -->
           <like :LoggedIn="showLikeButton"/>
           <un-watched :LoggedIn="showLikeButton"/>      
         <!-- </div> -->
-    </div>
   </div>
   </div>
 </template>
@@ -50,7 +43,7 @@ export default {
   },
   data() {
     return {
-      image_load: false,
+      image_load: true,
     };
   },
   props: {
@@ -92,18 +85,22 @@ export default {
   background: #fff; /* Optional: Add a background color to see the spacing more clearly */
   border-radius: 5px; /* Optional: Add some rounding to the corners */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  height: 100%;
+
 }
 
 .recipe-preview {
   display: inline-block;
   width: 100%;
   position: relative;
+
 }
 
 .recipe-card-wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
+
 }
 
 .image-container {
@@ -116,11 +113,13 @@ export default {
   justify-content: space-between;
   padding: 5px;
   box-sizing: border-box;
+  
 }
 
 .recipe-footer-content {
   width: calc(100% - 50px);
   color: black;
+  max-height: 60%;
 }
 
 .recipe-title {
@@ -148,6 +147,7 @@ export default {
   margin-bottom: 0px;
   font-size: 10px;
   font-weight: bold;
+  max-height: 20%;
 }
 
 .recipe-overview li {
@@ -155,42 +155,8 @@ export default {
   display: table-cell;
   text-align: center;
 }
-
-.like-container {
-  position: absolute;
-  bottom: 1%;
-  right: 45%;
+.tags{
+  margin-top: 30px;
 }
 
-.like-container button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: flex;
-}
-
-.like-container button img {
-  width: 30px;
-  height: 30px;
-}
-
-.tags-container {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  margin-top: 10px;
-}
-
-.tag-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 5px;
-}
-
-.watch-container{
-  justify-content: flex-start;
-  bottom: 1%;
-  left: 50%;
-}
 </style>

@@ -1,5 +1,5 @@
 // src/services/auth.js
-
+const axios = require("axios");
 
 export function mockLogin(username, password, success = true) {
   return new Promise((resolve, reject) => {
@@ -12,18 +12,17 @@ export function mockLogin(username, password, success = true) {
     }, 500); // Simulate a delay
   });
 }
-  
 
-  export function mockRegister(userDetails, success = true) {
-
-    if (!success) {
-      throw { status: 409, response: { data: { message: "Username taken", success: false } } };
-    }
-  
-    return { status: 200, response: { data: { message: "user created", success: true}} };
-  }
-  
-
+export async function Register1(user_details) {
+  console.log(user_details.username);
+  return await axios.post(`http://localhost:3000/api/Register`, {
+    user_name: user_details.username,
+    first_name: user_details.firstName,
+    last_name: user_details.lastName,
+    country: user_details.country,
+    password: user_details.password,
+    email: user_details.email,
+  });}
 
   export function mockLogout() {
     return { status: 200, response: { data: { message: "logout succeeded", success: true}} };

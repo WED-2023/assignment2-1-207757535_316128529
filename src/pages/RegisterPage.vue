@@ -22,7 +22,41 @@
           Username length should be between 3-8 characters long
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-if="!$v.form.username.alpha">
-          Username alpha
+          Username should only contain letters
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-firstName"
+        label-cols-sm="3"
+        label="First Name:"
+        label-for="firstName"
+      >
+        <b-form-input
+          id="firstName"
+          v-model="$v.form.firstName.$model"
+          type="text"
+          :state="validateState('firstName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.required">
+          First name is required
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-lastName"
+        label-cols-sm="3"
+        label="Last Name:"
+        label-for="lastName"
+      >
+        <b-form-input
+          id="lastName"
+          v-model="$v.form.lastName.$model"
+          type="text"
+          :state="validateState('lastName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.required">
+          Last name is required
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -44,7 +78,7 @@
       </b-form-group>
 
       <b-form-group
-        id="input-group-Password"
+        id="input-group-password"
         label-cols-sm="3"
         label="Password:"
         label-for="password"
@@ -67,6 +101,21 @@
         >
           Have length between 5-10 characters long
         </b-form-invalid-feedback>
+        <b-form-invalid-feedback
+          v-if="$v.form.password.required && !$v.form.password.passwordContainsLetter"
+        >
+          Contain at least one letter
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback
+          v-if="$v.form.password.required && !$v.form.password.passwordContainsNumber"
+        >
+          Contain at least one number
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback
+          v-if="$v.form.password.required && !$v.form.password.passwordContainsSpecialChar"
+        >
+          Contain at least one special character
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group
@@ -88,6 +137,26 @@
           v-else-if="!$v.form.confirmedPassword.sameAsPassword"
         >
           The confirmed password is not equal to the original password
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-email"
+        label-cols-sm="3"
+        label="Email:"
+        label-for="email"
+      >
+        <b-form-input
+          id="email"
+          v-model="$v.form.email.$model"
+          type="email"
+          :state="validateState('email')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.email.required">
+          Email is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-else-if="!$v.form.email.email">
+          Email must be valid
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -127,7 +196,7 @@ import {
   sameAs,
   email
 } from "vuelidate/lib/validators";
-import { mockRegister } from "../services/auth.js";
+import { Register1 } from "../services/auth.js";
 
 const passwordContainsLetter = (value) => /[a-zA-Z]/.test(value);
 const passwordContainsNumber = (value) => /\d/.test(value);
@@ -159,12 +228,18 @@ export default {
         length: (u) => minLength(3)(u) && maxLength(8)(u),
         alpha
       },
+      firstName: {
+        required
+      },
+      lastName: {
+        required
+      },
       country: {
         required
       },
       password: {
         required,
-        length: (p) => minLength(5)(p) && maxLength(10)(p) ,
+        length: (p) => minLength(5)(p) && maxLength(10)(p),
         passwordContainsLetter,
         passwordContainsNumber,
         passwordContainsSpecialChar
@@ -172,6 +247,10 @@ export default {
       confirmedPassword: {
         required,
         sameAsPassword: sameAs("password")
+      },
+      email: {
+        required,
+        email
       }
     }
   },
@@ -187,9 +266,13 @@ export default {
       try {
         const userDetails = {
           username: this.form.username,
-          password: this.form.password
+          password: this.form.password,
+          firstName: this.form.firstName,
+          lastName: this.form.lastName,
+          country: this.form.country,
+          email: this.form.email,
         };
-        const response = mockRegister(userDetails);
+        const response = await Register1(userDetails);
         this.$router.push("/login");
       } catch (err) {
         console.log(err.response);

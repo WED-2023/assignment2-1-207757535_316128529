@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mockAddFavorite } from "../services/user.js";
+import { AddFavorite } from "../services/user.js";
 import Like from "../components/Like.vue";
 import UnWatched from "../components/UnWatched.vue";
 import Tags from "../components/Tags.vue";
@@ -66,8 +66,8 @@ export default {
   methods: {
     async addToFavorites() {
       try {
-        const response = mockAddFavorite(this.recipe.id);
-        if (response.status === 200 && response.response.data.success) {
+        const response = AddFavorite(this.recipe.id);
+        if (response.status === 200 && response.data.success) {
           this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
           this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image
         } else {

@@ -47,6 +47,8 @@
 <script>
 import NewRecipe from "./components/NewRecipe";
 import { computed } from 'vue';
+import { Logout } from "./services/auth.js";
+
 export default {
   components: { NewRecipe },
   name: "App",
@@ -59,7 +61,7 @@ export default {
     },
     Logout() {
       this.$root.store.logout();
-      this.$root.toast("Logout", "User logged out successfully", "success");
+      Logout();
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });

@@ -73,7 +73,7 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mockLogin } from "../services/auth.js";
+import { Login } from "../services/auth.js";
 
 export default {
   name: "Login",
@@ -105,9 +105,8 @@ export default {
     },
     async Login() {
       try {
-        const response = await mockLogin(this.form.username, this.form.password, this.success);
-        
-        if (response.status === 200 && response.response.data.success) {
+        const response = await Login(this.form.username,this.form.password);
+        if (response.status === 200 && response.data.success) {
           this.form.submitSuccess = true;
           this.$root.store.login(this.form.username);
           this.$router.push("/");

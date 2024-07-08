@@ -196,7 +196,7 @@ import {
   sameAs,
   email
 } from "vuelidate/lib/validators";
-import { Register1 } from "../services/auth.js";
+import { Register } from "../services/auth.js";
 
 const passwordContainsLetter = (value) => /[a-zA-Z]/.test(value);
 const passwordContainsNumber = (value) => /\d/.test(value);
@@ -272,12 +272,19 @@ export default {
           country: this.form.country,
           email: this.form.email,
         };
-        const response = await Register1(userDetails);
+        const response = await Register(userDetails);
         this.$router.push("/login");
       } catch (err) {
         console.log(err.response);
-        this.form.submitError = err.response.data.message;
-      }
+        if (err.response.status === 409) {
+          // Username already exists, show error message but don't navigate away
+          this.form.submitError = "username taken";
+        } else {
+          // Handle other errors (if any)
+          console.error("Registration error:", err);
+          // Optionally show a generic error message
+          this.form.submitError = "Registration failed. Please try again later.";
+     }}
     },
     onRegister() {
       this.$v.form.$touch();

@@ -1,32 +1,66 @@
-// src/services/auth.js
 const axios = require("axios");
 
-export function mockLogin(username, password, success = true) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (!success) {
-        reject({ status: 409, response: { data: { message: "Username or password are incorrect", success: false } } });
-      } else {
-        resolve({ status: 200, response: { data: { message: "Login succeeded", success: true } } });
-      }
-    }, 500); // Simulate a delay
-  });
+// Function to handle login
+export async function Login(username, password) {
+  try {
+    const response = await axios.post("http://localhost:3000/api/Login", {
+      user_name: username,
+      password: password,
+    });
+    return response;
+  } catch (error) {
+    // Handle error response from server
+    if (error.response) {
+      return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
+    } else {
+      return { status: 500, message: "Server error", success: false };
+    }
+  }
 }
 
-export async function Register1(user_details) {
-  console.log(user_details.username);
-  return await axios.post(`http://localhost:3000/api/Register`, {
-    user_name: user_details.username,
-    first_name: user_details.firstName,
-    last_name: user_details.lastName,
-    country: user_details.country,
-    password: user_details.password,
-    email: user_details.email,
-  });}
-
-  export function mockLogout() {
-    return { status: 200, response: { data: { message: "logout succeeded", success: true}} };
-
+// Function to handle register
+export async function Register(user_details) {
+  try {
+    const response = await axios.post("http://localhost:3000/api/Register", {
+      user_name: user_details.username,
+      first_name: user_details.firstName,
+      last_name: user_details.lastName,
+      country: user_details.country,
+      password: user_details.password,
+      email: user_details.email,
+    });
+    // Check response from server
+    if (response.status === 201 && response.data.success) {
+      return { status: response.status, message: response.data.message, success: response.data.success };
+    } else {
+      throw { status: response.status, message: response.data.message, success: response.data.success };
+    }
+  } catch (error) {
+    // Handle error response from server
+    if (error.response) {
+      return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
+    } else {
+      return { status: 500, message: "Server error", success: false };
+    }
   }
-  
+}
 
+// Function to handle logout
+export function Logout() {
+  try {
+    const response = axios.post("http://localhost:3000/api/Logout");
+    // Check response from server
+    if (response.status === 200 && response.data.success) {
+      return { status: response.status, message: response.data.message, success: response.data.success };
+    } else {
+      throw { status: response.status, message: response.data.message, success: response.data.success };
+    }
+  } catch (error) {
+    // Handle error response from server
+    if (error.response) {
+      return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
+    } else {
+      return { status: 500, message: "Server error", success: false };
+    }
+  }
+}

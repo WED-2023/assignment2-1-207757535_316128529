@@ -10,7 +10,7 @@
           <RecipePreviewList
             :isUserLoggedIn=false
             class="RandomRecipes center"
-            :recipes="lastViewedRecipes"
+            :recipes="recipes"
           />
         </div>
     </div>
@@ -19,7 +19,7 @@
 <script>
 import RecipeCarousel from "../components/RecipeCarousel.vue";
 import RecipePreviewList from "../components/RecipePreviewList.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
+import { GetFavoritesRecipes } from "../services/recipes.js";
 
 export default {
   components: {
@@ -33,15 +33,17 @@ export default {
     };
   },
   mounted() {
-    this.fetchRecipes(4); // Fetch 4 recipes when the component is mounted
-    if (this.$root.store.username) {
-      this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
-    }
+    this.showFavorites(); // Fetch 4 recipes when the component is mounted
+    // if (this.$root.store.username) {
+    //   this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
+    // }
   },
   methods: {
-    fetchRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
-      this.recipes = response.data.recipes;
+    async showFavorites() {
+      const response = await GetFavoritesRecipes();
+      if (response.status === 200 && response.data.success) {
+        this.recipes = response.data.recipes;
+      }
     },
     fetchLastViewedRecipes(amountToFetch) {
       const response = mockGetRecipesPreview(amountToFetch);

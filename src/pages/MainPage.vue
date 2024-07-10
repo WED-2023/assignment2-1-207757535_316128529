@@ -14,7 +14,7 @@
           />
         </div>
         <div class="shuffle-container">
-            <b-button id="shuffle-button"></b-button>
+            <b-button id="shuffle-button" @click="fetchRandomRecipes"></b-button>
           </div>
       </div>
       <div class="right-side">
@@ -37,7 +37,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginPage from "../pages/LoginPage";
-import { mockGetRecipesPreview } from "../services/recipes.js"; // Import the mock function
+import { getRandomRecipes } from "../services/recipes.js"; 
 
 export default {
   data() {
@@ -52,20 +52,20 @@ export default {
     LoginPage,
   },
   mounted() {
-    this.fetchRandomRecipes(3); // Fetch 3 random recipes when the component is mounted
+    this.fetchRandomRecipes(); // Fetch 3 random recipes when the component is mounted
     if (this.$root.store.username) {
       this.fetchLastViewedRecipes(3); // Fetch 3 last viewed recipes if the user is logged in
     }
   },
   methods: {
-    fetchRandomRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
-      this.randomRecipes = response.data.recipes;
+    async fetchRandomRecipes() {
+      const response = await getRandomRecipes();
+      this.randomRecipes = response.data;
     },
     fetchLastViewedRecipes(amountToFetch) {
       const response = mockGetRecipesPreview(amountToFetch);
       this.lastViewedRecipes = response.data.recipes;
-    }
+    },
   }
 };
 </script>

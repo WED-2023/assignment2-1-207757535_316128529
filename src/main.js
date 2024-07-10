@@ -111,3 +111,4 @@ new Vue({
   },
   render: (h) => h(App),
 }).$mount("#app");
+export default shared_data; // Export shared_data for use in other modules

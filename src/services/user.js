@@ -15,7 +15,7 @@ const axios = require("axios");
     
   }
   export async function addLastViewRecipes(recipe_id) {
-    return await axios.post(`http://localhost:3000/users/lastViewed`, {"user_id": shared_data.username, "recipe_id": recipe_id },
+    return await axios.post(`http://localhost:3000/users/lastViewed`, {user_id : shared_data.username, recipe_id: recipe_id },
       {withCredentials: true}
     );
   }

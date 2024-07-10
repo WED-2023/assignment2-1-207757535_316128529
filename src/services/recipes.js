@@ -17,10 +17,10 @@ export function mockGetRecipesPreview(amount = 1) {
 
 
 
-export function mockGetRecipeFullDetails(recipeId) {
+export function mockGetRecipeFullDetails() {
     return { data: { recipe: recipe_full_view } } ;
   }
-  
+
   export async function getRandomRecipes() {
     return await axios.get(`http://localhost:3000/recipes/random?number=3`);
   }

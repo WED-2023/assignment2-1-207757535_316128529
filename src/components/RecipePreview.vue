@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="http://static.sasongsmat.nu/fonts/vegetarian.css" />
     <div class="recipe-card-wrapper">
       <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
-          <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%"></b-card>
+          <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%" @click="addLastViewRecipe"></b-card>
         </router-link>
         <div class="recipe-footer-content">
           <div :title="recipe.title" class="recipe-title">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mockAddFavorite } from "../services/user.js";
+import { addLastViewRecipes } from "../services/user.js";
 import Like from "../components/Like.vue";
 import UnWatched from "../components/UnWatched.vue";
 import Tags from "../components/Tags.vue";
@@ -69,7 +69,10 @@ export default {
       } catch (err) {
         this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
       }
-    }
+    },
+    async addLastViewRecipe() {
+      await addLastViewRecipes(this.recipe.id)}
+
   }
 };
 </script>

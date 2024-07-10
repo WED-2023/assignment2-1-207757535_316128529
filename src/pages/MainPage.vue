@@ -14,7 +14,7 @@
           />
         </div>
         <div class="shuffle-container">
-            <b-button id="shuffle-button"></b-button>
+            <b-button id="shuffle-button" @click="fetchRandomRecipes"></b-button>
           </div>
       </div>
       <div class="right-side">
@@ -37,7 +37,6 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginPage from "../pages/LoginPage";
-import { mockGetRecipesPreview } from "../services/recipes.js"; // Import the mock function
 import { getRandomRecipes } from "../services/recipes.js"; 
 
 export default {
@@ -66,7 +65,7 @@ export default {
     fetchLastViewedRecipes(amountToFetch) {
       const response = mockGetRecipesPreview(amountToFetch);
       this.lastViewedRecipes = response.data.recipes;
-    }
+    },
   }
 };
 </script>

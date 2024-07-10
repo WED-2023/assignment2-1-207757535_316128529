@@ -49,6 +49,7 @@ Vue.use(Vuelidate);
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
+    config.headers["Cache-Control"] = "no-cache";
     return config;
   },
   function(error) {
@@ -72,6 +73,8 @@ axios.interceptors.response.use(
 Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
+
+axios.defaults.withCredentials = true;
 
 const shared_data = {
   server_domain: "http://localhost:3000",

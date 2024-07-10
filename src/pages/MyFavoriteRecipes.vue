@@ -41,9 +41,12 @@ export default {
   methods: {
     async showFavorites() {
       const response = await GetFavoritesRecipes();
-      if (response.status === 200 && response.data.success) {
-        this.recipes = response.data.recipes;
-      }
+      this.recipes = response.data;
+      //   alert(this.rec
+      // if (response.status === 200 && response.success) {
+      //   this.recipes = response.recipes;
+      //   alert(this.recipes[0]);
+      // }
     },
     fetchLastViewedRecipes(amountToFetch) {
       const response = mockGetRecipesPreview(amountToFetch);

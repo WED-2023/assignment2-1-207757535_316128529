@@ -16,11 +16,16 @@ export function mockGetRecipesPreview(amount = 1) {
 
 export async function GetFavoritesRecipes() {
   try {
-    const favoriteRecipes_json = await axios.get("http://localhost:3000/users/favorites", {
-      user_name: shared_data.username,
-    },
-    { withCredentials: true });
-    return favoriteRecipes_json;
+    const response = await axios.get("http://localhost:3000/users/favorites", {
+      data: {
+        user_name: shared_data.username,
+      },
+      withCredentials: true, // Ensure credentials are sent with the request
+      headers: {
+        "Cache-Control": "no-cache", // Ensure no caching
+      },
+    });
+    return  response;
   }
   catch (error) {
     // Handle error response from server

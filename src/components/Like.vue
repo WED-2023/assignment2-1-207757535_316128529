@@ -20,6 +20,10 @@ export default {
     };
   },
    props: {
+    recipeId: {
+      type: String,
+      required: true
+    },
     LoggedIn: {
       type: Boolean,
       default: true
@@ -28,7 +32,8 @@ export default {
   methods: {
     async addToFavorites() {
       try {
-        const response = AddFavorite(this.recipeId);
+        alert(this.LoggedIn);
+        const response = AddFavorite(recipeId);
         if (response.status === 200 && response.data.success) {
           this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
           this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image

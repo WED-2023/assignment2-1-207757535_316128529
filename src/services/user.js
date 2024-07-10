@@ -5,6 +5,8 @@ import recipe_preview from "../assets/mocks/recipe_preview.json";
 
   export async function AddFavorite(recipeId) {
     try {
+      alert(recipeId);
+      // alert("http://localhost:3000/users/favorites/" + recipeId + "");
       const response = await axios.post("http://localhost:3000/users/favorites/" + recipeId + "");
       return response;
     } catch (error) {
@@ -20,7 +22,6 @@ import recipe_preview from "../assets/mocks/recipe_preview.json";
   
   export function mockAddUserRecipe(recipeDetails) {
     return { status: 200, response: { data: { message: "The Recipe successfully added to My Recipes", success: true}} };
-    
   }
   
   

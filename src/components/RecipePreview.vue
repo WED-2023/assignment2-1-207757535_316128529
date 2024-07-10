@@ -17,7 +17,7 @@
           <tags :recipe="recipe"/>
         <br><br>
         <!-- <div v-if="showLikeButton">   -->
-          <like :LoggedIn="showLikeButton"/>
+          <like :recipeId ="recipe.id" :LoggedIn="showLikeButton"/>
           <un-watched :LoggedIn="showLikeButton"/>      
         <!-- </div> -->
   </div>
@@ -57,19 +57,7 @@ export default {
     }
   },
   methods: {
-    async addToFavorites() {
-      try {
-        const response = mockAddFavorite(this.recipe.id);
-        if (response.status === 200 && response.response.data.success) {
-          this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
-          this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image
-        } else {
-          this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
-        }
-      } catch (err) {
-        this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
-      }
-    },
+    
     async addLastViewRecipe() {
       await addLastViewRecipes(this.recipe.id)}
 

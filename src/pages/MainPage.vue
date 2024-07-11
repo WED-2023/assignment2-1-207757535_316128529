@@ -37,7 +37,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginPage from "../pages/LoginPage";
-import { getRandomRecipes } from "../services/recipes.js"; 
+import { getRandomRecipes, getLastThreeRecipes } from "../services/recipes.js"; 
 
 export default {
   data() {
@@ -54,7 +54,7 @@ export default {
   mounted() {
     this.fetchRandomRecipes(); // Fetch 3 random recipes when the component is mounted
     if (this.$root.store.username) {
-      this.fetchLastViewedRecipes(3); // Fetch 3 last viewed recipes if the user is logged in
+      this.fetchLastViewedRecipes(); // Fetch max 3 last viewed recipes if the user is logged in
     }
   },
   methods: {
@@ -62,9 +62,12 @@ export default {
       const response = await getRandomRecipes();
       this.randomRecipes = response.data;
     },
-    fetchLastViewedRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
+    async fetchLastViewedRecipes() {
+      const response = await getLastThreeRecipes();
       this.lastViewedRecipes = response.data.recipes;
+      if (response.data.status === 200 && response.data.success) {
+        this.favoriteRecipes.push(...response.data.recipes);
+      }
     },
   }
 };

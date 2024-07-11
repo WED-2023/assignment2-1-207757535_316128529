@@ -1,7 +1,5 @@
 import axios from "axios";
 import shared_data from "../main"; // Adjust the path based on your project structure
-import recipe_full_view from "../assets/mocks/recipe_full_view.json";
-import recipe_preview from "../assets/mocks/recipe_preview.json";
 
 export async function AddFavorite(recipeId) {
   try {
@@ -28,10 +26,3 @@ export async function addLastViewRecipes(recipe_id) {
     );
   }
 
-export function mockAddUserRecipe(recipeDetails) {
-  return { status: 200, response: { data: { message: "The Recipe successfully added to My Recipes", success: true}} };
-}
-
-export function mockAddFavorite(recipeId) {
-  return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
-}

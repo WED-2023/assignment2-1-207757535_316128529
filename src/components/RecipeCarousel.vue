@@ -4,7 +4,7 @@
       :interval="4000"
       controls
       indicators
-      style="border: 100px; background-color: #fff; "
+      style="border: 100px; background-color: #fff;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
       prev-icon="fas fa-chevron-left"
@@ -35,6 +35,7 @@
     </b-carousel>
   </div>
 </template>
+
 
 <script>
 import { BCarousel, BCarouselSlide } from 'bootstrap-vue';

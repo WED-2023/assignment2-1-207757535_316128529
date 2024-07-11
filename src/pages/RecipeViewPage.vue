@@ -8,10 +8,9 @@
     <div class="recipe-content">
       <div clas = "preview-conteiner">
         <RecipePreviewList
-            :isUserLoggedIn="$root.store.username" :recipes="randomRecipes"
+            :recipes="recipePreview"  :isUserLoggedIn="$root.store.username" 
             style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
             class="RandomRecipes center"
-            :key="componentKey"
           />
     </div>
       <div class="recipe-details">
@@ -43,39 +42,50 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetRecipeFullDetails } from "../services/recipes.js";
-import { mockGetRecipesPreview } from "../services/recipes.js"; // Import the mock function
+import { getRecipePage, getRecipePreview } from "../services/recipes.js";
 
 export default {
   name: "recipe",
   components: {
-    RecipePreviewList
+    RecipePreviewList,
   },
   data() {
     return {
       showDetails: false,
+      recipeID: this.$route.params.recipeID,
       recipe: null,
-      preview: [],
+      recipePreview: [],
     };
   },
   mounted() {
     this.getRecipe();
-    this.fetchRecipes(1);
+    this.fetchPreview();
   },
   methods: {
     async getRecipe() {
       try {
-        const response = mockGetRecipeFullDetails(1);
-        const recipeDetails = response.data.recipe;
-        this.recipe = recipeDetails;
-      } catch (error) {
+        const response_full = await getRecipePage(this.recipeID);
+        if (response_full.data.status === 200 && response_full.data.success) {
+          const recipeDetails = response_full.data.recipe;
+          this.recipe = recipeDetails;
+        }
+        }
+        catch (error) 
+        {
+          console.log(error);
+        }
+    },
+    async fetchPreview() {
+      try{
+        const response = await getRecipePreview(this.recipeID);
+      if (response_full.data.status === 200 && response_full.data.success) {
+        this.recipePreview.push(response.data.recipePreview);  
+        }
+      }
+      catch (error) 
+      {
         console.log(error);
       }
-    },
-    fetchRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
-      this.randomRecipes = response.data.recipes;
-    
   },
 }};
 </script>

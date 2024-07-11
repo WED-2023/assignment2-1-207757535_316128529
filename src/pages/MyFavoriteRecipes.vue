@@ -3,34 +3,35 @@
     <br><br><br><br>
     <h1 class="title">MY FAVORITE RECIPES</h1>
       <div >
-          <RecipeCarousel :recipes="recipes"/>
-          
+          <RecipeCarousel :recipes="favoriteRecipes"/>
       </div>
       <div >
           <RecipePreviewList
             :isUserLoggedIn=false
             class="RandomRecipes center"
-            :recipes="recipes"
+            :recipes="favoriteRecipes"
+            :key="componentKey"
           />
         </div>
     </div>
 </template>
 
 <script>
-import RecipeCarousel from "../components/RecipeCarousel.vue";
-import RecipePreviewList from "../components/RecipePreviewList.vue";
+import RecipeCarousel from "../components/RecipeCarousel";
+import RecipePreviewList from "../components/RecipePreviewList";
 import { GetFavoritesRecipes } from "../services/recipes.js";
 
 export default {
+  data() {
+    return {
+      componentKey: 0,
+      favoriteRecipes: [], // Initialize an empty array for recipes
+      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
+    };
+  },
   components: {
     RecipeCarousel,
     RecipePreviewList,
-  },
-  data() {
-    return {
-      recipes: [], // Initialize an empty array for recipes
-      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
-    };
   },
   mounted() {
     this.showFavorites(); // Fetch 4 recipes when the component is mounted
@@ -41,17 +42,14 @@ export default {
   methods: {
     async showFavorites() {
       const response = await GetFavoritesRecipes();
-      this.recipes = response.data;
-      //   alert(this.rec
-      // if (response.status === 200 && response.success) {
-      //   this.recipes = response.recipes;
-      //   alert(this.recipes[0]);
-      // }
+      if (response.data.status === 200 && response.data.success) {
+        this.favoriteRecipes.push(...response.data.recipes);
+      }
     },
-    fetchLastViewedRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
-      this.lastViewedRecipes = response.data.recipes;
-    }
+    // fetchLastViewedRecipes(amountToFetch) {
+    //   const response = mockGetRecipesPreview(amountToFetch);
+    //   this.lastViewedRecipes = response.data.recipes;
+    // }
   }
 };
 </script>

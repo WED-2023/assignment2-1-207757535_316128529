@@ -111,7 +111,7 @@ export default {
           this.$root.store.login(this.form.username);
           this.$router.push("/");
         } else {
-          this.form.submitError = response.response.data.message;
+          this.$root.toast("Failed to Login", "Username or Password are incorrect", "danger");
         }
       } catch (err) {
         this.form.submitError = err.response.data.message;

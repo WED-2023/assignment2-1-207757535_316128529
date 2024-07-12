@@ -88,7 +88,6 @@ export default {
 
 .recipe-info {
   max-width: 400px; /* Adjust the max-width as needed */
- background-color: #afccd8 ;
   text-align: center;
   margin-top: 5px; /* Add margin between image and info */
   font-weight: bold;

@@ -33,7 +33,6 @@ export default {
     async addToFavorites() {
       try {
         const response = await AddFavorite(this.recipeId);
-        alert(response.status);
         if (response.status === 200 && response.data.success) {
           this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
           this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image

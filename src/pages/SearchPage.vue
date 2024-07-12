@@ -62,16 +62,13 @@
 
       <FiltersSidebar :selectedFilters="selectedFilters"/>
       
-      <div v-if="username" class="recent-searches-container">
-        <h1 style="font-size: 20px">Your recent recipes:</h1>
+      <div v-if="username" class="searches-container">
+        <h1 style="font-size: 20px">Result:</h1>
         <div>
-          <RecipePreviewList :isUserLoggedIn="false" class="RandomRecipes center" :recipes="lastViewedRecipes"/>
+          <RecipePreviewList :isUserLoggedIn="$root.store.username" class="Recipes center" :recipes="recipes"/>
         </div>
       </div>
-      <br><br><br><br>
-      <div class="current-searches-container">
-        <h1 style="font-size: 20px">Your results:</h1>
-      </div>
+
     </div>
   </div>
 </template>
@@ -79,7 +76,7 @@
 <script>
 import FiltersSidebar from '../components/Filter.vue';
 import RecipePreviewList from "../components/RecipePreviewList.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
+import { get_search_result } from "../services/recipes.js";
 
 export default {
   components: {
@@ -89,10 +86,9 @@ export default {
   data() {
     return {
       recipes: [],
-      lastViewedRecipes: [],
       selectedFilters: {
         cuisines: {},
-        diets: {},
+        diet: {},
         intolerances: {}
       },
       numOfRecipes: 5,
@@ -103,6 +99,10 @@ export default {
   watch: {
     selectedSortOption() {
       this.handleSortOptionChange();
+    },
+    selectedFilters: {
+      handler: 'search', // Watch selectedFilters for changes and trigger search
+      deep: true
     }
   },
   computed: {
@@ -111,21 +111,31 @@ export default {
     }
   },
   mounted() {
-    if (this.$root.store.username) {
-      this.fetchLastViewedRecipes(this.numOfRecipes);
-    }
   },
   methods: {
-    fetchLastViewedRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
-      this.lastViewedRecipes = response.data.recipes;
+    async changeNumOfPresentedRec(num){
+      this.numOfRecipes = num;
+      this.search();
     },
-    changeNumOfPresentedRec(number) {
-      this.numOfRecipes = number;
-      this.fetchLastViewedRecipes(this.numOfRecipes);
-    },
-    search() {
-      this.searchQuery = "";
+  
+    async search() {
+      try {
+        const response = await get_search_result(
+          this.searchQuery,
+          this.selectedFilters.cuisines,
+          this.selectedFilters.diet,
+          this.selectedFilters.intolerances,
+          this.selectedSortOption,
+          this.numOfRecipes
+        );
+          if (response.status === 200 ) {
+          this.recipes.push(...response.data);
+        } else {
+          this.$root.toast("Failed", "can't find recipes");
+        }
+      } catch (err) {
+        this.form.submitError = err.response.data.message;
+      }
     },
     handleSortOptionChange() {
       switch (this.selectedSortOption) {

@@ -43,11 +43,11 @@
     data() {
       return {
         cuisines: cuisines,
-        diets: diets,
+        diet: diets,
         intolerances: intolerances,
         selectedFilters: {
           cuisines: [],
-          diets: [],
+          diet: [],
           intolerances: []
         }
       };

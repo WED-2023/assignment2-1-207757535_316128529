@@ -23,17 +23,14 @@
 
         <!-- Sort options button to the left of the number of recipes buttons -->
         <div class="sort-options-container" style="padding-left: 2%; padding-bottom: 10%">
-          <b-dropdown v-model="selectedSortOption" id="sort-options" size="sm" toggle-class="btn-sm text-decoration-none small-button" no-caret>
+          <b-dropdown v-model="selectedSortOption" id="sort-options" size="sm" toggle-class="btn-sm text-decoration-none small-button" no-caret @change="search">
             <template #button-content>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
                 <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
               </svg>       
             </template>
-            <b-dropdown-item value="Default">Default</b-dropdown-item>
-            <b-dropdown-item value="Rating High-Low">Rating High-Low</b-dropdown-item>
-            <b-dropdown-item value="Rating Low-High">Rating Low-High</b-dropdown-item>
-            <b-dropdown-item value="Cooking Time Short-Long">Cooking Time Short-Long</b-dropdown-item>
-            <b-dropdown-item value="Cooking Time Long-Short">Cooking Time Long-Short</b-dropdown-item>         
+            <b-dropdown-item value="time">Preparation Time</b-dropdown-item>
+            <b-dropdown-item value="popularity">Popularity</b-dropdown-item>
           </b-dropdown>
         </div>
 
@@ -60,10 +57,9 @@
         </div>
       </div>
 
-      <FiltersSidebar :selectedFilters="selectedFilters"/>
+      <FiltersSidebar :selectedFilters.sync="selectedFilters"/>
       
       <div v-if="username" class="searches-container">
-        <h1 style="font-size: 20px">Result:</h1>
         <div>
           <RecipePreviewList :isUserLoggedIn="$root.store.username" class="Recipes center" :recipes="recipes"/>
         </div>
@@ -83,34 +79,24 @@ export default {
     FiltersSidebar,
     RecipePreviewList,
   },
+  
   data() {
     return {
       recipes: [],
       selectedFilters: {
-        cuisines: {},
-        diet: {},
-        intolerances: {}
+        cuisines: [],
+        diets: [],
+        intolerances: []
       },
       numOfRecipes: 5,
-      selectedSortOption: 'Default',
+      selectedSortOption: "time", // Initialize with default sort option
       searchQuery: ""
     };
-  },
-  watch: {
-    selectedSortOption() {
-      this.handleSortOptionChange();
-    },
-    selectedFilters: {
-      handler: 'search', // Watch selectedFilters for changes and trigger search
-      deep: true
-    }
   },
   computed: {
     username() {
       return this.$root.store.username;
     }
-  },
-  mounted() {
   },
   methods: {
     async changeNumOfPresentedRec(num){
@@ -120,42 +106,21 @@ export default {
   
     async search() {
       try {
-        const response = await get_search_result(
-          this.searchQuery,
-          this.selectedFilters.cuisines,
-          this.selectedFilters.diet,
-          this.selectedFilters.intolerances,
-          this.selectedSortOption,
-          this.numOfRecipes
-        );
-          if (response.status === 200 ) {
-          this.recipes.push(...response.data);
+        const cuisineFilters = this.selectedFilters.cuisines.join(',');
+        const dietFilters = this.selectedFilters.diets.join(',');
+        const intoleranceFilters = this.selectedFilters.intolerances.join(',');
+        const response = await get_search_result(this.searchQuery, cuisineFilters, dietFilters, intoleranceFilters, this.selectedSortOption, this.numOfRecipes);
+
+        if (response.status === 200) {
+          this.recipes = response.data; // Replace old recipes with new ones
+          if (this.recipes.length === 0) {
+            this.$root.toast("Failed", "can't find recipes");
+          }
         } else {
           this.$root.toast("Failed", "can't find recipes");
         }
       } catch (err) {
-        this.form.submitError = err.response.data.message;
-      }
-    },
-    handleSortOptionChange() {
-      switch (this.selectedSortOption) {
-        case 'Default':
-          this.recipes.sort(/* Add your default sorting logic */);
-          break;
-        case 'Rating High-Low':
-          this.recipes.sort((a, b) => b.rating - a.rating);
-          break;
-        case 'Rating Low-High':
-          this.recipes.sort((a, b) => a.rating - b.rating);
-          break;
-        case 'Cooking Time Short-Long':
-          this.recipes.sort((a, b) => a.cookingTime - b.cookingTime);
-          break;
-        case 'Cooking Time Long-Short':
-          this.recipes.sort((a, b) => b.cookingTime - a.cookingTime);
-          break;
-        default:
-          break;
+        this.$root.toast("Error", err.response.data.message);
       }
     }
   }

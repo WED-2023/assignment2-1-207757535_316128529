@@ -284,8 +284,8 @@ export default {
           console.error("Registration error:", err);
           // Optionally show a generic error message
           this.form.submitError = "Registration failed. Please try again later.";
-            }
-    }},
+     }}
+    },
     onRegister() {
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {

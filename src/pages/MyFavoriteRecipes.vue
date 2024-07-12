@@ -3,50 +3,53 @@
     <br><br><br><br>
     <h1 class="title">MY FAVORITE RECIPES</h1>
       <div >
-          <RecipeCarousel :recipes="recipes"/>
-          
+          <RecipeCarousel :recipes="favoriteRecipes"/>
       </div>
       <div >
           <RecipePreviewList
             :isUserLoggedIn=false
             class="RandomRecipes center"
-            :recipes="lastViewedRecipes"
+            :recipes="favoriteRecipes"
+            :key="componentKey"
           />
         </div>
     </div>
 </template>
 
 <script>
-import RecipeCarousel from "../components/RecipeCarousel.vue";
-import RecipePreviewList from "../components/RecipePreviewList.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
+import RecipeCarousel from "../components/RecipeCarousel";
+import RecipePreviewList from "../components/RecipePreviewList";
+import { GetFavoritesRecipes } from "../services/recipes.js";
 
 export default {
+  data() {
+    return {
+      componentKey: 0,
+      favoriteRecipes: [], // Initialize an empty array for recipes
+      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
+    };
+  },
   components: {
     RecipeCarousel,
     RecipePreviewList,
   },
-  data() {
-    return {
-      recipes: [], // Initialize an empty array for recipes
-      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
-    };
-  },
   mounted() {
-    this.fetchRecipes(4); // Fetch 4 recipes when the component is mounted
-    if (this.$root.store.username) {
-      this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
-    }
+    this.showFavorites(); // Fetch 4 recipes when the component is mounted
+    // if (this.$root.store.username) {
+    //   this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
+    // }
   },
   methods: {
-    fetchRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
-      this.recipes = response.data.recipes;
+    async showFavorites() {
+      const response = await GetFavoritesRecipes();
+      if (response.data.status === 200 && response.data.success) {
+        this.favoriteRecipes.push(...response.data.recipes);
+      }
     },
-    fetchLastViewedRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
-      this.lastViewedRecipes = response.data.recipes;
-    }
+    // fetchLastViewedRecipes(amountToFetch) {
+    //   const response = mockGetRecipesPreview(amountToFetch);
+    //   this.lastViewedRecipes = response.data.recipes;
+    // }
   }
 };
 </script>

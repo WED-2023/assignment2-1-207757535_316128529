@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mockAddFavorite } from "../services/user.js";
+import { AddFavorite } from "../services/user.js";
 
 export default {
   data() {
@@ -20,6 +20,10 @@ export default {
     };
   },
    props: {
+    recipeId: {
+      type: String,
+      required: true
+    },
     LoggedIn: {
       type: Boolean,
       default: true
@@ -28,8 +32,9 @@ export default {
   methods: {
     async addToFavorites() {
       try {
-        const response = mockAddFavorite(this.recipeId);
-        if (response.status === 200 && response.response.data.success) {
+        const response = await AddFavorite(this.recipeId);
+        alert(response.status);
+        if (response.status === 200 && response.data.success) {
           this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
           this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image
         } else {

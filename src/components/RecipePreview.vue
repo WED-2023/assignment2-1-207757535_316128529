@@ -18,7 +18,7 @@
         <br><br>
         <!-- <div v-if="showLikeButton">   -->
           <like :recipeId ="recipe.id" :LoggedIn="showLikeButton"/>
-          <un-watched :LoggedIn="showLikeButton"/>      
+          <watch :isViewed="Viewed"/>      
         <!-- </div> -->
   </div>
   </div>
@@ -27,13 +27,13 @@
 <script>
 import { addLastViewRecipes } from "../services/user.js";
 import Like from "../components/Like.vue";
-import UnWatched from "../components/UnWatched.vue";
+import Watch from "../components/Watch.vue";
 import Tags from "../components/Tags.vue";
 
 export default {
   components:{
       Like,
-      UnWatched,
+      Watch,
       Tags
   },
   mounted() {
@@ -54,15 +54,21 @@ export default {
     showLikeButton: {
       type: Boolean,
       default: true
-    }
+    },
+    Viewed: {
+      type: Boolean,
+      default: true
+    },
   },
   methods: {
-    
     async addLastViewRecipe() {
-      await addLastViewRecipes(this.recipe.id)}
+      const response = await addLastViewRecipes(this.recipe.id);
+      if(response.data.status === 200 && response.data.success) {
+        this.Viewed = true;
+      }
 
   }
-};
+}};
 </script>
 
 <style scoped>

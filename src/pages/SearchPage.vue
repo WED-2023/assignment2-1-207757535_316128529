@@ -79,7 +79,7 @@
 <script>
 import FiltersSidebar from '../components/Filter.vue';
 import RecipePreviewList from "../components/RecipePreviewList.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
+// import { mockGetRecipesPreview } from "../services/recipes.js";
 
 export default {
   components: {
@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     fetchLastViewedRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
+      // const response = mockGetRecipesPreview(amountToFetch);
       this.lastViewedRecipes = response.data.recipes;
     },
     changeNumOfPresentedRec(number) {

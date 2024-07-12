@@ -19,18 +19,36 @@
 
       <!-- Image -->
       <b-form-group class="select-image-container" label="Recipe image:">
-        <div class="form-group">
-          <b-form-file
-            label="Image:"
-            v-model="file1"
-            :state="Boolean(file1)"
-            placeholder="Choose an image or drop it here..."
-            drop-placeholder="Drop file here..."
-            required
-          ></b-form-file>
-          <div class="mt-3">Selected file: {{ file1 ? file1.name : '' }}</div>
-        </div>
-      </b-form-group>
+    <div class="form-group">
+      <!-- Toggle Button -->
+      <b-button @click="toggleInputMode">
+        {{ useUrlInput ? 'Upload File' : 'Enter URL' }}
+      </b-button>
+      
+      <!-- File Upload -->
+      <b-form-file
+        label="Image:"
+        v-if="!useUrlInput"
+        v-model="file1"
+        :state="Boolean(file1)"
+        placeholder="Choose an image or drop it here..."
+        drop-placeholder="Drop file here..."
+        @change="handleFileChange"
+        required
+      ></b-form-file>
+      
+      <!-- URL Input -->
+      <b-form-input
+        v-else
+        v-model="imageUrl"
+        placeholder="Enter image URL..."
+        required
+      ></b-form-input>
+
+      <!-- Selected File or URL Display -->
+      <div class="mt-3">Selected: {{ selectedFileOrUrl }}</div>
+    </div>
+  </b-form-group>
 
       <!-- Summary -->
       <b-form-group class="summary-container" label="Summary:" label-for="input-summary">
@@ -46,7 +64,7 @@
 
       <!-- Time to make -->
       <b-form-group class="time-container" label="Time to make:">
-        <b-form-timepicker v-model="time" show-seconds required :hour12="false"></b-form-timepicker>
+        <b-form-timepicker v-model="time" :show-hours="false" required :hour12="false"></b-form-timepicker>
       </b-form-group>
 
       <!-- Serving -->
@@ -70,10 +88,10 @@
       <b-form-group class="instruction-container" label="Instructions:">
         <label>Add an instruction:</label>
         <template v-if="numOfInstructions === 1">
-          <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}. Enter instruction...`" required></b-form-input>
+          <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}. Enter instruction...`" ></b-form-input>
         </template>
         <template v-else>
-             <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}.`" required></b-form-input>
+             <b-form-input v-model="instruction" :placeholder="`${numOfInstructions}.`" ></b-form-input>
         </template>
         <b-icon variant="success" icon="plus" @click="AddInstruction"></b-icon>
         <b-icon variant="danger" icon="dash" @click="RemoveInstruction"></b-icon>
@@ -83,10 +101,10 @@
       <b-form-group class="ingredients-container" label="Ingredients:">
         <label>Add an ingredient:</label>
         <template v-if="numOfIngredients === 1">
-          <b-form-input v-model="ingredientName" :placeholder="`${numOfIngredients}. Please enter here your ingredients name...`" required></b-form-input>
+          <b-form-input v-model="ingredientName" :placeholder="`${numOfIngredients}. Please enter here your ingredients name...`" ></b-form-input>
         </template>
         <template v-else>
-             <b-form-input v-model="ingredientName" :placeholder="`${numOfIngredients}.`" required></b-form-input>
+             <b-form-input v-model="ingredientName" :placeholder="`${numOfIngredients}.`" ></b-form-input>
         </template>
         <!-- Ingredient details -->
         <div class="ingredients-details-container">
@@ -95,7 +113,7 @@
                 <b-form-spinbutton id="amount-sb" v-model="amount" min="1" max="100"></b-form-spinbutton>
               </b-form-group>
               <b-form-group class="units" label="Units:">
-                <b-form-select v-model="selected" required>
+                <b-form-select v-model="selected" >
                 <b-form-select-option :value="null">Please select a unit measure</b-form-select-option>
                   <b-form-select-option value="Gram">Gram</b-form-select-option>
                   <b-form-select-option value="Kilogram">Kilogram</b-form-select-option>
@@ -128,7 +146,7 @@
 
 
       <div class="buttons-container">
-        <b-button type="submit" variant="success">Create</b-button>
+        <b-button type="submit" variant="success" @click="onSubmit">Create</b-button>
         <b-button type="reset" variant="warning" @click="onReset">Reset</b-button>
       </div>
     </b-form>
@@ -136,12 +154,14 @@
 </template>
 
 <script>
-import { mockAddUserRecipe } from "../services/user.js";
+import { addNewRecipe } from "../services/user.js";
 
 export default {
   name: 'NewRecipe',
   data() {
     return {
+      imageUrl: '', // Initialize imageUrl as empty string
+      useUrlInput: false, // Flag to toggle between file upload and URL input
       show: true,
       file1: null,
       file2: null,
@@ -157,18 +177,25 @@ export default {
       ingredientName: "",
       numOfIngredients: 1,
       amount: 0,
-      time: '00:00:00',
+      time: '00:00',
       text: '',
       selected: null,
-      showToast: false
+      showToast: false,
     }
   },
   computed: {
     isIngredientButtonDisabled() {
       return !this.ingredientName || !this.amount || !this.selected;
-    }
+    },
+    selectedFileOrUrl() {
+      return this.useUrlInput ? this.imageUrl : (this.file1 ? this.file1.name : '');
+    },
   },
   methods: {
+    timeAsFloat() {
+    const [minutes, seconds] = this.time.split(':').map(Number);
+    return minutes + (seconds / 60);
+  },
     AddInstruction() {
       if (this.instruction) {
         this.instructions.push(this.instruction);
@@ -213,22 +240,26 @@ export default {
         this.$root.toast("Problem encountered during ingridient removal ", "You don't have any ingridient for this recipe", "danger");
       }
     },
-    onSubmit(event) {
+    async onSubmit(event) {
       event.preventDefault();
       const recipeDetails = {
-        name: this.form.name,
-        image: this.file1,
+        title: this.form.name,
+        readyInMinutes: this.timeAsFloat(),
+        image: this.useUrlInput ? this.imageUrl : (this.file1 ? this.imageUrl : ''), // Use URL if in URL mode, else use uploaded file URL
+        aggregateLikes: 0,
+        vegan: this.form.checked.includes('isVegan'),
+        vegetarian: this.form.checked.includes('isVegetarian'),
+        glutenFree: this.form.checked.includes('isGlutenFree'),
+        extendedIngredients: this.ingredients,
         summary: this.text,
-        time: this.time,
-        servings: this.servingAmount,
-        dietaryOptions: this.form.checked,
-        instructions: this.instructions,
-        ingredients: this.ingredients
+        analyzedInstructions: this.instructions,
+        serving: this.servingAmount,
       };
-      const response = mockAddUserRecipe(recipeDetails);
-      if (response.status === 200 && response.response.data.success) {
-        alert(response.response.data.message);
+      const response = await addNewRecipe(recipeDetails);
+      alert(response.data.success);
+      if (response.data.status === 200 && response.data.success) {
         this.show = false; // Close the form window
+        this.$emit('recipe-created');
       } else {
         alert('Failed to add the recipe. Please try again.');
       }
@@ -250,10 +281,20 @@ export default {
       this.numOfIngredients = 1;
       this.ingredientName = '';
       this.amount = 0;
-      this.time = '00:00:00';
+      this.time = '00:00';
       this.text = '';
       this.selected = null;
-    }
+    },
+    handleFileChange() {
+      // Reset imageUrl when switching back to file upload mode
+      this.imageUrl = '';
+    },
+    toggleInputMode() {
+      this.useUrlInput = !this.useUrlInput;
+      if (this.useUrlInput) {
+        this.file1 = null; // Reset file1 when switching to URL input mode
+      }
+    },
   }
 }
 

@@ -19,7 +19,6 @@
 <script>
 import RecipeCarousel from "../components/RecipeCarousel.vue";
 import RecipePreviewList from "../components/RecipePreviewList.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
 
 export default {
   components: {
@@ -40,11 +39,9 @@ export default {
   },
   methods: {
     fetchRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
       this.recipes = response.data.recipes;
     },
     fetchLastViewedRecipes(amountToFetch) {
-      const response = mockGetRecipesPreview(amountToFetch);
       this.lastViewedRecipes = response.data.recipes;
     }
   }

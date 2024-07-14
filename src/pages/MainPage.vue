@@ -60,16 +60,21 @@ export default {
   methods: {
     async fetchRandomRecipes() {
       const response = await getRandomRecipes();
-      this.randomRecipes = response.data;
+      const {randomRecipes, viewed, status, success} = response.data;
+      if (status === 200 && success) {
+        this.randomRecipes = randomRecipes;
+        this.viewedRecipes = viewed;
+      }
     },
     async fetchLastViewedRecipes() {
       const response = await getLastThreeRecipes();
-      this.lastViewedRecipes = response.data.recipes;
-      if (response.data.status === 200 && response.data.success) {
-        this.favoriteRecipes.push(...response.data.recipes);
-      }
-    },
+      const {recipes, viewed, status, success} = response.data;
+      if (status === 200 && success) {
+        this.lastViewedRecipes = recipes;
   }
+},
+}
+  
 };
 </script>
 

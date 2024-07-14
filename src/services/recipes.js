@@ -36,7 +36,19 @@ export async function GetFavoritesRecipes() {
 }
 
 export async function getRandomRecipes() {
-  return await axios.get(`http://localhost:3000/recipes/random?number=3`);
+  try {
+    const response = await axios.get(`http://localhost:3000/recipes/random?number=3`);
+    return  response;
+  }
+  catch (error) {
+    // Handle error response from server
+    if (error.response) {
+      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
+      return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
+    } else {
+      return { status: 500, message: "Server error", success: false };
+}
+}
 }
 
 export async function getLastThreeRecipes() {

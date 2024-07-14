@@ -26,7 +26,6 @@ export default {
     return {
       componentKey: 0,
       favoriteRecipes: [], // Initialize an empty array for recipes
-      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
     };
   },
   components: {
@@ -34,10 +33,7 @@ export default {
     RecipePreviewList,
   },
   mounted() {
-    this.showFavorites(); // Fetch 4 recipes when the component is mounted
-    // if (this.$root.store.username) {
-    //   this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
-    // }
+    this.showFavorites(); 
   },
   methods: {
     async showFavorites() {
@@ -46,10 +42,7 @@ export default {
         this.favoriteRecipes.push(...response.data.recipes);
       }
     },
-    // fetchLastViewedRecipes(amountToFetch) {
-    //   const response = mockGetRecipesPreview(amountToFetch);
-    //   this.lastViewedRecipes = response.data.recipes;
-    // }
+
   }
 };
 </script>

@@ -81,3 +81,18 @@ export async function getLastThreeRecipes() {
       }
     }}
 
+    export async function get_search_result(query, cuisine, diet, intolerances, sort, number) {
+      try {
+        const response = await axios.get(`http://localhost:3000/recipes/search?query=${query}&number=${number}&cuisine=${cuisine}&diet=${diet}&intolerances=${intolerances}&sort=${sort}`);
+        return  response;
+      }
+      catch (error) {
+        // Handle error response from server
+        if (error.response) {
+          alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
+          return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
+        } else {
+          return { status: 500, message: "Server error", success: false };
+    }
+  }}
+

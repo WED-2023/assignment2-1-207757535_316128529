@@ -26,3 +26,20 @@ export async function addLastViewRecipes(recipe_id) {
     );
   }
 
+  export async function addNewRecipe(recipe_details) {
+    try {
+      const response = await axios.post(`http://localhost:3000/users/MyRecipes`, {recipe_details },
+        {withCredentials: true});
+      return response;
+    } catch (error) {
+      // Handle error response from server
+      if (error.response) {
+        alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
+        return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
+      } else {
+        return { status: 500, message: "Server error", success: false};
+   }
+ }
+  }
+
+

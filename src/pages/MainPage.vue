@@ -6,7 +6,7 @@
       <div class="left-side">
         <div class="container-random">         
           <RecipePreviewList
-            :isUserLoggedIn="$root.store.username" :recipes="randomRecipes"
+            :isUserLoggedIn="$root.store.username" :recipes="randomRecipes" :viewedRecipes="viewedRecipes"
             style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
             title="Explore these recipes"
             class="RandomRecipes center"
@@ -22,6 +22,7 @@
           <RecipePreviewList
             :isUserLoggedIn="$root.store.username"
             :recipes="lastViewedRecipes"
+            :viewedRecipes="[true, true, true]"
             title="Last Viewed Recipes"
             class="RandomRecipes center"
           />
@@ -44,7 +45,8 @@ export default {
     return {
       componentKey: 0,
       randomRecipes: [], // Initialize an empty array for random recipes
-      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
+      lastViewedRecipes: [], // Initialize an empty array for last viewed recipes
+      viewedRecipes: [],
     };
   },
   components: {
@@ -60,13 +62,17 @@ export default {
   methods: {
     async fetchRandomRecipes() {
       const response = await getRandomRecipes();
-      this.randomRecipes = response.data;
+      const {randomRecipes, viewed, status, success} = response.data;
+      if (status === 200 && success) {
+        this.randomRecipes = randomRecipes;
+        this.viewedRecipes = viewed;
+      }
     },
     async fetchLastViewedRecipes() {
       const response = await getLastThreeRecipes();
-      this.lastViewedRecipes = response.data.recipes;
-      if (response.data.status === 200 && response.data.success) {
-        this.favoriteRecipes.push(...response.data.recipes);
+      const {recipes, viewed, status, success} = response.data;
+      if (status === 200 && success) {
+        this.lastViewedRecipes = recipes;
       }
     },
   }

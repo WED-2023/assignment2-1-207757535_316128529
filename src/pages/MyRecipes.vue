@@ -19,6 +19,8 @@
 <script>
 import RecipeCarousel from "../components/RecipeCarousel.vue";
 import RecipePreviewList from "../components/RecipePreviewList.vue";
+import { GetMyRecipes } from "../services/recipes.js";
+
 
 export default {
   components: {
@@ -32,18 +34,15 @@ export default {
     };
   },
   mounted() {
-    this.fetchRecipes(4); // Fetch 4 recipes when the component is mounted
-    if (this.$root.store.username) {
-      this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
-    }
+    this.showMyRecipes(); 
   },
   methods: {
-    fetchRecipes(amountToFetch) {
-      this.recipes = response.data.recipes;
+    async showMyRecipes() {
+      const response = await GetMyRecipes();
+      if (response.data.status === 200 && response.data.success) {
+        this.favoriteRecipes.push(...response.data.recipes);
+      }
     },
-    fetchLastViewedRecipes(amountToFetch) {
-      this.lastViewedRecipes = response.data.recipes;
-    }
   }
 };
 </script>

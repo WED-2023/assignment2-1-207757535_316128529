@@ -26,6 +26,7 @@ export default {
     return {
       componentKey: 0,
       favoriteRecipes: [], // Initialize an empty array for recipes
+      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
     };
   },
   components: {
@@ -42,7 +43,6 @@ export default {
         this.favoriteRecipes.push(...response.data.recipes);
       }
     },
-
   }
 };
 </script>

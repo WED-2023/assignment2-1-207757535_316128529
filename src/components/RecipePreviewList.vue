@@ -5,10 +5,22 @@
       <slot></slot>
     </h3>
     <b-row>
-      <b-col v-for="r in recipes" :key="r.id" cols="12" md="6" lg="5" xl="4" class="mb-5 mx-auto">
-        <RecipePreview class="recipePreview" :recipe="r" :showLikeButton="isUserLoggedIn"/>
-      </b-col>
-    </b-row>
+    <b-col
+      v-for="(r, index) in recipes"
+      :key="r.id"
+      cols="12"
+      md="6"
+      lg="5"
+      xl="4"
+      class="mb-5 mx-auto"
+    >
+      <RecipePreview
+        class="recipePreview"
+        :recipe="r"
+        :showLikeButton="isUserLoggedIn"
+        v-bind="viewedRecipes ? { Viewed: viewedRecipes[index] } : {}"/>
+    </b-col>
+  </b-row>
   </b-container>
 </template>
 
@@ -19,6 +31,12 @@ export default {
   name: "RecipePreviewList",
   components: {
     RecipePreview
+  },
+  data() {
+    return{
+      index: 0
+
+    }
   },
   props: {
     title: {
@@ -32,6 +50,10 @@ export default {
     isUserLoggedIn: {
       type: Boolean,
       default: false
+    },
+    viewedRecipes: {
+      type: Array,
+      required: true
     }
   }
 };

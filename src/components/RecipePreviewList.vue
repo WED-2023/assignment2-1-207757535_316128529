@@ -18,6 +18,7 @@
         class="recipePreview"
         :recipe="r"
         :showLikeButton="isUserLoggedIn"
+        :spoonRecipe="spoonRecipes"
         v-bind="viewedRecipes ? { Viewed: viewedRecipes[index] } : {}"/>
     </b-col>
   </b-row>
@@ -54,6 +55,10 @@ export default {
     viewedRecipes: {
       type: Array,
       required: true
+    },
+    spoonRecipes:{
+      type: Boolean,
+      default: true,
     }
   }
 };

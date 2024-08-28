@@ -21,7 +21,7 @@
               </div>
               <ul class="recipe-overview">
                 <li>{{ recipe.readyInMinutes }} minutes</li>
-                <li>{{ recipe.aggregateLikes }} likes</li>
+                <li v-if="spoonRecipes">{{ recipe.aggregateLikes }} likes</li>
               </ul>
             </div>
             <div class="tags-container">
@@ -49,6 +49,10 @@ export default {
     recipes: {
       type: Array,
       required: true
+    },
+    spoonRecipes: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

@@ -96,9 +96,9 @@ export async function getLastThreeRecipes() {
   }
 }}
 
-  export async function GetMyRecipes() {
+  export async function getMyRecipes() {
     try {
-      const response = await axios.get("http://localhost:3000/users/favorites");
+      const response = await axios.get("http://localhost:3000/users/MyRecipes");
       return  response;
     }
     catch (error) {

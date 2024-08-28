@@ -3,14 +3,15 @@
     <br><br><br><br>
     <h1 class="title">MY RECIPES</h1>
       <div >
-          <RecipeCarousel :recipes="recipes"/>
+          <RecipeCarousel :recipes="myRecipes" :spoonRecipes="false"/>
           
       </div>
       <div >
           <RecipePreviewList
             :isUserLoggedIn=false
             class="RandomRecipes center"
-            :recipes="lastViewedRecipes"
+            :recipes="myRecipes"
+            :spoonRecipes="false"
           />
         </div>
     </div>
@@ -19,6 +20,8 @@
 <script>
 import RecipeCarousel from "../components/RecipeCarousel.vue";
 import RecipePreviewList from "../components/RecipePreviewList.vue";
+import { getMyRecipes } from "../services/recipes.js";
+
 
 export default {
   components: {
@@ -28,22 +31,19 @@ export default {
   data() {
     return {
       recipes: [], // Initialize an empty array for recipes
-      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
+      myRecipes: [] // Initialize an empty array for my recipes
     };
   },
   mounted() {
-    this.fetchRecipes(4); // Fetch 4 recipes when the component is mounted
-    if (this.$root.store.username) {
-      this.fetchLastViewedRecipes(6); // Fetch 3 last viewed recipes if the user is logged in
-    }
+    this.showMyRecipes(); 
   },
   methods: {
-    fetchRecipes(amountToFetch) {
-      this.recipes = response.data.recipes;
+    async showMyRecipes() {
+      const response = await getMyRecipes();
+      if (response.data.status === 200 && response.data.success) {
+        this.myRecipes.push(...response.data.recipes);
+      }
     },
-    fetchLastViewedRecipes(amountToFetch) {
-      this.lastViewedRecipes = response.data.recipes;
-    }
   }
 };
 </script>

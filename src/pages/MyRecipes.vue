@@ -3,14 +3,15 @@
     <br><br><br><br>
     <h1 class="title">MY RECIPES</h1>
       <div >
-          <RecipeCarousel :recipes="recipes"/>
+          <RecipeCarousel :recipes="myRecipes" :spoonRecipes="false"/>
           
       </div>
       <div >
           <RecipePreviewList
             :isUserLoggedIn=false
             class="RandomRecipes center"
-            :recipes="lastViewedRecipes"
+            :recipes="myRecipes"
+            :spoonRecipes="false"
           />
         </div>
     </div>
@@ -19,7 +20,7 @@
 <script>
 import RecipeCarousel from "../components/RecipeCarousel.vue";
 import RecipePreviewList from "../components/RecipePreviewList.vue";
-import { GetMyRecipes } from "../services/recipes.js";
+import { getMyRecipes } from "../services/recipes.js";
 
 
 export default {
@@ -30,7 +31,7 @@ export default {
   data() {
     return {
       recipes: [], // Initialize an empty array for recipes
-      lastViewedRecipes: [] // Initialize an empty array for last viewed recipes
+      myRecipes: [] // Initialize an empty array for my recipes
     };
   },
   mounted() {
@@ -38,9 +39,9 @@ export default {
   },
   methods: {
     async showMyRecipes() {
-      const response = await GetMyRecipes();
+      const response = await getMyRecipes();
       if (response.data.status === 200 && response.data.success) {
-        this.favoriteRecipes.push(...response.data.recipes);
+        this.myRecipes.push(...response.data.recipes);
       }
     },
   }

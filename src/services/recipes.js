@@ -34,21 +34,7 @@ export async function getRecipePreview(recipe_id){
       }
     }}
 
-export async function GetFavoritesRecipes() {
-  try {
-    const response = await axios.get("http://localhost:3000/users/favorites");
-    return  response;
-  }
-  catch (error) {
-    // Handle error response from server
-    if (error.response) {
-      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
-      return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
-    } else {
-      return { status: 500, message: "Server error", success: false };
-    }
-  }
-}
+
 
 export async function getRandomRecipes(){
   try {
@@ -65,21 +51,6 @@ export async function getRandomRecipes(){
     }
   }
 }
-
-export async function getLastThreeRecipes() {
-  try {
-    const response = await axios.get("http://localhost:3000/users/lastViewed");
-    return  response;
-  }
-  catch (error) {
-    // Handle error response from server
-    if (error.response) {
-      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
-      return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
-    } else {
-      return { status: 500, message: "Server error", success: false };
-    }
-  }}
 
   export async function getRecipePage(recipe_id) {
     try {
@@ -127,20 +98,6 @@ export async function getLastThreeRecipes() {
   }
 }}
 
-  export async function getMyRecipes() {
-    try {
-      const response = await axios.get("http://localhost:3000/users/MyRecipes");
-      return  response;
-    }
-    catch (error) {
-      // Handle error response from server
-      if (error.response) {
-        alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
-        return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
-      } else {
-        return { status: 500, message: "Server error", success: false };
-      }
-    }
-  }
+  
   
 

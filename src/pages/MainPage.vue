@@ -38,7 +38,9 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginPage from "../pages/LoginPage";
-import { getRandomRecipes, getLastThreeRecipes } from "../services/recipes.js"; 
+import { getRandomRecipes} from "../services/recipes.js"; 
+import {getLastThreeRecipes} from "../services/user.js"; 
+
 
 export default {
   data() {

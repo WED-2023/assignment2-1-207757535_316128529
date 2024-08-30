@@ -2,7 +2,7 @@
   <div class="recipe-container">
     <link rel="stylesheet" href="http://static.sasongsmat.nu/fonts/vegetarian.css" />
     <div class="recipe-card-wrapper">
-      <router-link :to="{ name: 'recipe', params: { recipeID: recipe.id } }" class="recipe-preview">
+      <router-link :to="{ name: 'recipe', params: { recipeID: recipe.id, isSpoonRecipe: spoonRecipe } }" class="recipe-preview">
           <b-card v-if="image_load" :img-src="recipe.image" img-alt="Image" tag="article" class="recipe-image" style="height: 100%" @click="addLastViewRecipe"></b-card>
         </router-link>
         <div class="recipe-footer-content">

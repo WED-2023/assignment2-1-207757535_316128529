@@ -36,9 +36,10 @@
 
         <!-- Recipe Preview Card -->
         <div class="recipe-preview-card">
-          <RecipePreviewList
-            :recipes="recipePreview"
-            :isUserLoggedIn="$root.store.username"
+          <RecipePreview
+            :recipe="recipe"
+            :spoonRecipes=spoonRecipe
+            :showLikeButton="spoonRecipe"
             style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
             class="RandomRecipes center"
           />
@@ -50,19 +51,20 @@
 
 
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
-import { getRecipePage, getRecipePreview } from "../services/recipes.js";
+import RecipePreview from "../components/RecipePreview";
+import { getRecipePage, getRecipePreview, getMyRecipePage, getMyRecipePreview } from "../services/recipes.js";
 
 export default {
   name: "recipe",
   components: {
-    RecipePreviewList,
+    RecipePreview,
   },
   data() {
     return {
       showDetails: false,
       recipeID: this.$route.params.recipeID,
       recipe: null,
+      spoonRecipe: this.$route.params.isSpoonRecipe,
       recipePreview: [],
     };
   },
@@ -73,7 +75,13 @@ export default {
   methods: {
     async getRecipe() {
       try {
-        const response_full = await getRecipePage(this.recipeID);
+        let response_full = null;
+        if(this.spoonRecipe){
+          response_full = await getRecipePage(this.recipeID);
+        }
+        else{
+          response_full = await getMyRecipePage(this.recipeID);
+        }
         if (response_full.data.status === 200 && response_full.data.success) {
           const recipeDetails = response_full.data.recipe;
           this.recipe = recipeDetails;
@@ -86,10 +94,16 @@ export default {
     },
     async fetchPreview() {
       try{
-        const response = await getRecipePreview(this.recipeID);
-      if (response.data.status === 200 && response.data.success) {
-        this.recipePreview.push(response.data.recipePreview);  
-        }
+        // let response = null;
+        // if(this.spoonRecipe){
+        //   response = await getRecipePreview(this.recipeID);
+        // }
+        // else{
+        //   response = await getMyRecipePreview(this.recipeID);
+        // }
+      // if (response.data.status === 200 && response.data.success) {
+        this.recipePreview.push(this.recipe);  
+        // }
       }
       catch (error) 
       {

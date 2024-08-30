@@ -11,7 +11,7 @@
             :isUserLoggedIn=false
             class="RandomRecipes center"
             :recipes="myRecipes"
-            :spoonRecipes="false"
+            :spoonRecipes=false
           />
         </div>
     </div>

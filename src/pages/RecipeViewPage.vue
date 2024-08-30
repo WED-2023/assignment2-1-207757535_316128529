@@ -35,14 +35,14 @@
         </div>
 
         <!-- Recipe Preview Card -->
-        <div class="recipe-preview-card">
-          <RecipePreview
-            :recipe="recipe"
-            :spoonRecipes=spoonRecipe
-            :showLikeButton="spoonRecipe"
-            style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
-            class="RandomRecipes center"
-          />
+        <div style="position: relative">
+          <div class="recipe-preview-card" id="bulbul">
+            <RecipePreview
+              :recipe="recipe"
+              :spoonRecipes="spoonRecipe"
+              :showLikeButton="spoonRecipe"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -94,16 +94,7 @@ export default {
     },
     async fetchPreview() {
       try{
-        // let response = null;
-        // if(this.spoonRecipe){
-        //   response = await getRecipePreview(this.recipeID);
-        // }
-        // else{
-        //   response = await getMyRecipePreview(this.recipeID);
-        // }
-      // if (response.data.status === 200 && response.data.success) {
         this.recipePreview.push(this.recipe);  
-        // }
       }
       catch (error) 
       {
@@ -113,7 +104,7 @@ export default {
 }};
 </script>
 
-<style scoped>
+<style>
 .recipe-container {
   display: flex;
   flex-direction: column;
@@ -121,6 +112,8 @@ export default {
   color: #ffffff;
   background-color: #151718;
 }
+
+
 
 .cover-image-container {
   position: relative;
@@ -169,9 +162,19 @@ export default {
 }
 
 .recipe-preview-card {
-  flex: 1;
-  min-width: 300px; /* Adjust width of the preview card */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 200px;
+  height: auto;
+  z-index: 10;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
+
+
 
 .ingredients,
 .instructions,

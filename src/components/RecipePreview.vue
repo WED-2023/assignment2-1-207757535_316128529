@@ -87,7 +87,6 @@ export default {
   border-radius: 5px; /* Optional: Add some rounding to the corners */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
   height: 100%;
-
 }
 
 .recipe-preview {

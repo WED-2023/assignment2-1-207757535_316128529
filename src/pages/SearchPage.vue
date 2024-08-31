@@ -90,7 +90,7 @@ export default {
       },
       numOfRecipes: 5,
       selectedSortOption: "time", // Initialize with default sort option
-      searchQuery: ""
+      searchQuery: this.$route.query.q || "" // Initialize with query parameter
     };
   },
   computed: {
@@ -136,6 +136,12 @@ export default {
         this.$root.toast("Error", err.response.data.message);
       }
     }
+  },
+  mounted() {
+  this.search(); // Trigger search when component is mounted
+  },
+  watch: {
+    '$route.query.q': 'search' // Watch for changes in the query parameter
   }
 };
 </script>

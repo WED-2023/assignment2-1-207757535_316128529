@@ -35,13 +35,14 @@
         </div>
 
         <!-- Recipe Preview Card -->
-        <div class="recipe-preview-card">
-          <RecipePreviewList
-            :recipes="recipePreview"
-            :isUserLoggedIn="$root.store.username"
-            style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
-            class="RandomRecipes center"
-          />
+        <div style="position: relative">
+          <div class="recipe-preview-card" id="bulbul">
+            <RecipePreview
+              :recipe="recipe"
+              :spoonRecipes="spoonRecipe"
+              :showLikeButton="spoonRecipe"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -50,19 +51,20 @@
 
 
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
-import { getRecipePage, getRecipePreview } from "../services/recipes.js";
+import RecipePreview from "../components/RecipePreview";
+import { getRecipePage, getRecipePreview, getMyRecipePage, getMyRecipePreview } from "../services/recipes.js";
 
 export default {
   name: "recipe",
   components: {
-    RecipePreviewList,
+    RecipePreview,
   },
   data() {
     return {
       showDetails: false,
       recipeID: this.$route.params.recipeID,
       recipe: null,
+      spoonRecipe: this.$route.params.isSpoonRecipe,
       recipePreview: [],
     };
   },
@@ -73,7 +75,13 @@ export default {
   methods: {
     async getRecipe() {
       try {
-        const response_full = await getRecipePage(this.recipeID);
+        let response_full = null;
+        if(this.spoonRecipe){
+          response_full = await getRecipePage(this.recipeID);
+        }
+        else{
+          response_full = await getMyRecipePage(this.recipeID);
+        }
         if (response_full.data.status === 200 && response_full.data.success) {
           const recipeDetails = response_full.data.recipe;
           this.recipe = recipeDetails;
@@ -86,10 +94,7 @@ export default {
     },
     async fetchPreview() {
       try{
-        const response = await getRecipePreview(this.recipeID);
-      if (response.data.status === 200 && response.data.success) {
-        this.recipePreview.push(response.data.recipePreview);  
-        }
+        this.recipePreview.push(this.recipe);  
       }
       catch (error) 
       {
@@ -99,7 +104,7 @@ export default {
 }};
 </script>
 
-<style scoped>
+<style>
 .recipe-container {
   display: flex;
   flex-direction: column;
@@ -107,6 +112,8 @@ export default {
   color: #ffffff;
   background-color: #151718;
 }
+
+
 
 .cover-image-container {
   position: relative;
@@ -155,9 +162,19 @@ export default {
 }
 
 .recipe-preview-card {
-  flex: 1;
-  min-width: 300px; /* Adjust width of the preview card */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 200px;
+  height: auto;
+  z-index: 10;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
+
+
 
 .ingredients,
 .instructions,

@@ -11,7 +11,7 @@
             :isUserLoggedIn=false
             class="RandomRecipes center"
             :recipes="myRecipes"
-            :spoonRecipes="false"
+            :spoonRecipes=false
           />
         </div>
     </div>
@@ -20,7 +20,7 @@
 <script>
 import RecipeCarousel from "../components/RecipeCarousel.vue";
 import RecipePreviewList from "../components/RecipePreviewList.vue";
-import { getMyRecipes } from "../services/recipes.js";
+import { getMyRecipes } from "../services/user.js";
 
 
 export default {

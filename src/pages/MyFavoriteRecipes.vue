@@ -19,7 +19,7 @@
 <script>
 import RecipeCarousel from "../components/RecipeCarousel";
 import RecipePreviewList from "../components/RecipePreviewList";
-import { GetFavoritesRecipes } from "../services/recipes.js";
+import { GetFavoritesRecipes } from "../services/user.js";
 
 export default {
   data() {

@@ -99,47 +99,61 @@ export default {
     }
   },
   mounted() {
-    // Load saved search results from localStorage
-    const savedResults = localStorage.getItem('savedRecipes');
-    if (savedResults) {
-      this.recipes = JSON.parse(savedResults);
-    }
-  },
-  methods: {
-    async changeNumOfPresentedRec(num){
-      this.numOfRecipes = num;
-      this.search();
-    },
-    async updateSortOption(option) {
-      this.selectedSortOption = option;
-      this.search(); // Trigger search with the new sort option
-    },
-    async search() {
-      try {
-        const cuisineFilters = this.selectedFilters.cuisines.join(',');
-        const dietFilters = this.selectedFilters.diets.join(',');
-        const intoleranceFilters = this.selectedFilters.intolerances.join(',');
-        const response = await get_search_result(this.searchQuery, cuisineFilters, dietFilters, intoleranceFilters, this.selectedSortOption, this.numOfRecipes);
+  this.initializeSearch();
+},
 
-        if (response.status === 200) {
-          this.recipes = response.data; // Replace old recipes with new ones
-          if (this.recipes.length === 0) {
-            this.$root.toast("Failed", "can't find recipes");
-          } else {
-            // Save results to localStorage
-            localStorage.setItem('savedRecipes', JSON.stringify(this.recipes));
-          }
-        } else {
-          this.$root.toast("Failed", "can't find recipes");
-        }
-      } catch (err) {
-        this.$root.toast("Error", err.response.data.message);
-      }
+methods: {
+  async initializeSearch() {
+    // Retrieve saved recipes from localStorage if they exist
+    const savedRecipes = localStorage.getItem('savedRecipes');
+    if (savedRecipes) {
+      this.recipes = JSON.parse(savedRecipes);
+    } else {
+      this.recipes = null; // No previous search, show nothing
     }
   },
-  mounted() {
-  this.search(); // Trigger search when component is mounted
+
+  async changeNumOfPresentedRec(num){
+    this.numOfRecipes = num;
+    this.search();
   },
+  
+  async updateSortOption(option) {
+    this.selectedSortOption = option;
+    this.search(); // Trigger search with the new sort option
+  },
+  
+  async search() {
+    if (!this.searchQuery.trim()) {
+      // If the search query is empty, clear the recipes and return
+      this.recipes = null; // Show nothing since no search was made
+      localStorage.removeItem('savedRecipes');
+      return;
+    }
+    
+    try {
+      const cuisineFilters = this.selectedFilters.cuisines.join(',');
+      const dietFilters = this.selectedFilters.diets.join(',');
+      const intoleranceFilters = this.selectedFilters.intolerances.join(',');
+      const response = await get_search_result(this.searchQuery, cuisineFilters, dietFilters, intoleranceFilters, this.selectedSortOption, this.numOfRecipes);
+
+      if (response.status === 200) {
+        this.recipes = response.data;
+        if (this.recipes.length === 0) {
+          this.$root.toast("Failed", "Can't find recipes");
+        } else {
+          // Save results to localStorage
+          localStorage.setItem('savedRecipes', JSON.stringify(this.recipes));
+        }
+      } else {
+        this.$root.toast("Failed", "Can't find recipes");
+      }
+    } catch (error) {
+      console.error("Error during search:", error);
+      this.$root.toast("Error", "An error occurred during the search");
+    }
+  }
+},
   watch: {
     '$route.query.q': 'search' // Watch for changes in the query parameter
   }

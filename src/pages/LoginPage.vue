@@ -110,6 +110,7 @@ export default {
           this.form.submitSuccess = true;
           this.$root.store.login(this.form.username);
           this.$router.push("/");
+          location.reload();
         } else {
           this.$root.toast("Failed to Login", "Username or Password are incorrect", "danger");
         }

@@ -1,72 +1,118 @@
 <template>
-    <div class="about-us-container">
-      <div class="image-container">
-        <img src="@/assets/4002676.jpg" alt="About Us Image" class="about-us-image" />
-        <div class="overlay">
-          <h1>About Us</h1>
-        </div>
+  <div class="about-us-container">
+    <div class="image-container">
+      <img src="@/assets/4002676.jpg" alt="About Us Image" class="about-us-image" />
+      <div class="overlay">
+        <h1>About Us</h1>
       </div>
-      <div class="middle-text">
+    </div>
+    <div class="middle-text">
+      <p class="styled-paragraph">
+        Welcome to our recipe Website!<br> Our team is dedicated to continuous improvement and innovation. <br>We are two Software and Information Systems Engineering students in our 3rd year at Ben Gurion University. We are passionate about technology and committed to delivering high-quality solutions. Our expertise spans a variety of programming languages and platforms, allowing us to tackle diverse challenges in the tech world.
+      </p>
+    </div>
+    <div class="content-section">
+      <img src="@/assets/dvir.jpg" alt="Another Image" class="side-image" />
+      <div class="text-content">
+        <audio ref="audioDvir" src="@/assets/Milkshake.mp3"></audio>
         <p class="styled-paragraph">
-          Welcome to our recipe Website!<br> Our team is dedicated to continuous improvement and innovation. <br>We are two Software and Information Systems Engineering students in our 3rd year at Ben Gurion University.We are passionate about technology and committed to delivering high-quality solutions. Our expertise spans a variety of programming languages and platforms, allowing us to tackle diverse challenges in the tech world.
+          Dvir Zandany <br> Dvir Zandany, tech's shining star,<br>Leading projects, reaching far,<br>With code and vision, sets the bar,<br>Innovation drives his car,<br>In the digital world, he’s raising the par.
         </p>
-      </div>
-      <div class="content-section">
-        <img src="@/assets/dvir.jpg" alt="Another Image" class="side-image" />
-        <div class="text-content">
-          <p class="styled-paragraph">
-            Dvir Zandany <br> Dvir Zandany, tech's shining star,<br>Leading projects, reaching far,<br>With code and vision, sets the bar,<br>Innovation drives his car,<br>In thedigital world, he’s raising the par.
-          </p>
-        </div>
-      </div>
-      <div class="content-section">
-        <img src="@/assets/ido.jpg" alt="Another Image" class="side-image" />
-        <div class="text-content">
-          <p class="styled-paragraph">
-            Ido Dai<br>Ido Dai, in tech he shines bright,<br>Crafting code through day and night,<br>Innovation's path, he lights,<br>In the world of tech, he takes flight,<br>Turning dreams to real, just right.
-          </p>
-        </div>
-      </div>
-      <!-- Link sections -->
-      <div class="links-sections-container">
-        <!-- First link section -->
-        <div class="links-section">
-          <h1>Projects</h1>
-          <br>
-          <div class="link-item" v-for="(link, index) in links" :key="index">
-            <img src="@/assets/git.jpg" alt="Another Image" class="icon" />
-            <a :href="link.url">{{ link.text }}</a>
-          </div>
-        </div>
-        <!-- Second link section -->
-        <div class="links-section">
-          <h1>LinkedIn </h1>
-          <div class="link-item" v-for="(link, index) in links2" :key="index">
-            <img src="@/assets/link.webp" alt="Another Image" class="icon1"  />
-            <a :href="link.url">{{ link.text }}</a>
-          </div>
+        <!-- Audio control buttons for Dvir -->
+        <div class="audio-controls">
+          <button @click="playAudio('audioDvir')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
+          </svg></button>
+          <button @click="pauseAudio('audioDvir')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0z"/>
+          </svg></button>
+          <button @click="stopAudio('audioDvir')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5z"/>
+          </svg></button>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'AboutUs',
-    data() {
-      return {
-        links: [
-          { image: '@/assets/git.jpg', url: 'https://github.com/zandanyd', text: "Dvir's GitHub", alt: "Link 1 Image" },
-          { image: '@/assets/in.png', url: 'https://github.com/IdoDai', text: "Ido's GitHub", alt: 'Link 2 Image' }
-        ],
-        links2: [
-          { image: '@/assets/git.jpg', url: 'https://www.linkedin.com/in/dvir-zandany-197921236/', text: "Dvir's Linkdin", alt: 'Link 1 Image' },
-          { image: '@/assets/in.png', url: 'https://www.linkedin.com/in/ido-dai-a176b0201?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app ', text: "Ido's Linkdin", alt: 'Link 2 Image' }
-        ]
-      };
+    <div class="content-section">
+      <img src="@/assets/ido.jpg" alt="Another Image" class="side-image" />
+      <div class="text-content">
+        <audio ref="audioIdo" src="@/assets/rondelim.mp3"></audio>
+        <p class="styled-paragraph">
+          Ido Dai<br>Ido Dai, in tech he shines bright,<br>Crafting code through day and night,<br>Innovation's path, he lights,<br>In the world of tech, he takes flight,<br>Turning dreams to real, just right.
+        </p>
+        <!-- Audio control buttons for Ido -->
+        <div class="audio-controls">
+          <button @click="playAudio('audioIdo')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
+          </svg></button>
+          <button @click="pauseAudio('audioIdo')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0z"/>
+          </svg></button>
+          <button @click="stopAudio('audioIdo')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5z"/>
+          </svg></button>
+        </div>
+      </div>
+    </div>
+    <!-- Link sections -->
+    <div class="links-sections-container">
+      <!-- First link section -->
+      <div class="links-section">
+        <h1>Projects</h1>
+        <br>
+        <div class="link-item" v-for="(link, index) in links" :key="index">
+          <img src="@/assets/git.jpg" alt="Another Image" class="icon" />
+          <a :href="link.url">{{ link.text }}</a>
+        </div>
+      </div>
+      <!-- Second link section -->
+      <div class="links-section">
+        <h1>LinkedIn</h1>
+        <div class="link-item" v-for="(link, index) in links2" :key="index">
+          <img img src="@/assets/link.webp" alt="Another Image"  class="icon1" />
+          <a :href="link.url">{{ link.text }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'AboutUs',
+  data() {
+    return {
+      links: [
+        { image: '@/assets/git.jpg', url: 'https://github.com/zandanyd', text: "Dvir's GitHub", alt: "Link 1 Image" },
+        { image: '@/assets/in.png', url: 'https://github.com/IdoDai', text: "Ido's GitHub", alt: 'Link 2 Image' }
+      ],
+      links2: [
+        { image: '@/assets/git.jpg', url: 'https://www.linkedin.com/in/dvir-zandany-197921236/', text: "Dvir's LinkedIn", alt: 'Link 1 Image' },
+        { image: '@/assets/in.png', url: 'https://www.linkedin.com/in/ido-dai-a176b0201?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app', text: "Ido's LinkedIn", alt: 'Link 2 Image' }
+      ]
+    };
+  },
+  methods: {
+    playAudio(refName) {
+      this.$refs[refName].play();
+    },
+    pauseAudio(refName) {
+      this.$refs[refName].pause();
+    },
+    stopAudio(refName) {
+      const audio = this.$refs[refName];
+      audio.pause();
+      audio.currentTime = 0;
     }
-  };
-  </script>
+  }
+};
+</script>
+
   
   <style scoped>
   .about-us-container {
@@ -175,6 +221,23 @@
   font-size: 2em; /* Adjust the font size as needed */
   color: #013c30; /* Change the text color if desired */
   width: 100%;
+}
+.audio-controls {
+  margin-top: 20px;
+}
+
+.audio-controls button {
+  background-color: #294b47;
+  color: #f1f1f1;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.audio-controls button:hover {
+  background-color: #013c30;
 }
 
   </style>

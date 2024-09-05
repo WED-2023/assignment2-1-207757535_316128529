@@ -292,7 +292,6 @@ export default {
         serving: this.servingAmount,
       };
       const response = await addNewRecipe(recipeDetails);
-      alert(response.data.success);
       if (response.data.status === 200 && response.data.success) {
         this.show = false; // Close the form window
         this.$emit('recipe-created');

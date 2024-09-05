@@ -124,6 +124,15 @@ methods: {
   },
   
   async search() {
+    if (!this.$root.store.username) {
+        // Show toast message
+        this.$bvToast.toast('You must be logged in to search!', {
+          title: 'Search Not Available',
+          variant: 'warning',
+          solid: true
+        });
+        return;
+      }
     if (!this.searchQuery.trim()) {
       // If the search query is empty, clear the recipes and return
       this.recipes = null; // Show nothing since no search was made

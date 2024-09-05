@@ -74,14 +74,18 @@ export default {
       });
     },
     handleSearch() {
-      if (this.searchQuery.trim()) {
-        this.$router.push({ name: 'search', query: { q: this.searchQuery } })
-          .then(() => {
-            // Focus on search input when navigating to search page
-            this.$refs.searchInput.focus();
-          });
+      if (!this.$root.store.username) {
+        // Show toast message
+        this.$bvToast.toast('You must be logged in to search!', {
+          title: 'Search Not Available',
+          variant: 'warning',
+          solid: true
+        });
+      } else {
+        // Proceed with search action
+        this.$router.push({ name: 'search' });
       }
-    } 
+    }
   }
 }
 </script>

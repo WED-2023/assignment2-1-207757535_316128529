@@ -30,6 +30,7 @@
         <div v-else class="login-container">
           <LoginPage />
         </div>
+        <div id="bthn" lang="en"></div>
       </div>
     </div>
   </div>
@@ -60,6 +61,7 @@ export default {
     if (this.$root.store.username) {
       this.fetchLastViewedRecipes(); // Fetch max 3 last viewed recipes if the user is logged in
     }
+    this.function();
   },
   methods: {
     async fetchRandomRecipes() {
@@ -76,7 +78,17 @@ export default {
       if (status === 200 && success) {
         this.lastViewedRecipes = recipes;
       }
-    },
+    },function () {
+   var script = document.createElement("script");
+   script.type = "text/javascript";
+   script.src = "https://bringthemhomenow.net/1.1.0/hostages-ticker.js";
+   script.setAttribute(
+     "integrity",
+     "sha384-DHuakkmS4DXvIW79Ttuqjvl95NepBRwfVGx6bmqBJVVwqsosq8hROrydHItKdsne"
+   );
+   script.setAttribute("crossorigin", "anonymous");
+   document.getElementsByTagName("head")[0].appendChild(script);
+ }
   }
 };
 </script>

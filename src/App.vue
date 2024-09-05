@@ -63,6 +63,7 @@ export default {
     NewRecipe
   },
   methods: {
+    
     showNewRecipeModal() {
       this.$bvModal.show('new-recipe-modal');
     },

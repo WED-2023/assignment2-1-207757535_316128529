@@ -100,7 +100,11 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for the scale and shadow */
+}
+.recipe-card-wrapper:hover {
+  transform: scale(1.15); /* Scale up the card slightly */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhance the shadow on hover */
 }
 
 .image-container {

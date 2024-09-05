@@ -192,6 +192,35 @@ export default {
     },
   },
   methods: {
+    validateForm() {
+    const missingFields = [];
+
+    if (!this.form.name) {
+      missingFields.push('Title');
+    }
+    if (!this.time || this.time === '00:00') {
+      missingFields.push('Time to make');
+    }
+    if (this.useUrlInput && !this.imageUrl) {
+      missingFields.push('Image URL');
+    } else if (!this.useUrlInput && !this.file1) {
+      missingFields.push('Image File');
+    }
+    if (!this.text) {
+      missingFields.push('Summary');
+    }
+    if (this.servingAmount <= 0) {
+      missingFields.push('Serving Amount');
+    }
+    if (this.instructions.length === 0) {
+      missingFields.push('Instructions');
+    }
+    if (this.ingredients.length === 0) {
+      missingFields.push('Ingredients');
+    }
+
+    return missingFields;
+  },
     timeAsFloat() {
     const [minutes, seconds] = this.time.split(':').map(Number);
     return minutes + (seconds / 60);
@@ -242,6 +271,13 @@ export default {
     },
     async onSubmit(event) {
       event.preventDefault();
+
+    // Validate form before submitting
+    const missingFields = this.validateForm();
+    if (missingFields.length > 0) {
+      this.$root.toast(`Please fill out the following fields: ${missingFields.join(', ')}`," ");
+      return;
+    }
       const recipeDetails = {
         title: this.form.name,
         readyInMinutes: this.timeAsFloat(),
@@ -256,7 +292,6 @@ export default {
         serving: this.servingAmount,
       };
       const response = await addNewRecipe(recipeDetails);
-      alert(response.data.success);
       if (response.data.status === 200 && response.data.success) {
         this.show = false; // Close the form window
         this.$emit('recipe-created');

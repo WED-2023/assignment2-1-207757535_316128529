@@ -40,7 +40,7 @@
             <RecipePreview
               :recipe="recipe"
               :spoonRecipes="spoonRecipe"
-              :showLikeButton="spoonRecipe"
+              :showLikeButton="showLike"
             />
           </div>
         </div>
@@ -67,6 +67,14 @@ export default {
       spoonRecipe: this.$route.params.isSpoonRecipe,
       recipePreview: [],
     };
+  },
+  computed: {
+    showLike() {
+      if( this.$root.store.username){
+        return this.$route.params.isSpoonRecipe
+      }
+      return false
+    }
   },
   mounted() {
     this.getRecipe();

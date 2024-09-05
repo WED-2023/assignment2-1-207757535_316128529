@@ -29,8 +29,8 @@
                 <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
               </svg>       
             </template>
-            <b-dropdown-item value="time">Preparation Time</b-dropdown-item>
-            <b-dropdown-item value="popularity">Popularity</b-dropdown-item>
+            <b-dropdown-item @click="updateSortOption('time')">Preparation Time</b-dropdown-item>
+            <b-dropdown-item @click="updateSortOption('popularity')">Popularity</b-dropdown-item>
           </b-dropdown>
         </div>
 
@@ -90,7 +90,7 @@ export default {
       },
       numOfRecipes: 5,
       selectedSortOption: "time", // Initialize with default sort option
-      searchQuery: ""
+      searchQuery: this.$route.query.q || "" // Initialize with query parameter
     };
   },
   computed: {
@@ -98,31 +98,73 @@ export default {
       return this.$root.store.username;
     }
   },
-  methods: {
-    async changeNumOfPresentedRec(num){
-      this.numOfRecipes = num;
-      this.search();
-    },
-  
-    async search() {
-      try {
-        const cuisineFilters = this.selectedFilters.cuisines.join(',');
-        const dietFilters = this.selectedFilters.diets.join(',');
-        const intoleranceFilters = this.selectedFilters.intolerances.join(',');
-        const response = await get_search_result(this.searchQuery, cuisineFilters, dietFilters, intoleranceFilters, this.selectedSortOption, this.numOfRecipes);
+  mounted() {
+  this.initializeSearch();
+},
 
-        if (response.status === 200) {
-          this.recipes = response.data; // Replace old recipes with new ones
-          if (this.recipes.length === 0) {
-            this.$root.toast("Failed", "can't find recipes");
-          }
-        } else {
-          this.$root.toast("Failed", "can't find recipes");
-        }
-      } catch (err) {
-        this.$root.toast("Error", err.response.data.message);
-      }
+methods: {
+  async initializeSearch() {
+    // Retrieve saved recipes from localStorage if they exist
+    const savedRecipes = localStorage.getItem('savedRecipes');
+    if (savedRecipes) {
+      this.recipes = JSON.parse(savedRecipes);
+    } else {
+      this.recipes = null; // No previous search, show nothing
     }
+  },
+
+  async changeNumOfPresentedRec(num){
+    this.numOfRecipes = num;
+    this.search();
+  },
+  
+  async updateSortOption(option) {
+    this.selectedSortOption = option;
+    this.search(); // Trigger search with the new sort option
+  },
+  
+  async search() {
+    if (!this.$root.store.username) {
+        // Show toast message
+        this.$bvToast.toast('You must be logged in to search!', {
+          title: 'Search Not Available',
+          variant: 'warning',
+          solid: true
+        });
+        return;
+      }
+    if (!this.searchQuery.trim()) {
+      // If the search query is empty, clear the recipes and return
+      this.recipes = null; // Show nothing since no search was made
+      localStorage.removeItem('savedRecipes');
+      return;
+    }
+    
+    try {
+      const cuisineFilters = this.selectedFilters.cuisines.join(',');
+      const dietFilters = this.selectedFilters.diets.join(',');
+      const intoleranceFilters = this.selectedFilters.intolerances.join(',');
+      const response = await get_search_result(this.searchQuery, cuisineFilters, dietFilters, intoleranceFilters, this.selectedSortOption, this.numOfRecipes);
+
+      if (response.status === 200) {
+        this.recipes = response.data;
+        if (this.recipes.length === 0) {
+          this.$root.toast("Failed", "Can't find recipes");
+        } else {
+          // Save results to localStorage
+          localStorage.setItem('savedRecipes', JSON.stringify(this.recipes));
+        }
+      } else {
+        this.$root.toast("Failed", "Can't find recipes");
+      }
+    } catch (error) {
+      console.error("Error during search:", error);
+      this.$root.toast("Error", "An error occurred during the search");
+    }
+  }
+},
+  watch: {
+    '$route.query.q': 'search' // Watch for changes in the query parameter
   }
 };
 </script>

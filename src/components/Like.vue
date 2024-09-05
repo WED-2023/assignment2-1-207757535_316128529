@@ -31,18 +31,22 @@ export default {
   },
   methods: {
     async addToFavorites() {
-      try {
-        const response = await AddFavorite(this.recipeId);
-        if (response.status === 200 && response.data.success) {
-          this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
-          this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image
-        } else {
-          this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
-        }
-      } catch (err) {
-        this.$root.toast("Failed to add", "There was an error adding this recipe to your favorites", "danger");
-      }
+  try {
+    const response = await AddFavorite(this.recipeId);
+    if (response.status === 200 && response.data.success) {
+      this.$root.toast("Recipe added!", "This recipe was added to your favorites", "success");
+    } else {
+      // If the status isn't 200 or the response data indicates failure
+      this.$root.toast("recipe allredy in favorites"," ");
     }
+  } catch (err) {
+    // Handle any errors that occur during the API call
+    this.$root.toast("recipe allredy in favorites", " ");
+  }
+  finally{
+    this.likeButtonImage = require("@/assets/vi.png"); // Change to the new image
+  }
+}
   }
 };
 </script>

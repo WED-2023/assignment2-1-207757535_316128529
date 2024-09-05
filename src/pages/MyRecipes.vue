@@ -43,6 +43,7 @@ export default {
       if (response.data.status === 200 && response.data.success) {
         this.myRecipes.push(...response.data.recipes);
       }
+
     },
   }
 };

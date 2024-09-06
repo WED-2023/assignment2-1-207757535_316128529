@@ -61,7 +61,7 @@ export default {
     if (this.$root.store.username) {
       this.fetchLastViewedRecipes(); // Fetch max 3 last viewed recipes if the user is logged in
     }
-    this.function();
+    this.BringThemHome();
   },
   methods: {
     async fetchRandomRecipes() {
@@ -78,7 +78,12 @@ export default {
       if (status === 200 && success) {
         this.lastViewedRecipes = recipes;
       }
-    },function () {
+      else{
+        console.error("Error during recipe retrivel:", error);
+        this.$root.toast("Error", "something went wrong, please try again later");
+      }
+    },
+  BringThemHome () {
    var script = document.createElement("script");
    script.type = "text/javascript";
    script.src = "https://bringthemhomenow.net/1.1.0/hostages-ticker.js";

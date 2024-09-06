@@ -42,6 +42,10 @@ export default {
       if (response.data.status === 200 && response.data.success) {
         this.favoriteRecipes.push(...response.data.recipes);
       }
+      else{
+        console.error("Error during recipe retrivel:", error);
+        this.$root.toast("Error", "something went wrong, please try again later");
+      }
     },
   }
 };

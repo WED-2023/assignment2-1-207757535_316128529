@@ -27,7 +27,6 @@ export async function addLastViewRecipes(recipe_id) {
   } catch (error) {
     // Handle error response from server
     if (error.response) {
-      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
       return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
     } else {
       return { status: 500, message: "Server error", success: false };
@@ -58,7 +57,6 @@ export async function GetFavoritesRecipes() {
   catch (error) {
     // Handle error response from server
     if (error.response) {
-      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
       return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
     } else {
       return { status: 500, message: "Server error", success: false };
@@ -74,7 +72,6 @@ export async function getLastThreeRecipes() {
   catch (error) {
     // Handle error response from server
     if (error.response) {
-      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
       return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
     } else {
       return { status: 500, message: "Server error", success: false };
@@ -89,7 +86,6 @@ export async function getLastThreeRecipes() {
     catch (error) {
       // Handle error response from server
       if (error.response) {
-        alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
         return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
       } else {
         return { status: 500, message: "Server error", success: false };

@@ -70,6 +70,9 @@ export default {
       if(response.data.status === 200 && response.data.success) {
         this.Viewed = true;
       }
+      else{
+        console.error("Error adding to last view:", error);
+      }
 
   }
 }};

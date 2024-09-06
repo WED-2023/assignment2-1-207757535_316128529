@@ -4,7 +4,6 @@
     <h1 class="title">MY RECIPES</h1>
       <div >
           <RecipeCarousel :recipes="myRecipes" :spoonRecipes="false"/>
-          
       </div>
       <div >
           <RecipePreviewList
@@ -42,6 +41,10 @@ export default {
       const response = await getMyRecipes();
       if (response.data.status === 200 && response.data.success) {
         this.myRecipes.push(...response.data.recipes);
+      }
+      else{
+        console.error("Error during recipe retrivel:", error);
+        this.$root.toast("Error", "something went wrong, please try again later");
       }
 
     },

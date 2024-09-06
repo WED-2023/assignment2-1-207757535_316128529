@@ -1,6 +1,5 @@
 // src/services/recipes.js
 // import axios from "axios";
-import shared_data from "../main"; // Adjust the path based on your project structure
 const axios = require("axios");
 
 
@@ -12,7 +11,6 @@ export async function getRecipePreview(recipe_id){
   catch (error) {
     // Handle error response from server
     if (error.response) {
-      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
       return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
     } else {
       return { status: 500, message: "Server error", success: false };
@@ -44,7 +42,6 @@ export async function getRandomRecipes(){
   catch (error) {
     // Handle error response from server
     if (error.response) {
-      alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
       return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
     } else {
       return { status: 500, message: "Server error", success: false };
@@ -60,7 +57,6 @@ export async function getRandomRecipes(){
     catch (error) {
       // Handle error response from server
       if (error.response) {
-        alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
         return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
       } else {
         return { status: 500, message: "Server error", success: false };
@@ -75,7 +71,6 @@ export async function getRandomRecipes(){
       catch (error) {
         // Handle error response from server
         if (error.response) {
-          alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
           return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
         } else {
           return { status: 500, message: "Server error", success: false };
@@ -91,7 +86,6 @@ export async function getRandomRecipes(){
       catch (error) {
         // Handle error response from server
         if (error.response) {
-          alert("status: " + error.response.status + " message: " + error.response.data + " success: " + error.response.data.success);
           return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
         } else {
           return { status: 500, message: "Server error", success: false };

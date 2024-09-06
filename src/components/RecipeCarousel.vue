@@ -84,8 +84,8 @@ export default {
 }
 
 .recipe-image {
-  width: 400px; /* Adjust the width as needed */
-  height: 400px; /* Adjust the height as needed */
+  width: 300px; /* Adjust the width as needed */
+  height: 300px; /* Adjust the height as needed */
   display: block;
   cursor: pointer; /* Indicate that the image is clickable */
 }

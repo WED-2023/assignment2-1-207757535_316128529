@@ -97,7 +97,8 @@ export default {
         }
         catch (error) 
         {
-          console.log(error);
+          console.error("Error during recipe retrivel:", error);
+          this.$root.toast("Error", "something went wrong, please try again later");
         }
     },
     async fetchPreview() {
@@ -120,9 +121,6 @@ export default {
   color: #ffffff;
   background-color: #151718;
 }
-
-
-
 .cover-image-container {
   position: relative;
   text-align: center;
@@ -181,8 +179,6 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
-
-
 
 .ingredients,
 .instructions,

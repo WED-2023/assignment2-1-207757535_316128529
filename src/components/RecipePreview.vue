@@ -66,13 +66,15 @@ export default {
   },
   methods: {
     async addLastViewRecipe() {
-      const response = await addLastViewRecipes(this.recipe.id);
-      if(response.data.status === 200 && response.data.success) {
-        this.Viewed = true;
-      }
-      else{
-        console.error("Error adding to last view:", error);
-      }
+      if(this.spoonRecipe){
+        const response = await addLastViewRecipes(this.recipe.id);
+        if(response.data.status === 200 && response.data.success) {
+          this.Viewed = true;
+        }
+        else{
+          console.error("Error adding to last view:", error);
+        }
+    }
 
   }
 }};

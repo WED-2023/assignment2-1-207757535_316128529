@@ -39,6 +39,7 @@
 
 <script>
 import { BCarousel, BCarouselSlide } from 'bootstrap-vue';
+import { addLastViewRecipes } from "../services/user.js";
 
 export default {
   components: {
@@ -68,8 +69,14 @@ export default {
     onSlideEnd(slide) {
       this.sliding = false;
     },
-    goToRecipe(recipeId) {
-      this.$router.push({ name: 'recipe', params: { recipeID: recipeId } });
+    async goToRecipe(recipeId) {
+      if(this.spoonRecipes){
+        const response = await addLastViewRecipes(recipeId);
+        if(! (response.data.status === 200 && response.data.success)) {
+          console.error("Error adding to last view:", error);
+        }
+    }
+    this.$router.push({ name: 'recipe', params: { recipeID: recipeId, isSpoonRecipe: this.spoonRecipes} });
     }
   }
 };

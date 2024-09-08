@@ -52,7 +52,7 @@
 
 <script>
 import RecipePreview from "../components/RecipePreview";
-import { getRecipePage, getRecipePreview, getMyRecipePage, getMyRecipePreview } from "../services/recipes.js";
+import { getRecipePage, getMyRecipePage } from "../services/recipes.js";
 
 export default {
   name: "recipe",

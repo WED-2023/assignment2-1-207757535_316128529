@@ -3,7 +3,11 @@
     <br><br><br><br>
     <h1 class="title">MY FAVORITE RECIPES</h1>
       <div >
-          <RecipeCarousel :recipes="favoriteRecipes"/>
+          <RecipeCarousel 
+          :recipes="favoriteRecipes"
+          :spoonRecipes=true
+          />
+
       </div>
       <div >
           <RecipePreviewList
@@ -11,6 +15,7 @@
             class="RandomRecipes center"
             :recipes="favoriteRecipes"
             :key="componentKey"
+            :spoonRecipes=true
           />
         </div>
     </div>

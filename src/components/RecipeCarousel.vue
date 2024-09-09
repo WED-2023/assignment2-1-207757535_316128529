@@ -75,6 +75,7 @@ export default {
         if(! (response.data.status === 200 && response.data.success)) {
           console.error("Error adding to last view:", error);
         }
+    
     }
     this.$router.push({ name: 'recipe', params: { recipeID: recipeId, isSpoonRecipe: this.spoonRecipes} });
     }

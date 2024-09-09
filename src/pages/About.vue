@@ -14,7 +14,7 @@
     <div class="content-section">
       <img src="@/assets/dvir.jpg" alt="Another Image" class="side-image" />
       <div class="text-content">
-        <audio ref="audioDvir" src="@/assets/Milkshake.mp3"></audio>
+        <audio ref="audioDvir" src="@/assets/Dwirr.mp3"></audio>
         <p class="styled-paragraph">
           Dvir Zandany <br> Dvir Zandany, tech's shining star,<br>Leading projects, reaching far,<br>With code and vision, sets the bar,<br>Innovation drives his car,<br>In the digital world, he’s raising the par.
         </p>
@@ -38,7 +38,7 @@
     <div class="content-section">
       <img src="@/assets/ido.jpg" alt="Another Image" class="side-image" />
       <div class="text-content">
-        <audio ref="audioIdo" src="@/assets/rondelim.mp3"></audio>
+        <audio ref="audioIdo" src="@/assets/Wedo.mp3"></audio>
         <p class="styled-paragraph">
           Ido Dai<br>Ido Dai, in tech he shines bright,<br>Crafting code through day and night,<br>Innovation's path, he lights,<br>In the world of tech, he takes flight,<br>Turning dreams to real, just right.
         </p>

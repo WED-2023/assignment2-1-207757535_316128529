@@ -18,7 +18,7 @@
         <br><br>
         <!-- <div v-if="showLikeButton">   -->
           <like :recipeId ="recipe.id" :LoggedIn="showLikeButton"/>
-          <watch :isViewed="Viewed"/>      
+          <watch :recipeID="recipe.id"/>      
         <!-- </div> -->
   </div>
   </div>
@@ -59,17 +59,13 @@ export default {
       type: Boolean,
       default: true
     },
-    Viewed: {
-      type: Boolean,
-      default: true
-    },
+
   },
   methods: {
     async addLastViewRecipe() {
       if(this.spoonRecipe){
         const response = await addLastViewRecipes(this.recipe.id);
         if(response.data.status === 200 && response.data.success) {
-          this.Viewed = true;
         }
         else{
           console.error("Error adding to last view:", error);

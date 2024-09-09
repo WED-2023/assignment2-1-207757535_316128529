@@ -6,7 +6,7 @@
       <div class="left-side">
         <div class="container-random">         
           <RecipePreviewList
-            :isUserLoggedIn="$root.store.username" :recipes="randomRecipes" :viewedRecipes="viewedRecipes"
+            :isUserLoggedIn="$root.store.username" :recipes="randomRecipes" 
             style="text-align: center; font-family: Comfortaa; margin-top: 3%;"
             title="Explore these recipes"
             class="RandomRecipes center"
@@ -22,7 +22,6 @@
           <RecipePreviewList
             :isUserLoggedIn="$root.store.username"
             :recipes="lastViewedRecipes"
-            :viewedRecipes="[true, true, true]"
             title="Last Viewed Recipes"
             class="RandomRecipes center"
           />
@@ -66,10 +65,10 @@ export default {
   methods: {
     async fetchRandomRecipes() {
       const response = await getRandomRecipes();
-      const {randomRecipes, viewed, status, success} = response.data;
+      const {randomRecipes, status, success} = response.data;
       if (status === 200 && success) {
         this.randomRecipes = randomRecipes;
-        this.viewedRecipes = viewed;
+    
       }
     },
     async fetchLastViewedRecipes() {

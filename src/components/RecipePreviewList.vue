@@ -6,7 +6,7 @@
     </h3>
     <b-row>
     <b-col
-      v-for="(r, index) in recipes"
+      v-for="(r) in recipes"
       :key="r.id"
       cols="12"
       md="6"
@@ -19,7 +19,7 @@
         :recipe="r"
         :showLikeButton="isUserLoggedIn"
         :spoonRecipe="spoonRecipes"
-        v-bind="viewedRecipes ? { Viewed: viewedRecipes[index] } : {}"/>
+     />
     </b-col>
   </b-row>
   </b-container>
@@ -51,10 +51,6 @@ export default {
     isUserLoggedIn: {
       type: Boolean,
       default: false
-    },
-    viewedRecipes: {
-      type: Array,
-      required: true
     },
     spoonRecipes:{
       type: Boolean,

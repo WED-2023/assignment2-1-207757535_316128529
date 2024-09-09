@@ -19,21 +19,39 @@
 </template>
 
 <script>
+import { isRecipeViewed } from "../services/user.js";
+
 export default {
   data() {
     return {
+      isViewed: ""
+     
+    
     };
   },
   props: {
-    isViewed: {
-      type: Boolean,
-      default: false
-    },
+
     recipeID:{
         type: Number,
         default:0
     }   
 },
+mounted() {
+   this.Viewed();
+  },
+  methods:{
+    async Viewed(){
+      const response = await isRecipeViewed(this.recipeID);
+      if(response.data.status === 200 && response.data.success) {
+          this.isViewed =response.data.viewed;
+        }
+        else{
+          this.isViewed = false;
+        }
+
+    }
+
+  }
 };
 </script>
 

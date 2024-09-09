@@ -91,6 +91,7 @@ const shared_data = {
   },
 };
 console.log(shared_data);
+Vue.prototype.$shared_data = shared_data;
 // Vue.prototype.$root.store = shared_data;
 
 new Vue({

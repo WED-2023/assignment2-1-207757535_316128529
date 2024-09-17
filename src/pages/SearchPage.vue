@@ -103,6 +103,11 @@ export default {
 },
 
 methods: {
+     /**
+     * Initializes the search by checking if there are saved recipes in localStorage.
+     * If found, they are loaded into the `recipes` array.
+     * Otherwise, the `recipes` array is cleared (null).
+     */
   async initializeSearch() {
     // Retrieve saved recipes from localStorage if they exist
     const savedRecipes = localStorage.getItem('savedRecipes');
@@ -112,17 +117,28 @@ methods: {
       this.recipes = null; // No previous search, show nothing
     }
   },
-
+ /**
+     * Changes the number of presented recipes on the page.
+     * @param {Number} num - The number of recipes to display (e.g., 5, 10, 15)
+     */
   async changeNumOfPresentedRec(num){
     this.numOfRecipes = num;
     this.search();
   },
-  
+  /**
+     * Updates the selected sorting option (e.g., preparation time or popularity)
+     * and triggers the search based on the new sort option.
+     * @param {String} option - The selected sorting option
+     */
   async updateSortOption(option) {
     this.selectedSortOption = option;
     this.search(); // Trigger search with the new sort option
   },
-  
+   /**
+     * Executes the search for recipes based on the search query, filters, sorting, and number of recipes.
+     * If the user is not logged in, a toast notification is shown, and no search is performed.
+     * Results are fetched from the server and stored in localStorage for future use.
+     */
   async search() {
     if (!this.$root.store.username) {
         // Show toast message
@@ -133,6 +149,7 @@ methods: {
         });
         return;
       }
+    // Check if the search query is empty
     if (!this.searchQuery.trim()) {
       // If the search query is empty, clear the recipes and return
       this.recipes = null; // Show nothing since no search was made
@@ -163,6 +180,7 @@ methods: {
     }
   }
 },
+    // Watch for changes in the query parameter and trigger a search if it changes
   watch: {
     '$route.query.q': 'search' // Watch for changes in the query parameter
   }

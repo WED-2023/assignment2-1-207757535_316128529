@@ -1,6 +1,13 @@
 import axios from "axios";
 import shared_data from "../main"; // Adjust the path based on your project structure
 
+
+
+/**
+ * Add a recipe to the user's list of favorites.
+ * @param {string} recipeId - The ID of the recipe to add to favorites.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function AddFavorite(recipeId) {
   try {
     const response = await axios.post("http://localhost:3000/users/favorites", {
@@ -19,6 +26,11 @@ export async function AddFavorite(recipeId) {
   }
 }
 
+/**
+ * Add a recipe to the user's list of last viewed recipes.
+ * @param {string} recipe_id - The ID of the recipe.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function addLastViewRecipes(recipe_id) {
   try {
     const response = await axios.post(`http://localhost:3000/users/lastViewed`, {user_id : shared_data.username, recipe_id: recipe_id },
@@ -34,6 +46,11 @@ export async function addLastViewRecipes(recipe_id) {
   }
 }
 
+/**
+ * Check if a recipe has been viewed by the user.
+ * @param {string} recipe_id - The ID of the recipe.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function isRecipeViewed(recipe_id) {
   try {
     const response = await axios.get(`http://localhost:3000/users/isViewed/`+ recipe_id);
@@ -49,6 +66,11 @@ export async function isRecipeViewed(recipe_id) {
   }
 }
 
+/**
+ * Add a new recipe to the user's recipe list.
+ * @param {Object} recipe_details - The details of the recipe to be added.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function addNewRecipe(recipe_details) {
   try {
     const response = await axios.post(`http://localhost:3000/users/MyRecipes`, {recipe_details },
@@ -64,6 +86,10 @@ export async function addNewRecipe(recipe_details) {
   }
 }
 
+/**
+ * Fetch the user's favorite recipes.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function GetFavoritesRecipes() {
   try {
     const response = await axios.get("http://localhost:3000/users/favorites");
@@ -79,6 +105,10 @@ export async function GetFavoritesRecipes() {
   }
 }
 
+/**
+ * Fetch the user's last three viewed recipes.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function getLastThreeRecipes() {
   try {
     const response = await axios.get("http://localhost:3000/users/lastViewed");
@@ -93,6 +123,10 @@ export async function getLastThreeRecipes() {
     }
   }}
 
+/**
+ * Fetch all recipes created by the user.
+ * @returns {Object} - The server response or an error object.
+ */
   export async function getMyRecipes() {
     try {
       const response = await axios.get("http://localhost:3000/users/MyRecipes");

@@ -3,6 +3,7 @@
     <br><br><br><br>
     <h1 class="title">Register</h1>
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
+      <!-- Username input field with validation -->
       <b-form-group
         id="input-group-username"
         label-cols-sm="3"
@@ -15,6 +16,7 @@
           type="text"
           :state="validateState('username')"
         ></b-form-input>
+        <!-- Username validation errors -->
         <b-form-invalid-feedback v-if="!$v.form.username.required">
           Username is required
         </b-form-invalid-feedback>
@@ -25,7 +27,7 @@
           Username should only contain letters
         </b-form-invalid-feedback>
       </b-form-group>
-
+      <!-- First name input field with validation -->
       <b-form-group
         id="input-group-firstName"
         label-cols-sm="3"
@@ -89,6 +91,7 @@
           v-model="$v.form.password.$model"
           :state="validateState('password')"
         ></b-form-input>
+        <!-- First name validation error -->
         <b-form-invalid-feedback v-if="!$v.form.password.required">
           Password is required
         </b-form-invalid-feedback>
@@ -139,7 +142,7 @@
           The confirmed password is not equal to the original password
         </b-form-invalid-feedback>
       </b-form-group>
-
+ <!-- Email input field with validation for required and valid email format -->
       <b-form-group
         id="input-group-email"
         label-cols-sm="3"
@@ -159,7 +162,7 @@
           Email must be valid
         </b-form-invalid-feedback>
       </b-form-group>
-
+       <!-- Submit and Reset buttons -->
       <div class="button-container">
         <b-button type="reset" variant="danger">Reset</b-button>
         <b-button
@@ -174,6 +177,7 @@
         <router-link to="login"> Log in here</router-link>
       </div>
     </b-form>
+    <!-- Alert for displaying registration errors -->
     <b-alert
       class="mt-2"
       v-if="form.submitError"

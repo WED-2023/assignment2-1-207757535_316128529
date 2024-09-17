@@ -1,8 +1,12 @@
 <template>
+  <!-- Main container for the login page -->
   <div class="container">
+    <!-- Title of the page -->
     <br><br><br><br><br>
     <h1 class="title">Login</h1>
+    <!-- Form for login with username and password fields -->
     <b-form @submit.prevent="onLogin">
+      <!-- Username input field -->
       <b-form-group
         id="input-group-Username"
         label-cols-sm="3"
@@ -20,6 +24,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <!-- Password input field -->
       <b-form-group
         id="input-group-Password"
         label-cols-sm="3"
@@ -37,6 +42,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <!-- Login button -->
       <b-button
         type="submit"
         variant="primary"
@@ -45,11 +51,13 @@
       >
         Login
       </b-button>
+      <!-- Link to registration page for users without an account -->
       <div class="mt-2">
         Do not have an account yet?
         <router-link to="register"> Register in here</router-link>
       </div>
     </b-form>
+    <!-- Alert message for failed login attempts -->
     <b-alert
       class="mt-2"
       v-if="form.submitError"
@@ -59,6 +67,8 @@
     >
       Login failed: {{ form.submitError }}
     </b-alert>
+
+    <!-- Alert message for successful login -->
     <b-alert
       class="mt-2"
       v-if="form.submitSuccess"
@@ -79,6 +89,7 @@ export default {
   name: "Login",
   data() {
     return {
+      // State variables for the form, including success/error messages
       success: true, // Change this to false to simulate login failure
       form: {
         username: "",
@@ -99,10 +110,21 @@ export default {
     }
   },
   methods: {
+    /**
+     * Determines the validation state of the input field based on its parameter.
+     * @param {string} param - The name of the form field (e.g., 'username', 'password').
+     * @returns {boolean|null} - Returns true if the input is valid, false if invalid, or null if not dirty.
+     */
     validateState(param) {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
     },
+
+    /**
+     * Handles login logic by sending the username and password to the server.
+     * On successful login, updates the store, redirects to the home page, and shows success message.
+     * On failure, shows an error message.
+     */
     async Login() {
       try {
         const response = await Login(this.form.username,this.form.password);
@@ -110,7 +132,6 @@ export default {
           this.form.submitSuccess = true;
           this.$root.store.login(this.form.username);
           this.$router.push("/");
-          location.reload();
         } else {
           this.$root.toast("Failed to Login", "Username or Password are incorrect", "danger");
         }
@@ -118,6 +139,10 @@ export default {
         this.form.submitError = err.response.data.message;
       }
     },
+
+    /**
+     * Validates the form and triggers the login process if the form is valid.
+     */
     onLogin() {
       this.form.submitError = undefined;
       this.form.submitSuccess = undefined;

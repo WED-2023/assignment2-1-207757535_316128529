@@ -19,7 +19,7 @@
         :recipe="r"
         :showLikeButton="isUserLoggedIn"
         :spoonRecipe="spoonRecipes"
-     />
+        />
     </b-col>
   </b-row>
   </b-container>

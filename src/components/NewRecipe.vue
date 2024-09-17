@@ -162,37 +162,40 @@ export default {
     return {
       imageUrl: '', // Initialize imageUrl as empty string
       useUrlInput: false, // Flag to toggle between file upload and URL input
-      show: true,
-      file1: null,
-      file2: null,
+      show: true, // Flag to show or hide the form
+      file1: null, // Holds the selected image file
+      file2: null, // Additional file input (not used in this version)
       form: {
-        name: '',
-        checked: [],
+        name: '', // Recipe title
+        checked: [], // Selected dietary options
       },
-      servingAmount: 0,
-      instructions: [],
-      instruction: "",
-      numOfInstructions: 1,
-      ingredients: [],
-      ingredientName: "",
-      numOfIngredients: 1,
-      amount: 0,
-      time: '00:00',
-      text: '',
-      selected: null,
-      showToast: false,
+      servingAmount: 0, // Number of servings
+      instructions: [], // Array of recipe instructions
+      instruction: "", // Current instruction being added
+      numOfInstructions: 1, // Number of instructions
+      ingredients: [], // Array of recipe ingredients
+      ingredientName: "", // Current ingredient name being added
+      numOfIngredients: 1, // Number of ingredients
+      amount: 0, // Amount of the ingredient
+      time: '00:00', // Time required to make the recipe
+      text: '', // Summary or description of the recipe
+      selected: null, // Selected unit for ingredients
+      showToast: false, // Flag to show toast messages
     }
   },
   computed: {
     isIngredientButtonDisabled() {
+      // Disable ingredient button if any required field is empty
       return !this.ingredientName || !this.amount || !this.selected;
     },
     selectedFileOrUrl() {
+      // Display the selected file name or URL based on input mode
       return this.useUrlInput ? this.imageUrl : (this.file1 ? this.file1.name : '');
     },
   },
   methods: {
     validateForm() {
+    // Validate required fields in the form and return a list of missing fields
     const missingFields = [];
 
     if (!this.form.name) {
@@ -222,10 +225,12 @@ export default {
     return missingFields;
   },
     timeAsFloat() {
+    // Convert time to a float representing minutes
     const [minutes, seconds] = this.time.split(':').map(Number);
     return minutes + (seconds / 60);
   },
     AddInstruction() {
+      // Add a new instruction to the list
       if (this.instruction) {
         this.instructions.push(this.instruction);
         this.numOfInstructions += 1;
@@ -234,6 +239,7 @@ export default {
       }
     },
     RemoveInstruction() {
+      // Remove the last instruction from the list
       if(this.numOfInstructions > 0){
          this.instructions.pop();
          this.numOfInstructions -= 1;
@@ -245,6 +251,7 @@ export default {
      
     },
     AddIngredient() {
+      // Add a new ingredient to the list
       if (this.isIngredientButtonDisabled) {
         this.showToast = true;
         return;
@@ -260,6 +267,7 @@ export default {
       }
     },
     RemoveIngredient() {
+      // Remove the last ingredient from the list
       if(this.numOfIngredients > 0){
         this.ingredients.pop();
         this.numOfIngredients -= 1;
@@ -269,7 +277,9 @@ export default {
         this.$root.toast("Problem encountered during ingridient removal ", "You don't have any ingridient for this recipe", "danger");
       }
     },
+
     async onSubmit(event) {
+      // Handle form submission
       event.preventDefault();
 
     // Validate form before submitting
@@ -300,6 +310,7 @@ export default {
       }
     },
     onReset(event) {
+      // Reset form fields to their initial state
       if(event != null){
         event.preventDefault();
       }
@@ -325,6 +336,7 @@ export default {
       this.imageUrl = '';
     },
     toggleInputMode() {
+      // Toggle between file upload and URL input modes
       this.useUrlInput = !this.useUrlInput;
       if (this.useUrlInput) {
         this.file1 = null; // Reset file1 when switching to URL input mode

@@ -19,39 +19,41 @@
 </template>
 
 <script>
-import { isRecipeViewed } from "../services/user.js";
-
+import {isViewedRecipe} from "../services/user.js"; 
 export default {
   data() {
     return {
-      isViewed: ""
-     
-    
+      isViewed:false
     };
   },
   props: {
-
     recipeID:{
-        type: Number,
-        default:0
-    }   
+        type: String,
+        required: true
+      }   
 },
-mounted() {
-   this.Viewed();
-  },
-  methods:{
-    async Viewed(){
-      const response = await isRecipeViewed(this.recipeID);
-      if(response.data.status === 200 && response.data.success) {
-          this.isViewed =response.data.viewed;
-        }
-        else{
-          this.isViewed = false;
-        }
-
-    }
-
+mounted(){
+  /**
+     * Called after the component is mounted.
+     * Checks if the recipe has been viewed using the recipeID.
+     */
+  this.isRecipeViewed(this.recipeID);
+},
+methods: {
+  /**
+     * Fetches and sets the viewed status of the recipe.
+     * 
+     * @param {string} recipeID - The ID of the recipe to check.
+     * @returns {Promise<void>}
+     */
+  async isRecipeViewed(recipeID){
+    const response = await isViewedRecipe(recipeID);
+    const {viewed, status, success} = response.data;
+      if (status === 200 && success) {
+        this.isViewed = viewed;
+      }
   }
+}
 };
 </script>
 

@@ -16,10 +16,8 @@
         </div>
           <tags :recipe="recipe"/>
         <br><br>
-        <!-- <div v-if="showLikeButton">   -->
           <like :recipeId ="recipe.id" :LoggedIn="showLikeButton"/>
           <watch :recipeID="recipe.id"/>      
-        <!-- </div> -->
   </div>
   </div>
 </template>
@@ -59,9 +57,12 @@ export default {
       type: Boolean,
       default: true
     },
-
+   
   },
   methods: {
+    /**
+     * Adds the recipe to the last viewed list if it's a spoon recipe.
+     */
     async addLastViewRecipe() {
       if(this.spoonRecipe){
         const response = await addLastViewRecipes(this.recipe.id);

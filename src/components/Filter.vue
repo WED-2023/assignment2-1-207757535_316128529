@@ -44,29 +44,31 @@ export default {
     selectedFilters: {
       type: Object,
       default: () => ({
-        cuisines: [],
-        diets: [],
-        intolerances: []
+        cuisines: [],  // Array to hold selected cuisines
+        diets: [],     // Array to hold selected diets
+        intolerances: [] // Array to hold selected intolerances
       })
     }
   },
   data() {
     return {
-      cuisines: cuisines,
-      diets: diets,
-      intolerances: intolerances
+      cuisines: cuisines,         // Array of available cuisines
+      diets: diets,               // Array of available diets
+      intolerances: intolerances // Array of available intolerances
     };
   },
   watch: {
     selectedFilters: {
+      // Watcher to emit event when selectedFilters changes
       handler(newVal) {
         this.$emit('update:selectedFilters', newVal);
       },
-      deep: true
+      deep: true // Deep watch for nested changes
     }
   },
   methods: {
     resetFilters() {
+      // Method to reset all selected filters to default (empty arrays)
       this.$emit('update:selectedFilters', {
         cuisines: [],
         diets: [],

@@ -1,5 +1,6 @@
 <template>
   <div class="carousel-container">
+    <!-- Bootstrap Vue carousel component with controls and indicators -->
     <b-carousel v-model="slide"
       :interval="4000"
       controls
@@ -10,10 +11,13 @@
       prev-icon="fas fa-chevron-left"
       next-icon="fas fa-chevron-right"
     >
+      <!-- Carousel slide for each recipe -->
       <b-carousel-slide v-for="recipe in recipes" :key="recipe.id">
         <template #img>
+          <!-- Recipe image and clickable area -->
           <img :src="recipe.image" alt="Recipe Image" class="recipe-image" @click="goToRecipe(recipe.id)"/>
           <div class="recipe-info">
+            <!-- Recipe title and overview -->
             <div class="recipe-footer-content">
               <div :title="recipe.title" class="recipe-title">
                 <b-card-text>{{ recipe.title }}</b-card-text>
@@ -24,6 +28,7 @@
                 <li v-if="spoonRecipes">{{ recipe.aggregateLikes }} likes</li>
               </ul>
             </div>
+            <!-- Dietary tags -->
             <div class="tags-container">
               <img v-if="recipe.vegetarian" src="@/assets/vegetarian.png" alt="Vegetarian" class="tag-icon">
               <img v-if="recipe.vegan" src="@/assets/vegan.png" alt="Vegan" class="tag-icon">
@@ -58,17 +63,31 @@ export default {
   },
   data() {
     return {
-      slide: 0,
-      sliding: null
+      slide: 0, // Current slide index
+      sliding: null // Flag to indicate sliding status
     };
   },
   methods: {
+    /**
+     * Event handler triggered when sliding starts.
+     * Sets the `sliding` flag to true.
+     * @param {number} slide - The index of the current slide.
+     */
     onSlideStart(slide) {
       this.sliding = true;
     },
+    /**
+     * Event handler triggered when sliding ends.
+     * Sets the `sliding` flag to false.
+     * @param {number} slide - The index of the current slide.
+     */
     onSlideEnd(slide) {
       this.sliding = false;
     },
+    /**
+     * Navigate to the recipe details page and optionally add the recipe to last viewed.
+     * @param {number} recipeId - The ID of the recipe to navigate to.
+     */
     async goToRecipe(recipeId) {
       if(this.spoonRecipes){
         const response = await addLastViewRecipes(recipeId);

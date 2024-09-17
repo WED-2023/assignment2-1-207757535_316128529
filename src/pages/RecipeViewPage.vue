@@ -57,7 +57,7 @@ import { getRecipePage, getMyRecipePage } from "../services/recipes.js";
 export default {
   name: "recipe",
   components: {
-    RecipePreview,
+    RecipePreview, // Importing RecipePreview component for displaying the recipe preview
   },
   data() {
     return {
@@ -70,6 +70,7 @@ export default {
   },
   computed: {
     showLike() {
+      // If the user is logged in, show the like button only for Spoonacular recipes
       if( this.$root.store.username){
         return this.$route.params.isSpoonRecipe
       }
@@ -81,6 +82,9 @@ export default {
     this.fetchPreview();
   },
   methods: {
+     /**
+     * Fetch the recipe details based on the recipe ID and type (spoonRecipe or custom).
+     */
     async getRecipe() {
       try {
         let response_full = null;
@@ -90,6 +94,7 @@ export default {
         else{
           response_full = await getMyRecipePage(this.recipeID);
         }
+        // Check if the response is successful and store the recipe details
         if (response_full.data.status === 200 && response_full.data.success) {
           const recipeDetails = response_full.data.recipe;
           this.recipe = recipeDetails;
@@ -101,6 +106,9 @@ export default {
           this.$root.toast("Error", "something went wrong, please try again later");
         }
     },
+     /**
+     * Fetch the preview of the recipe to display on the page.
+     */
     async fetchPreview() {
       try{
         this.recipePreview.push(this.recipe);  

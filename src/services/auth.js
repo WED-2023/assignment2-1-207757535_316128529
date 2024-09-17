@@ -1,7 +1,13 @@
 const axios = require("axios");
 
 
-// Function to handle login
+// Function to handle user login
+/**
+ * Logs in a user by sending the username and password to the server.
+ * @param {string} username - The username of the user.
+ * @param {string} password - The password of the user.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function Login(username, password) {
   try {
     const response = await axios.post("http://localhost:3000/api/Login", {
@@ -19,7 +25,12 @@ export async function Login(username, password) {
   }
 }
 
-// Function to handle register
+// Function to handle user registration
+/**
+ * Registers a new user by sending their details to the server.
+ * @param {Object} user_details - The details of the user to register (username, first name, last name, country, password, email).
+ * @returns {Object} - The server response or an error object.
+ */
 export async function Register(user_details) {
   try {
     const response = await axios.post("http://localhost:3000/api/Register", {
@@ -46,7 +57,11 @@ export async function Register(user_details) {
   }
 }
 
-// Function to handle logout
+// Function to handle user logout
+/**
+ * Logs out the current user by sending a request to the server.
+ * @returns {Object} - The server response or an error object.
+ */
 export function Logout() {
   try {
     const response = axios.post("http://localhost:3000/api/Logout");

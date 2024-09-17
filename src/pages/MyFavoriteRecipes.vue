@@ -10,6 +10,7 @@
 
       </div>
       <div >
+         <!-- Recipe Preview List to display favorite recipes in a list format -->
           <RecipePreviewList
             :isUserLoggedIn=false
             class="RandomRecipes center"
@@ -42,6 +43,10 @@ export default {
     this.showFavorites(); 
   },
   methods: {
+    /**
+     * Fetch the user's favorite recipes and store them in favoriteRecipes array.
+     * If an error occurs during the fetch, log the error and show a toast notification.
+     */
     async showFavorites() {
       const response = await GetFavoritesRecipes();
       if (response.data.status === 200 && response.data.success) {

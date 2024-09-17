@@ -6,7 +6,8 @@ This project is a Recipe Management web application that allows users to registe
 1. User Authentication: Register and log in with secure user authentication.
 2. Recipe Search: Search for recipes using filters such as ingredients, cuisine, and more.
 3. Favorite Recipes: Mark and view favorite recipes in a dedicated section.
-4. Personal Recipe Collection: Add, edit, and delete personal recipes.
+4. Personal Recipe Collection: Add, edit, and delete personal recipes.    
+
 5.Recipe Details: View full details of a recipe, including ingredients, instructions, and nutritional information.
 
 

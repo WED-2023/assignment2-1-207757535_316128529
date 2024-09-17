@@ -2,7 +2,11 @@
 // import axios from "axios";
 const axios = require("axios");
 
-
+/**
+ * Fetch the preview of a recipe by its ID.
+ * @param {string} recipe_id - The ID of the recipe to fetch the preview for.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function getRecipePreview(recipe_id){
   try {
     const response = await axios.get("http://localhost:3000/recipes/preview/" + recipe_id);
@@ -17,6 +21,11 @@ export async function getRecipePreview(recipe_id){
     }
   }}
 
+/**
+ * Fetch the preview of a user's custom recipe by its ID.
+ * @param {string} recipe_id - The ID of the custom recipe to fetch the preview for.
+ * @returns {Object} - The server response or an error object.
+ */
   export async function getMyRecipePreview(recipe_id){
     try {
       const response = await axios.get("http://localhost:3000/recipes/myRecipePreview/" + recipe_id);
@@ -32,8 +41,10 @@ export async function getRecipePreview(recipe_id){
       }
     }}
 
-
-
+/**
+ * Fetch a random set of recipes.
+ * @returns {Object} - The server response or an error object.
+ */
 export async function getRandomRecipes(){
   try {
     const response = await axios.get(`http://localhost:3000/recipes/random?number=3`);
@@ -49,6 +60,11 @@ export async function getRandomRecipes(){
   }
 }
 
+/**
+ * Fetch the full details of a recipe by its ID.
+ * @param {string} recipe_id - The ID of the recipe.
+ * @returns {Object} - The server response or an error object.
+ */
   export async function getRecipePage(recipe_id) {
     try {
       const response = await axios.get("http://localhost:3000/recipes/fullDetails/" + recipe_id);
@@ -62,7 +78,11 @@ export async function getRandomRecipes(){
         return { status: 500, message: "Server error", success: false };
       }
     }}
-
+/**
+ * Fetch the full details of a user's custom recipe by its ID.
+ * @param {string} recipe_id - The ID of the custom recipe.
+ * @returns {Object} - The server response or an error object.
+ */
     export async function getMyRecipePage(recipe_id) {
       try {
         const response = await axios.get("http://localhost:3000/recipes/myRecipesFullDetails/" + recipe_id);
@@ -77,7 +97,16 @@ export async function getRandomRecipes(){
         }
       }}
   
-
+/**
+ * Perform a search for recipes based on query parameters.
+ * @param {string} query - The search query.
+ * @param {string} cuisine - The cuisine filter.
+ * @param {string} diet - The diet filter.
+ * @param {string} intolerances - The intolerances filter.
+ * @param {string} sort - The sorting option.
+ * @param {number} number - The number of results to fetch.
+ * @returns {Object} - The server response or an error object.
+ */
     export async function get_search_result(query, cuisine, diet, intolerances, sort, number) {
       try {
         const response = await axios.get(`http://localhost:3000/recipes/search?query=${query}&number=${number}&cuisine=${cuisine}&diet=${diet}&intolerances=${intolerances}&sort=${sort}`);

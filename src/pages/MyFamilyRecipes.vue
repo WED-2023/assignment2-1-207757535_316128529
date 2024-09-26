@@ -1,19 +1,14 @@
 <template>
-  <!-- Template for displaying family recipes -->
   <div style="background-color: #fff;">
-    <!-- Cover image and title -->
     <div class="cover-image-container">
       <img src="@/assets/Family.jpg" alt="Family Picture" class="full-width-image" />
       <h1 class="cover-text">My Family Recipes</h1>
     </div>
-    <!-- Loop through recipes and display each recipe section -->
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe-section">
-      <!-- Recipe image and owner -->
       <div class="recipe-image-container">
         <img :src="recipe.picture" alt="Recipe Picture" class="recipe-image" />
         <h2 class="recipe-owner">{{ recipe.owner }}'s Recipe</h2>
       </div>
-      <!-- Recipe details including name, ingredients, and instructions -->
       <div class="recipe-details">
         <h1>{{ recipe.name }}</h1>
         <br>
@@ -37,11 +32,6 @@
 export default {
   data() {
     return {
-      /**
-       * Array of recipe objects to be displayed.
-       * Each recipe includes an id, name, picture, owner, usual occasion, ingredients, and instructions.
-       * @type {Array<Object>}
-       */
       recipes: [
         {
           id: 1,

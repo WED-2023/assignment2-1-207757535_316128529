@@ -1,14 +1,9 @@
 <template>
-  <!-- Main container for the page layout -->
   <div class="container">
     <br><br><br><br>
-    <!-- Page title -->
     <h1 class="title">Main Page</h1>
-    <!-- Content area with left and right side sections -->
     <div class="content">
-      <!-- Left side of the content -->
       <div class="left-side">
-        <!-- Container for random recipe previews -->
         <div class="container-random">         
           <RecipePreviewList
             :isUserLoggedIn="$root.store.username" :recipes="randomRecipes" 
@@ -18,14 +13,11 @@
             :key="componentKey"
           />
         </div>
-        <!-- Shuffle button to fetch new random recipes -->
         <div class="shuffle-container">
             <b-button id="shuffle-button" @click="fetchRandomRecipes"></b-button>
           </div>
       </div>
-      <!-- Right side of the content -->
       <div class="right-side">
-        <!-- Display last viewed recipes if the user is logged in -->
         <div v-if="$root.store.username" class="container-user">
           <RecipePreviewList
             :isUserLoggedIn="$root.store.username"
@@ -34,11 +26,9 @@
             class="RandomRecipes center"
           />
         </div>
-        <!-- Display login page if the user is not logged in -->
         <div v-else class="login-container">
           <LoginPage />
         </div>
-        <!-- Placeholder for additional content -->
         <div id="bthn" lang="en"></div>
       </div>
     </div>
@@ -55,12 +45,10 @@ import {getLastThreeRecipes} from "../services/user.js";
 export default {
   data() {
     return {
-       // Key to force re-render of the RecipePreviewList component
-       componentKey: 0,
-      // Arrays to store recipes
-      randomRecipes: [], // For random recipes
-      lastViewedRecipes: [], // For last viewed recipes
-      viewedRecipes: [], // For storing viewed recipes (not used in this snippet)
+      componentKey: 0,
+      randomRecipes: [], // Initialize an empty array for random recipes
+      lastViewedRecipes: [], // Initialize an empty array for last viewed recipes
+      viewedRecipes: [],
     };
   },
   components: {
@@ -68,29 +56,21 @@ export default {
     LoginPage,
   },
   mounted() {
-    // Perform actions after the component is mounted
-    setTimeout(() => {
-    this.fetchRandomRecipes();// Fetch random recipes
+    this.fetchRandomRecipes(); // Fetch 3 random recipes when the component is mounted
     if (this.$root.store.username) {
-      this.fetchLastViewedRecipes(); // Fetch last viewed recipes if logged in
+      this.fetchLastViewedRecipes(); // Fetch max 3 last viewed recipes if the user is logged in
     }
-    }, 1000);
-    this.BringThemHome();// Load external script
+    this.BringThemHome();
   },
   methods: {
-    /**
-     * Fetches random recipes from the server and updates the randomRecipes data property.
-     */
     async fetchRandomRecipes() {
       const response = await getRandomRecipes();
       const {randomRecipes, viewed, status, success} = response.data;
       if (status === 200 && success) {
         this.randomRecipes = randomRecipes;
+        // this.viewedRecipes = viewed;
       }
     },
-    /**
-     * Fetches the last three viewed recipes from the server and updates the lastViewedRecipes data property.
-     */
     async fetchLastViewedRecipes() {
       const response = await getLastThreeRecipes();
       const {recipes, viewed, status, success} = response.data;
@@ -102,10 +82,6 @@ export default {
         this.$root.toast("Error", "something went wrong, please try again later");
       }
     },
-
-  /**
-     * Dynamically loads an external script and appends it to the document head.
-     */
   BringThemHome () {
    var script = document.createElement("script");
    script.type = "text/javascript";

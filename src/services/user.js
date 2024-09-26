@@ -10,7 +10,7 @@ import shared_data from "../main"; // Adjust the path based on your project stru
  */
 export async function AddFavorite(recipeId) {
   try {
-    const response = await axios.post("http://localhost:3000/users/favorites", {
+    const response = await axios.post(shared_data.server_domain + "/users/favorites", {
       user_name: shared_data.username,
       recipe_id: recipeId,
     },
@@ -33,8 +33,8 @@ export async function AddFavorite(recipeId) {
  */
 export async function addLastViewRecipes(recipe_id) {
   try {
-    const response = await axios.post(`http://localhost:3000/users/lastViewed`, {user_id : shared_data.username, recipe_id: recipe_id },
-      {withCredentials: true});
+    const response = await axios.post(shared_data.server_domain + "/users/lastViewed", {user_id : shared_data.username, recipe_id: recipe_id },
+      {withCredentials: true})
     return response;
   } catch (error) {
     // Handle error response from server
@@ -51,9 +51,9 @@ export async function addLastViewRecipes(recipe_id) {
  * @param {string} recipe_id - The ID of the recipe.
  * @returns {Object} - The server response or an error object.
  */
-export async function isRecipeViewed(recipe_id) {
+export async function isViewedRecipe(recipe_id) {
   try {
-    const response = await axios.get(`http://localhost:3000/users/isViewed/`+ recipe_id);
+    const response = await axios.get(shared_data.server_domain + "/users/isViewed/"+ recipe_id);
     return response;
     
   } catch (error) {
@@ -73,7 +73,7 @@ export async function isRecipeViewed(recipe_id) {
  */
 export async function addNewRecipe(recipe_details) {
   try {
-    const response = await axios.post(`http://localhost:3000/users/MyRecipes`, {recipe_details },
+    const response = await axios.post(shared_data.server_domain + "/users/MyRecipes", {recipe_details },
       {withCredentials: true});
     return response;
   } catch (error) {
@@ -92,7 +92,7 @@ export async function addNewRecipe(recipe_details) {
  */
 export async function GetFavoritesRecipes() {
   try {
-    const response = await axios.get("http://localhost:3000/users/favorites");
+    const response = await axios.get(shared_data.server_domain + "/users/favorites");
     return  response;
   }
   catch (error) {
@@ -111,7 +111,7 @@ export async function GetFavoritesRecipes() {
  */
 export async function getLastThreeRecipes() {
   try {
-    const response = await axios.get("http://localhost:3000/users/lastViewed");
+    const response = await axios.get(shared_data.server_domain + "/users/lastViewed");
     return  response;
   }
   catch (error) {
@@ -129,7 +129,7 @@ export async function getLastThreeRecipes() {
  */
   export async function getMyRecipes() {
     try {
-      const response = await axios.get("http://localhost:3000/users/MyRecipes");
+      const response = await axios.get(shared_data.server_domain + "/users/MyRecipes");
       return  response;
     }
     catch (error) {
@@ -139,6 +139,20 @@ export async function getLastThreeRecipes() {
       } else {
         return { status: 500, message: "Server error", success: false };
       }
+    }
+  }
+  export async function isLikedRecipe(recipe_id) {
+    try {
+      const response = await axios.get(shared_data.server_domain + "/users/isLikedRecipe/" + recipe_id);
+      return  response;
+    }
+    catch (error) {
+      // Handle error response from server
+      if (error.response) {
+        return { status: error.response.status, message: error.response.data.message, success: error.response.data.success };
+      } else {
+        return { status: 500, message: "Server error", success: false};
+     }
     }
   }
 

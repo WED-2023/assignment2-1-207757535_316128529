@@ -1,5 +1,4 @@
 const axios = require("axios");
-import shared_data from "@/main.js"; // Import the shared data
 
 
 // Function to handle user login
@@ -11,7 +10,7 @@ import shared_data from "@/main.js"; // Import the shared data
  */
 export async function Login(username, password) {
   try {
-    const response = await axios.post(shared_data.server_domain + "/api/Login", {
+    const response = await axios.post("http://localhost:3000/api/Login", {
       user_name: username,
       password: password,
     });
@@ -34,7 +33,7 @@ export async function Login(username, password) {
  */
 export async function Register(user_details) {
   try {
-    const response = await axios.post(shared_data.server_domain + "/api/Register", {
+    const response = await axios.post("http://localhost:3000/api/Register", {
       user_name: user_details.username,
       first_name: user_details.firstName,
       last_name: user_details.lastName,
@@ -65,7 +64,7 @@ export async function Register(user_details) {
  */
 export function Logout() {
   try {
-    const response = axios.post(shared_data.server_domain + "/api/Logout");
+    const response = axios.post("http://localhost:3000/api/Logout");
     // Check response from server
     if (response.status === 200 && response.data.success) {
       return { status: response.status, message: response.data.message, success: response.data.success };

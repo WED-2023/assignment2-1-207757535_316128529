@@ -33,9 +33,19 @@ export default {
       }   
 },
 mounted(){
+  /**
+     * Called after the component is mounted.
+     * Checks if the recipe has been viewed using the recipeID.
+     */
   this.isRecipeViewed(this.recipeID);
 },
 methods: {
+  /**
+     * Fetches and sets the viewed status of the recipe.
+     * 
+     * @param {string} recipeID - The ID of the recipe to check.
+     * @returns {Promise<void>}
+     */
   async isRecipeViewed(recipeID){
     const response = await isViewedRecipe(recipeID);
     const {viewed, status, success} = response.data;

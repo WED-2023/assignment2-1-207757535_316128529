@@ -110,7 +110,7 @@ methods: {
      */
   async initializeSearch() {
     // Retrieve saved recipes from localStorage if they exist
-    const savedRecipes = localStorage.getItem('savedRecipes');
+    const savedRecipes = sessionStorage.getItem('savedRecipes');
     if (savedRecipes) {
       this.recipes = JSON.parse(savedRecipes);
     } else {
@@ -153,7 +153,7 @@ methods: {
     if (!this.searchQuery.trim()) {
       // If the search query is empty, clear the recipes and return
       this.recipes = null; // Show nothing since no search was made
-      localStorage.removeItem('savedRecipes');
+      sessionStorage.removeItem('savedRecipes');
       return;
     }
     
@@ -169,7 +169,7 @@ methods: {
           this.$root.toast("Failed", "Can't find recipes");
         } else {
           // Save results to localStorage
-          localStorage.setItem('savedRecipes', JSON.stringify(this.recipes));
+          sessionStorage.setItem('savedRecipes', JSON.stringify(this.recipes));
         }
       } else {
         this.$root.toast("Failed", "Can't find recipes");
